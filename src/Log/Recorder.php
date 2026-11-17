@@ -755,6 +755,11 @@ final class Recorder
             // `parent`. The view context answers with the parent's class,
             // which would read as a change nobody made and revert to it.
             'tax_class' => (string) $product->get_tax_class('edit'),
+            // As stored: `woocommerce_product_get_description` may rewrite the text for display (a theme that strips
+            // its buy box), and a conflict check or an Undo built on that form would see changes nobody made, or
+            // write the display form back over the stored one.
+            'description' => (string) $product->get_description('edit'),
+            'short_description' => (string) $product->get_short_description('edit'),
             'attributes' => self::attributes($product),
             'default_attributes' => self::defaultAttributes($product),
             'grouped_products' => array_map('intval', $product->get_children()),

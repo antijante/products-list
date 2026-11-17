@@ -1819,3 +1819,99 @@ html.wc-pl-panel-open .wc-products-list__notices {
 	font-weight: 400;
 	color: #50575e;
 }
+
+// A description in block markup as its sections (resources/edit/html-text-control.tsx).
+.wc-pl-block-outline {
+	padding: 12px 16px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	background: #f6f7f7;
+
+	&__lead {
+		margin: 0 0 8px;
+		color: #50575e;
+	}
+
+	&__list {
+		margin: 0 0 12px 1.4em;
+		padding: 0;
+
+		li {
+			margin: 0 0 4px;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+	}
+}
+
+// The product's block editor over quick edit (resources/edit/description-modal/edit-screen-modal.tsx).
+.wc-pl-edit-screen-modal {
+	.components-modal__content {
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.components-modal__header {
+		padding-inline: 24px;
+	}
+
+	&__body {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		min-height: 0;
+	}
+
+	&__frame {
+		flex: 1 0 auto;
+		width: 100%;
+		// The modal's content has no height to share out: the screen less the modal's header and footer.
+		height: calc( 100vh - 220px );
+		min-height: 360px;
+		border: 0;
+		border-top: 1px solid #dcdcde;
+		visibility: hidden;
+
+		&.is-ready {
+			visibility: visible;
+		}
+	}
+
+	&__loading {
+		position: absolute;
+		inset: 40% 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		color: #50575e;
+	}
+
+	&__note {
+		margin: 0;
+		padding: 8px 24px;
+		background: #fcf9e8;
+		border-bottom: 1px solid #dcdcde;
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 12px 24px;
+		border-top: 1px solid #dcdcde;
+		background: #fff;
+	}
+
+	&__hint {
+		color: #50575e;
+	}
+}

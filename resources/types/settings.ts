@@ -65,6 +65,8 @@ export interface Links {
 	newProduct: string;
 	/** sprintf-style, %d is the product id. */
 	editProduct: string;
+	/** The product's block editor in quick edit's frame, `%d` the product id; empty when products use the classic editor. */
+	editProductEmbed?: string;
 	assets: string;
 }
 
@@ -118,6 +120,8 @@ export interface Settings {
 	actions: DeclarativeAction[];
 	/** The quick edit panel's scopes and tabs (`antijante_products_list/layout`); absent or empty for the plain tab strip. */
 	layout?: QuickEditLayout;
+	/** Block titles and synced pattern titles, for a description's outline; null where products do not use the block editor. */
+	blocks?: { types: Record< string, { title: string; part: boolean } >; synced: Record< string, string > } | null;
 	languages: LanguageSettings | null;
 	/** Anything else an integration adds through the bootstrap filter. */
 	[ extension: string ]: unknown;

@@ -94,6 +94,7 @@ import type { ImagesControlTarget } from '../fields/components/images-control';
 import type { DescriptionLanguage } from './description-modal/description-modal';
 
 const DescriptionModal = lazy( () => import( /* webpackChunkName: "description-modal" */ './description-modal/description-modal' ).then( ( module ) => ( { default: module.DescriptionModal } ) ) );
+const EditScreenModal = lazy( () => import( /* webpackChunkName: "edit-screen-modal" */ './description-modal/edit-screen-modal' ).then( ( module ) => ( { default: module.EditScreenModal } ) ) );
 
 export interface InlineEditorProps {
 	host: EditorHost;
@@ -979,15 +980,27 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 		return { postId: variation ? parentIdOf( only ) || only.id : only.id, single: variation, itemName: nameOf( only ), onBusyChange: setImagesBusy };
 	}, [ bulk, selectedRows ] );
 	const descriptionOpener = useRef< HTMLElement | null >( null );
+	// The default description of one product opens the product's own block editor (the edit screen in a frame), where
+	// the site gives products the block editor; the other languages keep the description modal (formatted text).
+	const embedProduct = ! bulk && selectedRows.length === 1 && selectedRows[ 0 ] && ! isVariation( selectedRows[ 0 ] ) ? selectedRows[ 0 ] : null;
+	const embedUrl = embedProduct && settings.links.editProductEmbed ? settings.links.editProductEmbed.replace( '%d', String( embedProduct.id ) ) : '';
+	const [ editScreenOpen, setEditScreenOpen ] = useState( false );
 	const openDescription = useMemo(
 		() =>
-			descriptionLanguages.length
+			descriptionLanguages.length || embedUrl
 				? ( fieldId: string, opener?: HTMLElement ) => {
 						descriptionOpener.current = opener ?? null;
+
+						if ( fieldId === 'description' && embedUrl ) {
+							setEditScreenOpen( true );
+
+							return;
+						}
+
 						setDescriptionFieldId( fieldId );
 				  }
 				: null,
-		[ descriptionLanguages ]
+		[ descriptionLanguages, embedUrl ]
 	);
 	const closeDescription = useCallback( ( lastFieldId?: string ) => {
 		setDescriptionFieldId( null );
@@ -3594,6 +3607,22 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				</div>
 				</div>
 				</div>
+
+				{ editScreenOpen && embedProduct ? (
+					<Suspense fallback={ null }>
+						<EditScreenModal
+							url={ embedUrl }
+							productName={ nameOf( embedProduct ) }
+							formValue={ String( state.data.description ?? '' ) }
+							storedValue={ String( ( hydrated.get( embedProduct.id ) ?? embedProduct ).description ?? '' ) }
+							onApply={ ( content ) => onChange( { description: content } ) }
+							onClose={ () => {
+								setEditScreenOpen( false );
+								window.requestAnimationFrame( () => descriptionOpener.current?.isConnected && descriptionOpener.current.focus() );
+							} }
+						/>
+					</Suspense>
+				) : null }
 
 				{ descriptionFieldId ? (
 					<Suspense fallback={ null }>

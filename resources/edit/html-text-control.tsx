@@ -32,6 +32,9 @@ import { formatBold, formatItalic, formatListBullets, formatListNumbered, link a
 import type { ClipboardEvent, ComponentType, KeyboardEvent, MouseEvent as ReactMouseEvent } from 'react';
 import type { DataFormControlProps } from '../dataviews';
 import type { FormData } from './bulk-numeric-control';
+import { getSettings } from '../settings';
+import { blockOutline } from './block-outline';
+import type { BlockTitles } from './block-outline';
 
 /** Elements the visual editor will not show (they would run, load something or be lost when edited). */
 const UNSAFE_ELEMENTS = 'script, style, iframe, object, embed, form, input, textarea, select, button, link, meta, base, svg, math, template, frame, frameset, noscript';
@@ -429,6 +432,15 @@ function VisualEditor( { id, labelId, describedBy, value, rows, onChange }: Visu
 	);
 }
 
+/** The block titles for a description's outline; none where there are no settings (a control drawn on its own). */
+function blockTitles(): BlockTitles | null {
+	try {
+		return getSettings().blocks ?? null;
+	} catch {
+		return null;
+	}
+}
+
 /** The DataForm control of an HTML field: Visual / Code. `rows` sizes both. */
 export function createHtmlTextControl( { rows = 4 }: { rows?: number } = {} ): ComponentType< DataFormControlProps< FormData > > {
 	function HtmlTextControl( { data, field, onChange, hideLabelFromVision }: DataFormControlProps< FormData > ) {
@@ -454,6 +466,46 @@ export function createHtmlTextControl( { rows = 4 }: { rows?: number } = {} ): C
 		}, [] );
 
 		const choose = ( next: HtmlEditorMode ) => writeMode( next );
+		// A description in block markup that opens in the block editor reads as its sections; the code is one click away.
+		const titles = openDescription && field.id === 'description' ? blockTitles() : null;
+		const outline = useMemo( () => ( titles && openDescription && field.id === 'description' && /<!--\s+wp:/.test( value ) ? blockOutline( value, titles ) : [] ), [ titles, openDescription, field.id, value ] );
+		const [ showCode, setShowCode ] = useState( false );
+
+		if ( outline.length && ! showCode ) {
+			return (
+				<div className="wc-pl-html-editor is-outline">
+					<div className="wc-pl-html-editor__head">
+						<span id={ labelId } className={ `wc-pl-html-editor__label${ hideLabelFromVision ? ' screen-reader-text' : '' }` }>
+							{ field.label }
+						</span>
+					</div>
+					<div className="wc-pl-block-outline" aria-labelledby={ labelId }>
+						<p className="wc-pl-block-outline__lead">{ __( 'The page is built from blocks. Its sections, in order:', 'antijante-products-list' ) }</p>
+						<ol className="wc-pl-block-outline__list">
+							{ outline.map( ( line, index ) => (
+								<li key={ index }>
+									{ line.title }
+									{ line.inside.length ? `: ${ line.inside.join( ', ' ) }` : '' }
+								</li>
+							) ) }
+						</ol>
+						<div className="wc-pl-block-outline__actions">
+							<Button variant="primary" data-description-opener={ field.id } onClick={ ( event: ReactMouseEvent< HTMLButtonElement > ) => openDescription?.( field.id, event.currentTarget ) }>
+								{ __( 'Edit in block editor', 'antijante-products-list' ) }
+							</Button>
+							<Button variant="link" onClick={ () => setShowCode( true ) }>
+								{ __( 'Show the code', 'antijante-products-list' ) }
+							</Button>
+						</div>
+					</div>
+					{ field.description ? (
+						<p id={ helpId } className="components-base-control__help wc-pl-html-editor__help">
+							{ field.description }
+						</p>
+					) : null }
+				</div>
+			);
+		}
 
 		return (
 			<div className={ `wc-pl-html-editor is-${ mode }` }>

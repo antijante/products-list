@@ -132,6 +132,7 @@ final class Bootstrap
             'filters' => Registry::filters(),
             'actions' => Registry::actions(),
             'layout' => Layout::get(),
+            'blocks' => self::blocks(),
             // Set by gds-woo-i18n (or any translation integration) through
             // the bootstrap filter: {default, others, labels, currencies}.
             'languages' => null,
@@ -263,6 +264,36 @@ final class Bootstrap
     /**
      * @return array<string, string>
      */
+    /**
+     * What a description in block markup is made of, for its outline in quick
+     * edit (resources/edit/block-outline.ts): each registered block's title and
+     * whether it is only a part of another (it declares a `parent` or an
+     * `ancestor`), and the synced patterns' titles. Only where descriptions
+     * open in the block editor.
+     *
+     * @return array{types: array<array-key, array{title: string, part: bool}>, synced: array<array-key, string>}|null
+     */
+    private static function blocks(): ?array
+    {
+        if (! function_exists('use_block_editor_for_post_type') || ! use_block_editor_for_post_type('product')) {
+            return null;
+        }
+
+        $types = [];
+
+        foreach (\WP_Block_Type_Registry::get_instance()->get_all_registered() as $name => $type) {
+            $types[$name] = ['title' => (string) ($type->title ?: $name), 'part' => ! empty($type->parent) || ! empty($type->ancestor)];
+        }
+
+        $synced = [];
+
+        foreach (get_posts(['post_type' => 'wp_block', 'post_status' => 'publish', 'numberposts' => 500, 'orderby' => 'ID', 'suppress_filters' => false]) as $pattern) {
+            $synced[(string) $pattern->ID] = get_the_title($pattern);
+        }
+
+        return ['types' => $types, 'synced' => $synced];
+    }
+
     private static function links(): array
     {
         return [
@@ -275,6 +306,10 @@ final class Bootstrap
             'newProduct' => admin_url('post-new.php?post_type=product'),
             // sprintf-style: %d is the product id.
             'editProduct' => admin_url('post.php?post=%d&action=edit'),
+            // The product's block editor in quick edit's frame (Modules\EditScreenEmbed); empty when products use the classic editor.
+            'editProductEmbed' => function_exists('use_block_editor_for_post_type') && use_block_editor_for_post_type('product')
+                ? admin_url('post.php?post=%d&action=edit&'.Modules\EditScreenEmbed::PARAM.'=1')
+                : '',
             'assets' => Plugin::url('build/'),
         ];
     }

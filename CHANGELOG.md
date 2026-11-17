@@ -19,6 +19,8 @@ Field types for a site's own product data, and WooCommerce fields the product sc
 - The integration tests run from whatever folder the plugin is checked out in.
 - A declared layout (`antijante_products_list/layout`) gives quick edit a main level: scopes in a rail (a select on a narrow panel), such as "All markets" and then each market, each with its tabs, its intro line and, for a market, how many of its texts are missing. Tabs can take fields from elsewhere, hide fields and set their own sections. One Update still saves every scope.
 - A number WooCommerce sends as text (`weight`) is read as a number and written back as text.
+- A product's description opens in the product's own block editor from quick edit: its edit screen in a frame (`post.php?…&wcpl_embed=1`, Modules\EditScreenEmbed), so every block, pattern, theme style, the inspector, the list view and undo work as there. The frame only edits: saving, autosaving and the post lock stay off, and Done puts the content in the form only when the editor changed it, so an untouched open leaves the stored description byte for byte. Other languages keep the formatted-text editor. A description in block markup shows as a list of its sections, with Edit in block editor and Show the code.
+- The conflict check and History read `description` and `short_description` as stored. A site that rewrites them for display (a theme stripping its buy box) had every description save refused, and an Undo could have written the display form over the stored text.
 
 ## 0.5.2 - 2026-10-29
 
