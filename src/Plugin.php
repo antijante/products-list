@@ -5,6 +5,7 @@ namespace Antijante\ProductsList;
 use Antijante\ProductsList\Modules\Actions;
 use Antijante\ProductsList\Modules\AdminPage;
 use Antijante\ProductsList\Modules\BlockEditorAssets;
+use Antijante\ProductsList\Modules\Fields;
 use Antijante\ProductsList\Modules\Log;
 use Antijante\ProductsList\Modules\Rest;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
@@ -22,6 +23,7 @@ class Plugin
         BlockEditorAssets::class,
         Log::class,
         Actions::class,
+        Fields::class,
     ];
 
     public const FILTER_MODULES = 'antijante_products_list/modules';

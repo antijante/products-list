@@ -1097,3 +1097,28 @@ function notSavedMessage( message: string | undefined ): string {
 		message || __( 'the request failed.', 'antijante-products-list' )
 	).slice( 0, 500 );
 }
+
+/** What `POST /preview` answers for a `textarea` field with `preview: true` (src/Fields/Preview.php). */
+export interface FieldPreview {
+	html: string;
+	error: string | null;
+	line: number | null;
+}
+
+/** The site's rendering of a text being typed, as the page will show it, or what it cannot read. */
+export async function getFieldPreview( field: string, value: string, id: number, options?: { signal?: AbortSignal } ): Promise< FieldPreview > {
+	return request< FieldPreview >( { path: `${ OWN }/preview`, method: 'POST', data: { field, value, id }, signal: options?.signal } );
+}
+
+/** Products by name for a picker: id and name only. */
+export async function searchProductNames( search: string, include: number[] = [] ): Promise< Array< { id: number; name: string } > > {
+	return request< Array< { id: number; name: string } > >( {
+		path: addQueryArgs( '/wc/v3/products', {
+			search: search || undefined,
+			include: include.length ? include.join( ',' ) : undefined,
+			per_page: include.length ? Math.min( 100, include.length ) : 20,
+			status: 'any',
+			_fields: 'id,name',
+		} ),
+	} );
+}

@@ -9,6 +9,15 @@ The plugin is Antijante's fork of Genero's WooCommerce Products List (https://gi
 - Unchanged, as stored data and links depend on them: the REST namespace `wc-products-list/v1`, the error codes, the log table, options and meta keys, the user preferences scope, capabilities, CSS classes, the admin page `wc-products-list`, the WooCommerce log source and the browser storage keys.
 - A site that ran the original activates `antijante-products-list` in its place: the plugin's file and folder are new to WordPress.
 
+Field types for a site's own product data, and WooCommerce fields the product screen has:
+
+- `textarea` fields, with `rows` and an optional `preview`: the site renders what is typed as its page will show it, and says which line it cannot read (`POST /wc-products-list/v1/preview`, filter `antijante_products_list/preview`).
+- `terms` fields: a product's terms in one taxonomy, edited by name, one or several, with `create` to allow new ones. With `numeric` and a `unit` the field is a number ("12,5 t") and the save finds or makes the term holding it. Attribute taxonomies are written through the product's attributes; History and Undo cover them.
+- `media` fields pick from the media library, limited by `accept` (`application/pdf`, `image`, `video`).
+- A field declared `visible` is a column of the default table view (it was read but not used).
+- Upsells, cross-sells and the purchase note in quick and bulk edit.
+- The integration tests run from whatever folder the plugin is checked out in.
+
 ## 0.5.2 - 2026-10-29
 
 - A save from the table refused because the product is open in the product editor (or was, and its lock has not lapsed: up to 2½ minutes after the editor is left) offers **Take over** in its snackbar, which stays until answered; the images popover offers it beside its error. Taking over saves the change and takes WordPress's post lock, as core's own "Take over" does: another user's editor then shows core's "taken over" dialog instead of letting its Update put the form back. The lock taken over is no clash for the next saves and their Undo, until an editor of the user's own refreshes it (`_wcpl_take_over` per item, `_wcpl_taken_lock` post meta, docs/contracts.md §3.6).

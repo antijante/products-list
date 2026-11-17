@@ -13,6 +13,9 @@ import type { RawImage } from '../types';
 export interface AttachmentJson {
 	id: number;
 	url?: string;
+	filename?: string;
+	mime?: string;
+	icon?: string;
 	alt?: string;
 	title?: string;
 	type?: string;
@@ -87,6 +90,22 @@ export function isMediaFrameOpen(): boolean {
  * the product screen.
  */
 export async function pickImages( options: PickImagesOptions ): Promise< RawImage[] | null > {
+	const picked = await pickMedia( { ...options, library: 'image' } );
+
+	return picked ? picked.filter( ( attachment ) => ! attachment.type || attachment.type === 'image' ).map( toRawImage ) : null;
+}
+
+export interface PickMediaOptions extends PickImagesOptions {
+	/** The MIME types the library shows: `image`, `video`, `application/pdf`; any when empty. */
+	library?: string | string[];
+}
+
+/**
+ * Opens the media library to pick attachments of the given types; resolves
+ * with them as the library gives them, or null when it was closed without
+ * picking.
+ */
+export async function pickMedia( options: PickMediaOptions ): Promise< AttachmentJson[] | null > {
 	await loadMedia();
 
 	const wpMedia = media();
@@ -103,11 +122,11 @@ export async function pickImages( options: PickImagesOptions ): Promise< RawImag
 		title: options.title,
 		button: { text: options.button },
 		multiple: options.multiple ? 'add' : false,
-		library: { type: 'image' },
+		library: options.library && ( ! Array.isArray( options.library ) || options.library.length ) ? { type: options.library } : {},
 	} );
 
 	return new Promise( ( resolve ) => {
-		let picked: RawImage[] | null = null;
+		let picked: AttachmentJson[] | null = null;
 
 		frame.on( 'open', () => {
 			const selection = frame.state().get( 'selection' );
@@ -123,12 +142,7 @@ export async function pickImages( options: PickImagesOptions ): Promise< RawImag
 		} );
 
 		frame.on( 'select', () => {
-			picked = frame
-				.state()
-				.get( 'selection' )
-				.toJSON()
-				.filter( ( attachment ) => ! attachment.type || attachment.type === 'image' )
-				.map( toRawImage );
+			picked = frame.state().get( 'selection' ).toJSON();
 		} );
 
 		// `close` follows `select` too; resolved once, after the frame's own focus handling.

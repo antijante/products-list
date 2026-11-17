@@ -20,6 +20,7 @@ import { createDescriptionFields } from './descriptions';
 import { createExternalFields } from './external';
 import { createFeaturedField } from './featured';
 import { createFlagFields } from './flags';
+import { createLinkedFields } from './linked';
 import { createIdentityFields } from './identity';
 import { createImagesField } from './images';
 import { createLowStockAmountField } from './low-stock-amount';
@@ -73,6 +74,9 @@ export const CORE_FIELD_IDS: readonly string[] = [
 	'downloadable',
 	'sold_individually',
 	'reviews_allowed',
+	'upsell_ids',
+	'cross_sell_ids',
+	'purchase_note',
 	'external_url',
 	'button_text',
 	'short_description',
@@ -119,6 +123,7 @@ export function createCoreFields( settings: Settings ): ProductField[] {
 		createTaxStatusField( settings ),
 		createTaxClassField( settings ),
 		...createFlagFields( settings ),
+		...createLinkedFields( settings ),
 		...createExternalFields( settings ),
 		...createDescriptionFields( settings ),
 		...createIdentityFields( settings ),

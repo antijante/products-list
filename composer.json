@@ -41,7 +41,7 @@
         "lint:fix": "pint",
         "test": "phpunit --testsuite unit",
         "test:integration": "phpunit --bootstrap tests/bootstrap.php --testsuite integration",
-        "test:wp-env": "npx wp-env run tests-cli --env-cwd=wp-content/plugins/antijante-products-list php -d memory_limit=1024M vendor/bin/phpunit --bootstrap tests/bootstrap.php --testsuite integration",
+        "test:wp-env": "npx wp-env run tests-cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") php -d memory_limit=1024M vendor/bin/phpunit --bootstrap tests/bootstrap.php --testsuite integration",
         "stan": "./vendor/bin/phpstan analyse --memory-limit=4G"
     },
     "config": {

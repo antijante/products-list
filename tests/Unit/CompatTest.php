@@ -54,7 +54,7 @@ class CompatTest extends TestCase
         $run = array_values(array_unique($found[1]));
         sort($run);
 
-        $bridged = [...Compat::FILTERS, ...Compat::ACTIONS];
+        $bridged = [...Compat::FILTERS, ...Compat::ACTIONS, ...Compat::NEW_HOOKS];
         sort($bridged);
 
         $this->assertSame($run, $bridged, 'A hook added to src/ needs its old name in Compat::FILTERS or Compat::ACTIONS, or the list is out of date.');

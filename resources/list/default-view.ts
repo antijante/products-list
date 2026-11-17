@@ -92,7 +92,8 @@ export function createDefaultView( settings: Settings, fields: ProductField[] = 
 		mediaField: 'images',
 		showMedia: true,
 		showTitle: true,
-		fields: [ ...DEFAULT_TABLE_FIELDS ],
+		// The core columns, then the extension columns declared `visible`, in field order.
+		fields: [ ...DEFAULT_TABLE_FIELDS, ...fields.filter( ( field ) => field.defaultVisible && ! DEFAULT_TABLE_FIELDS.includes( field.id ) ).map( ( field ) => field.id ) ],
 		layout: table ? { ...table, styles: columnStyles( fields ) } : undefined,
 	};
 

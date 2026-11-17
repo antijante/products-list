@@ -6,6 +6,7 @@
  */
 import { createElement, memo, useState } from '@wordpress/element';
 import { doAction } from '@wordpress/hooks';
+import { createMediaEdit, createTermsEdit, createTextareaEdit, mediaId } from './declarative-controls';
 import { decodeEntities } from '@wordpress/html-entities';
 import { __, sprintf } from '@wordpress/i18n';
 import { DataForm } from '../dataviews';
@@ -232,6 +233,8 @@ export function formatMoney( value: unknown, currency: FieldCurrency, settings: 
 
 const TYPE_MAP: Record< DeclarativeFieldType, FieldTypeName | undefined > = {
 	text: 'text',
+	textarea: 'text',
+	terms: 'text',
 	html: 'text',
 	price: 'text',
 	integer: 'integer',
@@ -240,7 +243,7 @@ const TYPE_MAP: Record< DeclarativeFieldType, FieldTypeName | undefined > = {
 	select: 'text',
 	date: 'date',
 	datetime: 'datetime',
-	media: 'media',
+	media: 'text',
 	array: 'array',
 };
 
@@ -261,6 +264,12 @@ function editControlFor( def: DeclarativeFieldInput, currency: FieldCurrency ): 
 	switch ( def.type ) {
 		case 'html':
 			return { control: 'textarea', rows: 4 };
+		case 'textarea':
+			return createTextareaEdit( def ) as ProductField[ 'Edit' ];
+		case 'terms':
+			return createTermsEdit( def ) as ProductField[ 'Edit' ];
+		case 'media':
+			return createMediaEdit( def ) as ProductField[ 'Edit' ];
 		case 'price':
 			// The shop's notation with the field's currency ("149,50" kr), as the core price fields and the list show it.
 			return createPriceEdit( currency ) as ProductField[ 'Edit' ];
@@ -279,6 +288,16 @@ function displayValue( value: unknown, def: DeclarativeFieldInput, currency: Fie
 			return def.options.find( ( option ) => option.value === String( value ) )?.label ?? String( value );
 		case 'html':
 			return stripTags( String( value ) );
+		case 'terms':
+			if ( def.numeric ) {
+				return value === '' || value === null || value === undefined ? '' : def.unit ? `${ String( value ) } ${ def.unit }` : String( value );
+			}
+
+			return Array.isArray( value ) ? value.join( ', ' ) : String( value ?? '' );
+		case 'media':
+			return value && typeof value === 'object' ? String( ( value as { title?: string } ).title || `#${ mediaId( value ) }` ) : mediaId( value ) ? `#${ mediaId( value ) }` : '';
+		case 'textarea':
+			return String( value ?? '' ).split( /\r?\n/ ).filter( Boolean ).join( '; ' );
 		default:
 			return Array.isArray( value ) ? value.join( ', ' ) : String( value );
 	}
@@ -347,6 +366,10 @@ export function fieldFromDeclarative( input: DeclarativeField, settings: Setting
 	const normalizeForWrite = ( value: unknown ): unknown => {
 		if ( def.type === 'price' ) {
 			return parseDecimal( value, settings ) ?? value;
+		}
+
+		if ( def.type === 'media' ) {
+			return mediaId( value );
 		}
 
 		if ( def.type === 'integer' && typeof value === 'string' && value !== '' ) {
@@ -515,6 +538,7 @@ export function fieldFromDeclarative( input: DeclarativeField, settings: Setting
 		shownReference,
 		source: def.source || 'extension',
 		columnStyle: defaultColumnStyle( def ),
+		...( def.visible ? { defaultVisible: true } : {} ),
 		columnGroup: def.group ?? undefined,
 	};
 

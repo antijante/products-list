@@ -45,6 +45,15 @@ describe( 'default table', () => {
 	} );
 } );
 
+describe( 'declared default columns', () => {
+	it( 'adds the extension columns declared visible after the core columns, in field order', () => {
+		const fields = [ { id: 'aluex_max_load', defaultVisible: true }, { id: 'aluex_material' }, { id: 'aluex_quote', defaultVisible: true }, { id: 'sku', defaultVisible: true } ] as ProductField[];
+		const view = createDefaultView( sampleSettings(), fields );
+
+		expect( view.fields ).toEqual( [ ...DEFAULT_TABLE_FIELDS, 'aluex_max_load', 'aluex_quote' ] );
+	} );
+} );
+
 describe( 'defaultColumnStyle', () => {
 	it( 'gives a translated name the width of a name, other text room to read, prices a number column, and honours an explicit width', () => {
 		expect( defaultColumnStyle( declarative( {} ) ) ).toEqual( { minWidth: 240 } );

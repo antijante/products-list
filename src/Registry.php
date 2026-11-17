@@ -2,6 +2,8 @@
 
 namespace Antijante\ProductsList;
 
+use Antijante\ProductsList\Fields\TermFields;
+
 /**
  * The declarative extension layer: PHP-side field, filter and action
  * definitions are collected through filters, normalised to one shape and
@@ -23,7 +25,10 @@ namespace Antijante\ProductsList;
  *     group: ?string, tab: ?string, visible: bool, order: int,
  *     enableSorting: bool, sortParam: ?string, restFields: array<int, string>,
  *     filter: ?array{param: string, operators: array<int, string>}, width: ?int,
- *     source: string
+ *     source: string, referenceLabel?: string, currency?: string, precision?: int,
+ *     rows?: int, preview?: bool,
+ *     taxonomy?: string, multiple?: bool, create?: bool, numeric?: bool, unit?: string,
+ *     accept?: array<int, string>
  * }
  * @phpstan-type FilterDef array{
  *     id: string, label: string, type: string, param: ?string,
@@ -47,7 +52,7 @@ final class Registry
 
     public const FILTER_ACTIONS = 'antijante_products_list/actions';
 
-    public const FIELD_TYPES = ['text', 'html', 'price', 'integer', 'number', 'boolean', 'select', 'date', 'datetime', 'media', 'array'];
+    public const FIELD_TYPES = ['text', 'textarea', 'html', 'price', 'integer', 'number', 'boolean', 'select', 'date', 'datetime', 'media', 'array', 'terms'];
 
     public const BULK_MODES = ['money', 'integer', 'default'];
 
@@ -222,6 +227,19 @@ final class Registry
             ];
         }
 
+        // A terms field reads and writes its taxonomy through the plugin's own key (Fields\TermFields).
+        $taxonomy = $type === 'terms' && isset($def['taxonomy']) && is_string($def['taxonomy']) && preg_match('/^[a-z0-9_\-]{1,32}$/', $def['taxonomy']) ? $def['taxonomy'] : null;
+
+        if ($type === 'terms' && $taxonomy === null) {
+            return null;
+        }
+
+        if ($taxonomy !== null) {
+            $def['path'] ??= TermFields::KEY.'.'.$taxonomy;
+            $def['writePath'] ??= TermFields::KEY.'.'.$taxonomy;
+            $def['restFields'] ??= [TermFields::KEY];
+        }
+
         $path = self::path($def['path'] ?? null) ?? $id;
         $reference = self::path($def['reference'] ?? null);
         $writePath = self::path($def['writePath'] ?? null);
@@ -269,6 +287,18 @@ final class Registry
             ...(isset($def['referenceLabel']) && is_scalar($def['referenceLabel']) ? ['referenceLabel' => (string) $def['referenceLabel']] : []),
             ...(isset($def['currency']) && is_scalar($def['currency']) && (string) $def['currency'] !== '' ? ['currency' => strtoupper((string) $def['currency'])] : []),
             ...(isset($def['precision']) && is_numeric($def['precision']) ? ['precision' => max(0, (int) $def['precision'])] : []),
+            // textarea: its height, and whether the server renders a preview of the value (POST /preview, Fields\Preview).
+            ...($type === 'textarea' ? ['rows' => max(2, min(30, (int) ($def['rows'] ?? 6))), 'preview' => (bool) ($def['preview'] ?? false)] : []),
+            // terms: the taxonomy, one or several, whether a new term can be made, and a number with its unit.
+            ...($taxonomy !== null ? [
+                'taxonomy' => $taxonomy,
+                'multiple' => (bool) ($def['multiple'] ?? false),
+                'create' => (bool) ($def['create'] ?? false),
+                'numeric' => (bool) ($def['numeric'] ?? false),
+                'unit' => isset($def['unit']) && is_scalar($def['unit']) ? (string) $def['unit'] : '',
+            ] : []),
+            // media: the MIME types offered (`application/pdf`, `image`, `video`).
+            ...($type === 'media' ? ['accept' => self::strings($def['accept'] ?? [])] : []),
         ];
     }
 

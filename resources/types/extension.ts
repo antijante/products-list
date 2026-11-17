@@ -14,6 +14,7 @@ export type BulkMode = 'money' | 'integer' | 'default' | false;
 
 export type DeclarativeFieldType =
 	| 'text'
+	| 'textarea'
 	| 'html'
 	| 'price'
 	| 'integer'
@@ -23,7 +24,8 @@ export type DeclarativeFieldType =
 	| 'date'
 	| 'datetime'
 	| 'media'
-	| 'array';
+	| 'array'
+	| 'terms';
 
 export interface DeclarativeOption {
 	value: string;
@@ -76,6 +78,22 @@ export interface DeclarativeField {
 	currency?: string;
 	/** `price` fields: decimals of that currency when not the shop's. */
 	precision?: number;
+	/** `textarea`: its height in lines. */
+	rows?: number;
+	/** `textarea`: the site renders a preview of the value (POST /preview). */
+	preview?: boolean;
+	/** `terms`: the taxonomy. */
+	taxonomy?: string;
+	/** `terms`: several terms, else one. */
+	multiple?: boolean;
+	/** `terms`: a name that is not a term yet may be typed; the save makes it. */
+	create?: boolean;
+	/** `terms`: a number with `unit`; the save finds or makes the term holding it. */
+	numeric?: boolean;
+	/** `terms` with `numeric`: shown after the number ("t", "kg"). */
+	unit?: string;
+	/** `media`: the MIME types offered (`image`, `video`, `application/pdf`); any when empty. */
+	accept?: string[];
 }
 
 export type DeclarativeFilterType = 'select' | 'text' | 'boolean' | 'number' | 'date';
@@ -193,6 +211,8 @@ export interface ProductField< Item = ProductListItem > extends Field< Item > {
 	filterOnly?: boolean;
 	/** The table column's default styles (`view.layout.styles[ id ]`), applied when the user's view has none for it. */
 	columnStyle?: ColumnStyle;
+	/** A column of the default table view (declarative `visible`), after the core columns. */
+	defaultVisible?: boolean;
 	/** The section of the column picker (`i18n:se` for a language); defaults to `edit.group`, then the field's source. */
 	columnGroup?: string;
 }

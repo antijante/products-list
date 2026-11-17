@@ -1354,3 +1354,84 @@ body.wc-pl-media-open .wc-pl-images-popover {
 	min-width: 0;
 }
 
+
+// Declarative textarea, terms and media fields (resources/extensions/declarative-controls.tsx).
+.wc-products-list__textarea-edit .is-invalid textarea {
+	border-color: #cc1818;
+}
+
+.wc-products-list__textarea-edit .is-invalid .components-base-control__help {
+	color: #cc1818;
+}
+
+.wc-products-list__preview {
+	margin-top: 8px;
+	padding: 8px 12px;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
+	background: #f9f9f9;
+
+	table {
+		border-collapse: collapse;
+	}
+
+	th,
+	td {
+		padding: 2px 16px 2px 0;
+		text-align: start;
+		font-weight: 400;
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+.wc-products-list__preview-label {
+	display: block;
+	margin-bottom: 4px;
+	color: $muted;
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.wc-products-list__terms-edit .components-base-control__help,
+.wc-products-list__media-edit .components-base-control__help {
+	margin-top: 8px;
+	margin-bottom: 0;
+	color: $muted;
+	font-size: 12px;
+}
+
+.wc-products-list__media-edit {
+	margin: 0;
+	padding: 0;
+	border: 0;
+
+	// As DataForm's own field labels.
+	legend {
+		margin-bottom: 8px;
+		padding: 0;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 1.4;
+		text-transform: uppercase;
+	}
+}
+
+.wc-products-list__media-edit-current {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 8px;
+
+	img {
+		object-fit: cover;
+		border-radius: 2px;
+	}
+
+	&.is-empty {
+		color: $muted;
+	}
+}

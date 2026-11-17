@@ -282,7 +282,7 @@ Returned by `Registry::fields()/filters()/actions()`; input via the filters in Â
 | --- | --- | --- |
 | `id` | required | unique; extension ids are prefixed (`i18n:se.name`) |
 | `label` | id | column header / form label |
-| `type` | `text` | `text, html, price, integer, number, boolean, select, date, datetime, media, array` |
+| `type` | `text` | `text, textarea, html, price, integer, number, boolean, select, date, datetime, media, array, terms` |
 | `description` | `''` | |
 | `path` | id | dot path into the row for the value (`i18n.se.name.value`) |
 | `reference` | null | dot path to a read-only companion value shown beside the control (`i18n.se.name.source`); for a sale-price field it is also the regular price the sale < regular check falls back to when the field's own regular price is empty |
@@ -306,6 +306,18 @@ Returned by `Registry::fields()/filters()/actions()`; input via the filters in Â
 | `referenceLabel` | absent | what the `reference` companion is ("Not translated to Svenska; showing the Suomi value"); the muted cell's `title` |
 | `currency` | absent | `price` fields: ISO code of the column's currency when not the shop's (upper-cased); the form reference and bulk preview format in it |
 | `precision` | absent | `price` fields: decimals of that currency |
+| `rows` | 6 | `textarea`: its height in lines (2 to 30) |
+| `preview` | false | `textarea`: the site renders the text as its page will (`POST /wc-products-list/v1/preview`, filter `antijante_products_list/preview`), and names the line it cannot read |
+| `taxonomy` | required for `terms` | `terms`: the taxonomy (`^[a-z0-9_\-]{1,32}$`); `path` and `writePath` default to `wcpl_terms.{taxonomy}`, `restFields` to `wcpl_terms` |
+| `multiple` | false | `terms`: several terms (a list of names), else one name |
+| `create` | false | `terms`: a name that is not a term yet is made on save (with the taxonomy's `manage_terms`); else the save is refused naming it |
+| `numeric` | false | `terms`: the value is a number ("12,5" or "12.5"); the save finds the term whose name holds it or makes one ("12.5") |
+| `unit` | absent | `terms` with `numeric`: shown after the number ("t", "kg") |
+| `accept` | `[]` | `media`: the MIME types the media library offers (`image`, `video`, `application/pdf`); any when empty |
+
+**Terms fields** (`Fields\TermFields`): the row carries `wcpl_terms: {taxonomy: value}` and a save sends the same key. On a product, a product attribute taxonomy (`pa_*`) is written through the product's attributes (its "used for variations" and "visible" flags kept; an attribute the variations are made from cannot be emptied); any other taxonomy is set after the save. On a variation (`applies.variation`) the value is one of the parent's terms of an attribute it is made from. The log and a revert use the same key and value.
+
+**Preview** (`Fields\Preview`): `POST /wc-products-list/v1/preview {field, value, id}` answers `{html, error, line}` from `antijante_products_list/preview` `(?array $preview, string $field, string $value, ?WC_Product $product)`; `html` passes `wp_kses_post`. The preview is a help: the save refuses the same text through `antijante_products_list/save` (throw `WC_REST_Exception`).
 
 **Filter** (`DeclarativeFilter`): `id, label, type (select|text|boolean|number|date), param (string|null), options [{value, label, params {â€¦}}], operators ['is'], isPrimary, multiple, variations (also sent on variation requests), order, source`. An option's `params` are merged into the query verbatim (`{"gds_i18n[lang]": "se", "gds_i18n[status]": "missing"}`); without `params`, `{[param]: value}`.
 

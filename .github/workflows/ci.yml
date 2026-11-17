@@ -65,11 +65,14 @@ jobs:
       # ~1.95 MB of the 2.1 MB (420 KB gzipped); the plugin's own code is
       # ~100 KB minified. edit/ and history/ are already lazy chunks. Raise
       # only with a note of what grew.
+      # 2,306,867 to 2,400,000: 0.5.2 was already 2,368,862 when the fork
+      # began; the fork's terms, textarea and media controls and the linked
+      # products fields add ~8 KB (build/index.js 2,374,065).
       - name: Size budget
         run: |
           size=$(wc -c < build/index.js)
           echo "build/index.js: $size bytes"
-          test "$size" -le 2306867
+          test "$size" -le 2400000
 
   integration:
     runs-on: ubuntu-latest

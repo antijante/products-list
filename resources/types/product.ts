@@ -178,6 +178,7 @@ export interface RawProduct extends RawSellable {
 	default_attributes?: RawAttribute[];
 	variations?: number[];
 	grouped_products?: number[];
+	purchase_note?: string;
 	upsell_ids?: number[];
 	cross_sell_ids?: number[];
 	related_ids?: number[];
