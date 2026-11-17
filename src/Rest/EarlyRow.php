@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Logger;
 use WP_Post;
 
 /**

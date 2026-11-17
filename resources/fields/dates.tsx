@@ -20,7 +20,7 @@ function dateField( id: 'date_created' | 'date_modified', label: string, sortPar
 
 export function createDateFields( _settings: Settings ): ProductField[] {
 	return [
-		dateField( 'date_created', __( 'Date', 'wp-woocommerce-products-list' ), 'date' ),
-		dateField( 'date_modified', __( 'Modified', 'wp-woocommerce-products-list' ), 'modified' ),
+		dateField( 'date_created', __( 'Date', 'antijante-products-list' ), 'date' ),
+		dateField( 'date_modified', __( 'Modified', 'antijante-products-list' ), 'modified' ),
 	];
 }

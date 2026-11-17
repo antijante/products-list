@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
-use GeneroWP\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\Rest\Concurrency;
 use WC_Product;
 use WC_Product_Variation;
 use WP_Post;

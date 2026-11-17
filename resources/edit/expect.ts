@@ -35,7 +35,7 @@
  * - whatever a registered field's `rest.expect( item, payload )` returns
  *   (`registerField`, docs/extension-api.md): an extension that knows the
  *   stored form of its own field (and reads it on the server through
- *   `wc_products_list/log_value`) gets the same conflict check.
+ *   `antijante_products_list/log_value`) gets the same conflict check.
  *
  * Not sent: the relative stock key (`inventory_delta` is applied to the
  * stock as stored, so an order meanwhile is not a conflict) and extension

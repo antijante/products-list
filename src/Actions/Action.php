@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\Actions;
+namespace Antijante\ProductsList\Actions;
 
 use WC_Product;
 use WP_Error;
@@ -8,9 +8,9 @@ use WP_REST_Request;
 
 /**
  * One row action behind POST /wc-products-list/v1/actions/{id}. Register
- * instances with the `wc_products_list/action_handlers` filter, keyed by
+ * instances with the `antijante_products_list/action_handlers` filter, keyed by
  * id; the declarative definition the UI renders goes through
- * `wc_products_list/actions`.
+ * `antijante_products_list/actions`.
  *
  * `run()` is called once per id, after `can()` passed, and returns the data
  * of the result row. A `changes` key (`field => [old, new]`) in it is logged

@@ -8,7 +8,7 @@ export function createPriceField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'price',
 		type: 'number',
-		label: __( 'Price', 'wp-woocommerce-products-list' ),
+		label: __( 'Price', 'antijante-products-list' ),
 		enableSorting: true,
 		filterBy: { operators: [ 'greaterThanOrEqual', 'lessThanOrEqual', 'between' ] },
 		readOnly: true,

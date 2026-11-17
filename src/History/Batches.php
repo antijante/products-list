@@ -1,9 +1,9 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Rest\Concurrency;
 use WP_REST_Request;
 
 /**

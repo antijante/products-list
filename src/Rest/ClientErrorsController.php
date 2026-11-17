@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Plugin;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -58,7 +58,7 @@ class ClientErrorsController extends WP_REST_Controller
             return true;
         }
 
-        return new WP_Error('wc_products_list_forbidden', __('Sorry, you are not allowed to report errors.', 'wp-woocommerce-products-list'), ['status' => rest_authorization_required_code()]);
+        return new WP_Error('wc_products_list_forbidden', __('Sorry, you are not allowed to report errors.', 'antijante-products-list'), ['status' => rest_authorization_required_code()]);
     }
 
     /**
@@ -90,7 +90,7 @@ class ClientErrorsController extends WP_REST_Controller
             [
                 'source' => self::LOG_SOURCE,
                 'user_id' => $userId,
-                'plugin_version' => defined('WC_PRODUCTS_LIST_VERSION') ? WC_PRODUCTS_LIST_VERSION : '',
+                'plugin_version' => defined('ANTIJANTE_PRODUCTS_LIST_VERSION') ? ANTIJANTE_PRODUCTS_LIST_VERSION : '',
                 'url' => self::clip(esc_url_raw((string) $request->get_param('url')), 500),
                 'context' => self::clip(is_string($encodedContext) ? $encodedContext : '', 2000),
                 'stack' => self::clip((string) $request->get_param('stack'), 4000),

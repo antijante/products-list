@@ -1,16 +1,16 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\BatchState;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Recorder;
-use GeneroWP\ProductsList\Log\Revert;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Rest\Concurrency;
-use GeneroWP\ProductsList\Rest\LogController;
-use GeneroWP\ProductsList\Rest\Saves;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\BatchState;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Recorder;
+use Antijante\ProductsList\Log\Revert;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\Rest\LogController;
+use Antijante\ProductsList\Rest\Saves;
 
 /**
  * Server-side protection against concurrent edits (docs/contracts.md §3.6):

@@ -33,12 +33,12 @@ export function undoNoticeId( batchId: string ): string {
 
 export function revertingMessage( done: number, total: number ): string {
 	if ( total === 0 ) {
-		return __( 'Reverting…', 'wp-woocommerce-products-list' );
+		return __( 'Reverting…', 'antijante-products-list' );
 	}
 
 	return sprintf(
 		/* translators: 1: items put back so far, 2: items in total */
-		__( 'Reverting %1$d of %2$d items…', 'wp-woocommerce-products-list' ),
+		__( 'Reverting %1$d of %2$d items…', 'antijante-products-list' ),
 		done,
 		total
 	);
@@ -86,11 +86,11 @@ export async function undoBatch( batchId: string, options: UndoOptions = {} ): P
 			notify.error(
 				sprintf(
 					/* translators: 1: number of items left alone, 2: the items with the field and the value kept */
-					_n( '%1$d item was changed again since and was left as it is (%2$s); revert it from History.', '%1$d items were changed again since and were left as they are (%2$s); revert them from History.', outcome.conflicts.length, 'wp-woocommerce-products-list' ),
+					_n( '%1$d item was changed again since and was left as it is (%2$s); revert it from History.', '%1$d items were changed again since and were left as they are (%2$s); revert them from History.', outcome.conflicts.length, 'antijante-products-list' ),
 					outcome.conflicts.length,
 					more > 0
 						? /* translators: 1: the first items, 2: number of further items */
-						  sprintf( __( '%1$s and %2$d more', 'wp-woocommerce-products-list' ), shown.join( '; ' ), more )
+						  sprintf( __( '%1$s and %2$d more', 'antijante-products-list' ), shown.join( '; ' ), more )
 						: shown.join( '; ' )
 				)
 			);
@@ -100,7 +100,7 @@ export async function undoBatch( batchId: string, options: UndoOptions = {} ): P
 			notify.success(
 				sprintf(
 					/* translators: %d: number of items put back */
-					_n( '%d item put back.', '%d items put back.', ok, 'wp-woocommerce-products-list' ),
+					_n( '%d item put back.', '%d items put back.', ok, 'antijante-products-list' ),
 					ok
 				)
 			);
@@ -110,10 +110,10 @@ export async function undoBatch( batchId: string, options: UndoOptions = {} ): P
 			notify.error(
 				sprintf(
 					/* translators: 1: items put back, 2: items that failed, 3: the first failure's message */
-					__( '%1$d put back, %2$d failed: %3$s', 'wp-woocommerce-products-list' ),
+					__( '%1$d put back, %2$d failed: %3$s', 'antijante-products-list' ),
 					ok,
 					failed.length,
-					failed[ 0 ]?.message ?? __( 'Some items could not be put back.', 'wp-woocommerce-products-list' )
+					failed[ 0 ]?.message ?? __( 'Some items could not be put back.', 'antijante-products-list' )
 				),
 				// The revert batch records what was not put back (runRevert posts the unanswered chunks as failed).
 				historyNoticeAction( outcome.revertBatchId ) ? { actions: [ historyNoticeAction( outcome.revertBatchId )! ] } : undefined
@@ -123,7 +123,7 @@ export async function undoBatch( batchId: string, options: UndoOptions = {} ): P
 		return { ok, failed: failed.length };
 	} catch ( error ) {
 		notify.remove( noticeId );
-		notify.error( error instanceof Error ? error.message : __( 'The undo failed.', 'wp-woocommerce-products-list' ) );
+		notify.error( error instanceof Error ? error.message : __( 'The undo failed.', 'antijante-products-list' ) );
 
 		return { ok: 0, failed: 1 };
 	} finally {

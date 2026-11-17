@@ -195,7 +195,7 @@ export function listNames( items: ProductListItem[] ): string {
 
 	if ( rest > 0 ) {
 		/* translators: 1: a comma-separated list of names, 2: how many more there are */
-		return sprintf( __( '%1$s and %2$d more', 'wp-woocommerce-products-list' ), names.join( ', ' ), rest );
+		return sprintf( __( '%1$s and %2$d more', 'antijante-products-list' ), names.join( ', ' ), rest );
 	}
 
 	return names.join( ', ' );
@@ -209,12 +209,12 @@ export function breakdown( items: ProductListItem[] ): string {
 
 	if ( products ) {
 		/* translators: %d: number of products */
-		parts.push( sprintf( _n( '%d product', '%d products', products, 'wp-woocommerce-products-list' ), products ) );
+		parts.push( sprintf( _n( '%d product', '%d products', products, 'antijante-products-list' ), products ) );
 	}
 
 	if ( variations ) {
 		/* translators: %d: number of variations */
-		parts.push( sprintf( _n( '%d variation', '%d variations', variations, 'wp-woocommerce-products-list' ), variations ) );
+		parts.push( sprintf( _n( '%d variation', '%d variations', variations, 'antijante-products-list' ), variations ) );
 	}
 
 	return parts.join( ', ' );
@@ -253,27 +253,27 @@ export function saveLabelFor( plan: SavePlan ): string {
 	const { products, variations } = plan;
 
 	if ( products === 0 && variations === 0 ) {
-		return __( 'Nothing to update', 'wp-woocommerce-products-list' );
+		return __( 'Nothing to update', 'antijante-products-list' );
 	}
 
 	if ( products > 0 && variations > 0 ) {
 		return sprintf(
 			/* translators: 1: "Update N products" or "Update 1 product", 2: "N variations" or "1 variation" */
-			__( '%1$s, %2$s', 'wp-woocommerce-products-list' ),
+			__( '%1$s, %2$s', 'antijante-products-list' ),
 			/* translators: %d: number of products */
-			sprintf( _n( 'Update %d product', 'Update %d products', products, 'wp-woocommerce-products-list' ), products ),
+			sprintf( _n( 'Update %d product', 'Update %d products', products, 'antijante-products-list' ), products ),
 			/* translators: %d: number of variations */
-			sprintf( _n( '%d variation', '%d variations', variations, 'wp-woocommerce-products-list' ), variations )
+			sprintf( _n( '%d variation', '%d variations', variations, 'antijante-products-list' ), variations )
 		);
 	}
 
 	if ( variations > 0 ) {
 		/* translators: %d: number of variations */
-		return sprintf( _n( 'Update %d variation', 'Update %d variations', variations, 'wp-woocommerce-products-list' ), variations );
+		return sprintf( _n( 'Update %d variation', 'Update %d variations', variations, 'antijante-products-list' ), variations );
 	}
 
 	/* translators: %d: number of products */
-	return sprintf( _n( 'Update %d product', 'Update %d products', products, 'wp-woocommerce-products-list' ), products );
+	return sprintf( _n( 'Update %d product', 'Update %d products', products, 'antijante-products-list' ), products );
 }
 
 /** The snackbar after a save without errors: what was written, and what the plan left out. */
@@ -292,55 +292,55 @@ export function successMessage( result: SaveResult, skipped: StatusSkips = { tra
 
 	if ( skipped.trashed > 0 ) {
 		/* translators: %d: number of rows */
-		extras.push( sprintf( _n( '%d skipped (moved to the Trash meanwhile)', '%d skipped (moved to the Trash meanwhile)', skipped.trashed, 'wp-woocommerce-products-list' ), skipped.trashed ) );
+		extras.push( sprintf( _n( '%d skipped (moved to the Trash meanwhile)', '%d skipped (moved to the Trash meanwhile)', skipped.trashed, 'antijante-products-list' ), skipped.trashed ) );
 	}
 
 	if ( skipped.missing > 0 ) {
 		/* translators: %d: number of rows */
-		extras.push( sprintf( _n( '%d skipped (deleted meanwhile)', '%d skipped (deleted meanwhile)', skipped.missing, 'wp-woocommerce-products-list' ), skipped.missing ) );
+		extras.push( sprintf( _n( '%d skipped (deleted meanwhile)', '%d skipped (deleted meanwhile)', skipped.missing, 'antijante-products-list' ), skipped.missing ) );
 	}
 
 	if ( result.unchanged > 0 ) {
 		/* translators: %d: number of rows */
-		extras.push( sprintf( _n( '%d unchanged', '%d unchanged', result.unchanged, 'wp-woocommerce-products-list' ), result.unchanged ) );
+		extras.push( sprintf( _n( '%d unchanged', '%d unchanged', result.unchanged, 'antijante-products-list' ), result.unchanged ) );
 	}
 
 	if ( result.stockSkipped > 0 ) {
 		/* translators: %d: number of rows */
-		extras.push( sprintf( _n( '%d skipped (no stock management)', '%d skipped (no stock management)', result.stockSkipped, 'wp-woocommerce-products-list' ), result.stockSkipped ) );
+		extras.push( sprintf( _n( '%d skipped (no stock management)', '%d skipped (no stock management)', result.stockSkipped, 'antijante-products-list' ), result.stockSkipped ) );
 	}
 
 	if ( result.saleSkipped > 0 ) {
 		/* translators: %d: number of rows */
-		extras.push( sprintf( _n( '%d skipped (already has a sale)', '%d skipped (already have a sale)', result.saleSkipped, 'wp-woocommerce-products-list' ), result.saleSkipped ) );
+		extras.push( sprintf( _n( '%d skipped (already has a sale)', '%d skipped (already have a sale)', result.saleSkipped, 'antijante-products-list' ), result.saleSkipped ) );
 	}
 
 	if ( ( result.notLowerSkipped ?? 0 ) > 0 ) {
 		const count = result.notLowerSkipped ?? 0;
 
 		/* translators: %d: number of rows */
-		extras.push( sprintf( _n( '%d skipped (the sale price would not be lower)', '%d skipped (the sale price would not be lower)', count, 'wp-woocommerce-products-list' ), count ) );
+		extras.push( sprintf( _n( '%d skipped (the sale price would not be lower)', '%d skipped (the sale price would not be lower)', count, 'antijante-products-list' ), count ) );
 	}
 
 	if ( result.replacedSales > 0 ) {
 		/* translators: %d: number of rows */
-		extras.push( sprintf( _n( '%d existing sale replaced', '%d existing sales replaced', result.replacedSales, 'wp-woocommerce-products-list' ), result.replacedSales ) );
+		extras.push( sprintf( _n( '%d existing sale replaced', '%d existing sales replaced', result.replacedSales, 'antijante-products-list' ), result.replacedSales ) );
 	}
 
 	if ( updated === 0 ) {
 		return extras.length
 			? /* translators: %s: e.g. "10 unchanged, 3 skipped (no stock management)" */
-			  sprintf( __( 'Nothing changed: %s.', 'wp-woocommerce-products-list' ), extras.join( ', ' ) )
-			: __( 'Nothing to change.', 'wp-woocommerce-products-list' );
+			  sprintf( __( 'Nothing changed: %s.', 'antijante-products-list' ), extras.join( ', ' ) )
+			: __( 'Nothing to change.', 'antijante-products-list' );
 	}
 
 	/* translators: %d: number of rows saved */
-	const base = sprintf( _n( '%d item updated', '%d items updated', updated, 'wp-woocommerce-products-list' ), updated );
+	const base = sprintf( _n( '%d item updated', '%d items updated', updated, 'antijante-products-list' ), updated );
 	const message = `${ [ base, ...extras ].join( ', ' ) }.`;
 
 	return skipped.names && skipped.trashed + skipped.missing > 0
 		? /* translators: 1: the message, 2: names of the rows skipped */
-		  sprintf( __( '%1$s Skipped: %2$s', 'wp-woocommerce-products-list' ), message, skipped.names )
+		  sprintf( __( '%1$s Skipped: %2$s', 'antijante-products-list' ), message, skipped.names )
 		: message;
 }
 
@@ -352,7 +352,7 @@ export function successMessage( result: SaveResult, skipped: StatusSkips = { tra
 export function partialFailureMessage( result: Pick< SaveResult, 'updated' | 'errors' >, names: Map< number, string >, detailed = true ): string {
 	const head = sprintf(
 		/* translators: 1: rows saved, 2: rows that failed */
-		__( '%1$d updated, %2$d failed.', 'wp-woocommerce-products-list' ),
+		__( '%1$d updated, %2$d failed.', 'antijante-products-list' ),
 		result.updated.length,
 		result.errors.length
 	);
@@ -366,7 +366,7 @@ export function partialFailureMessage( result: Pick< SaveResult, 'updated' | 'er
 
 	if ( rest > 0 ) {
 		/* translators: %d: number of further rows */
-		shown.push( sprintf( __( '…and %d more', 'wp-woocommerce-products-list' ), rest ) );
+		shown.push( sprintf( __( '…and %d more', 'antijante-products-list' ), rest ) );
 	}
 
 	return `${ head } ${ shown.join( ' ' ) }`;
@@ -541,7 +541,7 @@ function kindLabel( item: ProductListItem, types: Array< { value: string; label:
 	const type = editTypeOf( item );
 
 	if ( type === 'variation' ) {
-		return __( 'Variation', 'wp-woocommerce-products-list' );
+		return __( 'Variation', 'antijante-products-list' );
 	}
 
 	if ( type === 'simple' ) {
@@ -581,19 +581,19 @@ export function variationPriceRange( rows: ProductListItem[], settings: Settings
 	const low = Math.min( ...regular );
 	const high = Math.max( ...regular );
 	/* translators: 1: lowest price, 2: highest price */
-	const span = low === high ? formatPrice( low, settings ) : sprintf( __( '%1$s–%2$s', 'wp-woocommerce-products-list' ), formatPrice( low, settings ), formatPrice( high, settings ) );
+	const span = low === high ? formatPrice( low, settings ) : sprintf( __( '%1$s–%2$s', 'antijante-products-list' ), formatPrice( low, settings ), formatPrice( high, settings ) );
 	const onSale = rows.filter( ( row ) => ! row._placeholder && saleIsActive( row, now ) ).length;
 
 	return onSale
 		? sprintf(
 				/* translators: 1: a price or a price range, 2: number of variations on sale now */
-				_n( 'Regular price now %1$s; %2$d is on sale.', 'Regular price now %1$s; %2$d are on sale.', onSale, 'wp-woocommerce-products-list' ),
+				_n( 'Regular price now %1$s; %2$d is on sale.', 'Regular price now %1$s; %2$d are on sale.', onSale, 'antijante-products-list' ),
 				span,
 				onSale
 		  )
 		: sprintf(
 				/* translators: %s: a price or a price range */
-				__( 'Regular price now %s.', 'wp-woocommerce-products-list' ),
+				__( 'Regular price now %s.', 'antijante-products-list' ),
 				span
 		  );
 }
@@ -638,22 +638,22 @@ export function describeRunningSales( rows: ProductListItem[], edits: Record< st
 	const head = lowest
 		? sprintf(
 				/* translators: 1: number of rows, 2: the lowest price among them */
-				_n( '%1$d of them is on sale right now (at %2$s).', '%1$d of them are on sale right now (lowest %2$s).', running.length, 'wp-woocommerce-products-list' ),
+				_n( '%1$d of them is on sale right now (at %2$s).', '%1$d of them are on sale right now (lowest %2$s).', running.length, 'antijante-products-list' ),
 				running.length,
 				lowest
 		  )
 		: sprintf(
 				/* translators: %d: number of rows */
-				_n( '%d of them is on sale right now.', '%d of them are on sale right now.', running.length, 'wp-woocommerce-products-list' ),
+				_n( '%d of them is on sale right now.', '%d of them are on sale right now.', running.length, 'antijante-products-list' ),
 				running.length
 		  );
 	const tail = startsLater
 		? sprintf(
 				/* translators: %s: when the new sale starts */
-				__( 'A product has one sale at a time: replacing ends the current sale when you update, and these rows sell at their regular price until the new sale starts on %s.', 'wp-woocommerce-products-list' ),
+				__( 'A product has one sale at a time: replacing ends the current sale when you update, and these rows sell at their regular price until the new sale starts on %s.', 'antijante-products-list' ),
 				describeSiteDateTime( from, settings )
 		  )
-		: __( 'Replacing changes the price customers pay as soon as you update.', 'wp-woocommerce-products-list' );
+		: __( 'Replacing changes the price customers pay as soon as you update.', 'antijante-products-list' );
 
 	return { count: running.length, message: `${ head } ${ tail }` };
 }
@@ -800,7 +800,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					return;
 				}
 
-				notify.error( error instanceof Error ? error.message : __( 'The current values could not be loaded.', 'wp-woocommerce-products-list' ) );
+				notify.error( error instanceof Error ? error.message : __( 'The current values could not be loaded.', 'antijante-products-list' ) );
 				// The rows as the list had them, so the editor still opens.
 				setHydrated( ( current ) => {
 					const next = new Map( current );
@@ -953,7 +953,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				const isDefault = field.id === 'description';
 				const lang = isDefault ? languages?.default ?? '' : tabOf( field ).slice( 'i18n:'.length );
 
-				return { lang, label: languages?.labels[ lang ] ?? ( lang.toUpperCase() || __( 'Default', 'wp-woocommerce-products-list' ) ), fieldId: field.id, tabId: tabOf( field ), isDefault };
+				return { lang, label: languages?.labels[ lang ] ?? ( lang.toUpperCase() || __( 'Default', 'antijante-products-list' ) ), fieldId: field.id, tabId: tabOf( field ), isDefault };
 			} );
 	}, [ bulk, visibleFields, settings.languages ] );
 	// The Images field's upload or media library in progress: Update waits for it (the images it brings are part of it).
@@ -1030,7 +1030,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	const pendingFieldIds = useMemo( () => new Set( visibleFields.filter( ( field ) => ! fieldLoaded( field ) ).map( ( field ) => field.id ) ), [ visibleFields, fieldLoaded ] );
 
 	const tabs = useMemo( () => buildTabs( visibleFields, items, settings ), [ visibleFields, items, settings ] );
-	const tab = useMemo< QuickEditTab >( () => tabs.find( ( entry ) => entry.id === tabId ) ?? tabs[ 0 ] ?? { id: GENERAL_TAB_ID, label: __( 'General', 'wp-woocommerce-products-list' ) }, [ tabs, tabId ] );
+	const tab = useMemo< QuickEditTab >( () => tabs.find( ( entry ) => entry.id === tabId ) ?? tabs[ 0 ] ?? { id: GENERAL_TAB_ID, label: __( 'General', 'antijante-products-list' ) }, [ tabs, tabId ] );
 	// The labels inside the form ("Stock status"; "Name" on the Svenska tab): what a control is found by.
 	const controlLabels = useMemo( () => Object.fromEntries( editFields.map( ( field ) => [ field.id, formLabelOf( field, settings ) ] ) ), [ editFields, settings ] );
 	/** The variations a price tool reaches when "Apply price and sale fields to all variations" is ticked. */
@@ -1102,7 +1102,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			} )
 			.catch( ( error: unknown ) => {
 				if ( ! cancelled ) {
-					notify.error( error instanceof Error ? error.message : __( 'The current values could not be loaded.', 'wp-woocommerce-products-list' ) );
+					notify.error( error instanceof Error ? error.message : __( 'The current values could not be loaded.', 'antijante-products-list' ) );
 					setLoadedTabs( ( previous ) => new Set( [ ...previous, tab.id ] ) );
 				}
 			} )
@@ -1309,10 +1309,10 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	const applyLabel = bulk
 		? sprintf(
 				/* translators: %d: number of variable products */
-				_n( 'Also apply to the variations of the %d variable product', 'Also apply to the variations of the %d variable products', variableParents.length, 'wp-woocommerce-products-list' ),
+				_n( 'Also apply to the variations of the %d variable product', 'Also apply to the variations of the %d variable products', variableParents.length, 'antijante-products-list' ),
 				variableParents.length
 		  )
-		: __( 'Set the price of all its variations', 'wp-woocommerce-products-list' );
+		: __( 'Set the price of all its variations', 'antijante-products-list' );
 	const applyField = useMemo( () => applyControlField( applyLabel ), [ applyLabel ] );
 	// A variable product selected together with every one of its variations needs no "apply to its variations": the
 	// price fields reach those variations already, and the box would contradict the selection.
@@ -1436,18 +1436,18 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	const changedLine = ( entry: ChangedField ): string => {
 		const field = editFieldsById.get( entry.id );
 		const label = field ? messageLabelOf( field ) : entry.id;
-		const now = Array.isArray( entry.now ) && items.length > 1 ? __( 'different on the selected rows', 'wp-woocommerce-products-list' ) : field ? describeValue( field, entry.now, settings ) : String( entry.now ?? '' );
+		const now = Array.isArray( entry.now ) && items.length > 1 ? __( 'different on the selected rows', 'antijante-products-list' ) : field ? describeValue( field, entry.now, settings ) : String( entry.now ?? '' );
 
 		return entry.edited
 			? sprintf(
 					/* translators: 1: field label, 2: the value stored now */
-					__( '%1$s: changed by someone else since you started editing it, now %2$s. Your value is kept; Update will not write over the other change without asking.', 'wp-woocommerce-products-list' ),
+					__( '%1$s: changed by someone else since you started editing it, now %2$s. Your value is kept; Update will not write over the other change without asking.', 'antijante-products-list' ),
 					label,
 					now
 			  )
 			: sprintf(
 					/* translators: 1: field label, 2: the value stored now */
-					__( '%1$s: changed by someone else since the list loaded, now %2$s. The field shows the current value.', 'wp-woocommerce-products-list' ),
+					__( '%1$s: changed by someone else since the list loaded, now %2$s. The field shows the current value.', 'antijante-products-list' ),
 					label,
 					now
 			  );
@@ -1670,10 +1670,10 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	};
 
 	const historyAction = ( batchId: string ) =>
-		settings.links.history ? { label: __( 'View in History', 'wp-woocommerce-products-list' ), url: addQueryArgs( settings.links.history, { batch: batchId } ) } : null;
+		settings.links.history ? { label: __( 'View in History', 'antijante-products-list' ), url: addQueryArgs( settings.links.history, { batch: batchId } ) } : null;
 
 	const undoAction = ( batchId: string ) => ( {
-		label: __( 'Undo', 'wp-woocommerce-products-list' ),
+		label: __( 'Undo', 'antijante-products-list' ),
 		onClick: () => void undoBatch( batchId, { focus: captureFocusOrigin() } ),
 	} );
 
@@ -1770,7 +1770,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				} else {
 					errors.push( {
 						id: 0,
-						message: `${ tool }: ${ reason instanceof Error ? reason.message : __( 'The action failed.', 'wp-woocommerce-products-list' ) }`,
+						message: `${ tool }: ${ reason instanceof Error ? reason.message : __( 'The action failed.', 'antijante-products-list' ) }`,
 					} );
 				}
 			}
@@ -1834,7 +1834,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 						translations.clear( saved );
 						ran += saved.length;
 					} catch ( reason ) {
-						part.forEach( ( update ) => errors.push( { id: update.id, message: reason instanceof Error ? reason.message : __( 'The translation could not be saved.', 'wp-woocommerce-products-list' ) } ) );
+						part.forEach( ( update ) => errors.push( { id: update.id, message: reason instanceof Error ? reason.message : __( 'The translation could not be saved.', 'antijante-products-list' ) } ) );
 					}
 				} ),
 				3
@@ -1984,7 +1984,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 		}
 
 		if ( imagesBusy ) {
-			notify.info( __( 'An image is still uploading: Update when it is done.', 'wp-woocommerce-products-list' ) );
+			notify.info( __( 'An image is still uploading: Update when it is done.', 'antijante-products-list' ) );
 
 			return;
 		}
@@ -1998,7 +1998,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 
 		if ( pendingCount === 0 && stagedCount === 0 ) {
 			if ( state.hasInput ) {
-				notify.info( __( 'Nothing changed: the values equal the current ones.', 'wp-woocommerce-products-list' ) );
+				notify.info( __( 'Nothing changed: the values equal the current ones.', 'antijante-products-list' ) );
 			}
 
 			const next = advance ? nextRowNow() : null;
@@ -2038,7 +2038,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			}
 
 			if ( ! variationsReady ) {
-				reportProblems( [ { id: 0, message: variations.error ?? __( 'The variations are still loading.', 'wp-woocommerce-products-list' ) } ], 'errors' );
+				reportProblems( [ { id: 0, message: variations.error ?? __( 'The variations are still loading.', 'antijante-products-list' ) } ], 'errors' );
 
 				return;
 			}
@@ -2057,7 +2057,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 						id: 0,
 						message: sprintf(
 							/* translators: %d: number of rows on sale now */
-							_n( 'Choose what happens to the %d sale running now: replace it or skip that row.', 'Choose what happens to the %d sales running now: replace them or skip those rows.', runningSales.count, 'wp-woocommerce-products-list' ),
+							_n( 'Choose what happens to the %d sale running now: replace it or skip that row.', 'Choose what happens to the %d sales running now: replace them or skip those rows.', runningSales.count, 'antijante-products-list' ),
 							runningSales.count
 						),
 					},
@@ -2098,7 +2098,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				reportProblems(
 					unsure.map( ( item ) => ( {
 						id: item.id,
-						message: __( 'The last Update may have been saved on it before the connection failed. It now shows its stored values; a relative change applies to those again.', 'wp-woocommerce-products-list' ),
+						message: __( 'The last Update may have been saved on it before the connection failed. It now shows its stored values; a relative change applies to those again.', 'antijante-products-list' ),
 					} ) ),
 					'warnings'
 				);
@@ -2158,8 +2158,8 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			const staleWarnings = stale.map( ( item ) => ( {
 				id: item.id,
 				message: holdBack
-					? __( 'Saved by someone else since this editor loaded it, so it was not updated. The preview now uses its current values: check it, then press Update to apply the edits to it too, or Cancel to leave it.', 'wp-woocommerce-products-list' )
-					: __( 'Saved by someone else since this editor loaded it. The preview now uses its current values: check it, then press Update again.', 'wp-woocommerce-products-list' ),
+					? __( 'Saved by someone else since this editor loaded it, so it was not updated. The preview now uses its current values: check it, then press Update to apply the edits to it too, or Cancel to leave it.', 'antijante-products-list' )
+					: __( 'Saved by someone else since this editor loaded it. The preview now uses its current values: check it, then press Update again.', 'antijante-products-list' ),
 			} ) );
 
 			if ( staleIds.size && mountedRef.current ) {
@@ -2268,7 +2268,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				...changed.missing.map( ( id ): SkippedItem => ( { id, reason: 'deleted', fields: editKeys } ) ),
 				...( result.skippedItems ?? [] ),
 				// The rows held back because someone else saved them meanwhile: History lists them as left out of the campaign.
-				...( holdBack ? stale.map( ( item ): SkippedItem => ( { id: item.id, reason: 'conflict', fields: editKeys, message: __( 'Saved by someone else meanwhile; not updated.', 'wp-woocommerce-products-list' ) } ) ) : [] ),
+				...( holdBack ? stale.map( ( item ): SkippedItem => ( { id: item.id, reason: 'conflict', fields: editKeys, message: __( 'Saved by someone else meanwhile; not updated.', 'antijante-products-list' ) } ) ) : [] ),
 				// The rows that did not save are recorded too: the batch in History then says which rows of the campaign are missing.
 				// (Conflicts, locks and the Trash are refused and logged by the server itself.)
 				// An item error of a batch answer (a taken SKU) the server logged as an `error` row already.
@@ -2295,7 +2295,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 							{
 								label: sprintf(
 									/* translators: %d: number of items the save left out */
-									_n( 'Select the %d skipped', 'Select the %d skipped', skippedIds.length, 'wp-woocommerce-products-list' ),
+									_n( 'Select the %d skipped', 'Select the %d skipped', skippedIds.length, 'antijante-products-list' ),
 									skippedIds.length
 								),
 								onClick: () => void selectRows( skippedIds ),
@@ -2313,19 +2313,19 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				let toolsLine = tools.ran
 					? sprintf(
 							/* translators: %d: number of language changes (tool runs) */
-							_n( '%d language change applied.', '%d language changes applied.', tools.ran, 'wp-woocommerce-products-list' ),
+							_n( '%d language change applied.', '%d language changes applied.', tools.ran, 'antijante-products-list' ),
 							tools.ran
 					  )
 					: '';
 
 				// The language tools ran and wrote nothing, and there was nothing else to save: no "applied" for it.
 				if ( ! toolsLine && ! fieldsLine && tools.unchanged > 0 ) {
-					toolsLine = __( 'Nothing changed: the values equal the current ones.', 'wp-woocommerce-products-list' );
+					toolsLine = __( 'Nothing changed: the values equal the current ones.', 'antijante-products-list' );
 				}
 				const heldLine = holdBack
 					? sprintf(
 							/* translators: %d: number of rows held back */
-							_n( '%d item saved by someone else meanwhile was left for you to check.', '%d items saved by someone else meanwhile were left for you to check.', staleIds.size, 'wp-woocommerce-products-list' ),
+							_n( '%d item saved by someone else meanwhile was left for you to check.', '%d items saved by someone else meanwhile were left for you to check.', staleIds.size, 'antijante-products-list' ),
 							staleIds.size
 					  )
 					: '';
@@ -2342,7 +2342,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 							{
 								label: sprintf(
 									/* translators: %d: number of rows held back */
-									_n( 'Select the %d held back', 'Select the %d held back', heldIds.length, 'wp-woocommerce-products-list' ),
+									_n( 'Select the %d held back', 'Select the %d held back', heldIds.length, 'antijante-products-list' ),
 									heldIds.length
 								),
 								onClick: () => void selectRows( heldIds ),
@@ -2416,7 +2416,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 							{
 								label: sprintf(
 									/* translators: %d: number of items that failed to save */
-									_n( 'Select the %d failed', 'Select the %d failed', retryIds.length, 'wp-woocommerce-products-list' ),
+									_n( 'Select the %d failed', 'Select the %d failed', retryIds.length, 'antijante-products-list' ),
 									retryIds.length
 								),
 								onClick: () => void selectRows( retryIds ),
@@ -2449,7 +2449,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 						let message = error.message;
 
 						if ( goneSet.has( error.id ) ) {
-							message = __( 'It was deleted meanwhile and was left out.', 'wp-woocommerce-products-list' );
+							message = __( 'It was deleted meanwhile and was left out.', 'antijante-products-list' );
 						} else if ( isConflictCode( error.code ) ) {
 							// What the other change stored, next to the form that still holds the user's values.
 							message = editorConflictMessage( error.data, ( path ) => fieldLabels[ path ] ?? path, bulk, ( path, value ) => formatLogValue( path, value, settings ) );
@@ -2786,11 +2786,11 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 										'Variable products are priced per variation. Tick to set one price for its %d variation, or quick edit a single variation.',
 										'Variable products are priced per variation. Tick to set one price for all %d variations, or quick edit a single variation.',
 										count,
-										'wp-woocommerce-products-list'
+										'antijante-products-list'
 									),
 									count
 							  )
-							: __( 'Variable products are priced per variation. Tick to set one price for all its variations, or quick edit a single variation.', 'wp-woocommerce-products-list' ) }
+							: __( 'Variable products are priced per variation. Tick to set one price for all its variations, or quick edit a single variation.', 'antijante-products-list' ) }
 					</span>
 				);
 			}
@@ -2803,14 +2803,14 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 							'Price and sale fields apply to the other selected items and skip the %d variable product (its variations hold the prices). Tick the box to include all its variations.',
 							'Price and sale fields apply to the other selected items and skip the %d variable products (their variations hold the prices). Tick the box to include all their variations.',
 							variableParents.length,
-							'wp-woocommerce-products-list'
+							'antijante-products-list'
 						),
 						variableParents.length
 					) }
 				</span>
 			) : (
 				<span className="wc-pl-edit__note">
-					{ __( 'Variable products are priced per variation. Tick to set the price and sale fields on all their variations.', 'wp-woocommerce-products-list' ) }
+					{ __( 'Variable products are priced per variation. Tick to set the price and sale fields on all their variations.', 'antijante-products-list' ) }
 				</span>
 			);
 		}
@@ -2824,11 +2824,11 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					{ variationsLoaded > 0 && expected > 0
 						? sprintf(
 								/* translators: 1: variations loaded so far, 2: variations expected */
-								__( 'Loading variations… %1$s of %2$s', 'wp-woocommerce-products-list' ),
+								__( 'Loading variations… %1$s of %2$s', 'antijante-products-list' ),
 								variationsLoaded.toLocaleString(),
 								expected.toLocaleString()
 						  )
-						: __( 'Loading variations…', 'wp-woocommerce-products-list' ) }
+						: __( 'Loading variations…', 'antijante-products-list' ) }
 					{ variationsLoaded > 0 && expected > 0 ? <ProgressBar value={ Math.min( 100, Math.round( ( variationsLoaded / expected ) * 100 ) ) } /> : null }
 				</span>
 			);
@@ -2846,7 +2846,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			const parentCount = failedIds ? Array.from( byParent.values() ).filter( ( list ) => list.length > 0 ).length : variableParents.length;
 
 			if ( failedIds && rows.length === 0 ) {
-				return <span className="wc-pl-edit__note">{ __( 'The variations were saved: a retry changes none of them.', 'wp-woocommerce-products-list' ) }</span>;
+				return <span className="wc-pl-edit__note">{ __( 'The variations were saved: a retry changes none of them.', 'antijante-products-list' ) }</span>;
 			}
 
 			// The range is in the shop's currency: on a language tab whose prices are in a market currency (SEK) it would
@@ -2871,7 +2871,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 						{ range ? `${ range } ` : '' }
 						{ sprintf(
 							/* translators: %d: number of variations */
-							_n( 'The price of its %d variation does not change.', 'None of the %d variations change price.', rows.length, 'wp-woocommerce-products-list' ),
+							_n( 'The price of its %d variation does not change.', 'None of the %d variations change price.', rows.length, 'antijante-products-list' ),
 							rows.length
 						) }
 					</span>
@@ -2883,15 +2883,15 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					{ range ? `${ range } ` : '' }
 					{ sprintf(
 						/* translators: 1: "N variations", 2: "N variable products" */
-						__( 'Prices will change on %1$s of %2$s.', 'wp-woocommerce-products-list' ),
+						__( 'Prices will change on %1$s of %2$s.', 'antijante-products-list' ),
 						sprintf(
 							/* translators: %d: number of variations */
-							_n( '%d variation', '%d variations', count, 'wp-woocommerce-products-list' ),
+							_n( '%d variation', '%d variations', count, 'antijante-products-list' ),
 							count
 						),
 						sprintf(
 							/* translators: %d: number of variable products */
-							_n( '%d variable product', '%d variable products', changingParents, 'wp-woocommerce-products-list' ),
+							_n( '%d variable product', '%d variable products', changingParents, 'antijante-products-list' ),
 							changingParents
 						)
 					) }
@@ -2942,43 +2942,43 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 
 	const saveLabel = ( () => {
 		if ( saving ) {
-			return __( 'Updating…', 'wp-woocommerce-products-list' );
+			return __( 'Updating…', 'antijante-products-list' );
 		}
 
 		if ( failedButNothingToRetry ) {
-			return __( 'Close', 'wp-woocommerce-products-list' );
+			return __( 'Close', 'antijante-products-list' );
 		}
 
 		if ( failedIds && retryable === 0 ) {
 			/* translators: %d: number of language changes still to run */
-			return sprintf( _n( 'Retry %d language change', 'Retry %d language changes', stagedCount, 'wp-woocommerce-products-list' ), stagedCount );
+			return sprintf( _n( 'Retry %d language change', 'Retry %d language changes', stagedCount, 'antijante-products-list' ), stagedCount );
 		}
 
 		if ( failedIds && heldBack.size && Array.from( failedIds ).every( ( id ) => heldBack.has( id ) ) ) {
 			/* translators: %d: number of rows saved by someone else meanwhile */
-			return sprintf( _n( 'Update the %d changed item too', 'Update the %d changed items too', retryable, 'wp-woocommerce-products-list' ), retryable );
+			return sprintf( _n( 'Update the %d changed item too', 'Update the %d changed items too', retryable, 'antijante-products-list' ), retryable );
 		}
 
 		if ( failedIds && conflictCount === retryable && ! bulk ) {
-			return __( 'Overwrite with my values', 'wp-woocommerce-products-list' );
+			return __( 'Overwrite with my values', 'antijante-products-list' );
 		}
 
 		if ( failedIds && conflictCount === retryable ) {
 			/* translators: %d: number of rows someone else changed meanwhile */
-			return sprintf( _n( 'Apply the edits to the %d changed item', 'Apply the edits to the %d changed items', retryable, 'wp-woocommerce-products-list' ), retryable );
+			return sprintf( _n( 'Apply the edits to the %d changed item', 'Apply the edits to the %d changed items', retryable, 'antijante-products-list' ), retryable );
 		}
 
 		if ( failedIds ) {
 			/* translators: %d: number of rows that failed */
-			return sprintf( _n( 'Retry %d failed', 'Retry %d failed', retryable, 'wp-woocommerce-products-list' ), retryable );
+			return sprintf( _n( 'Retry %d failed', 'Retry %d failed', retryable, 'antijante-products-list' ), retryable );
 		}
 
 		if ( shownWarnings.length && ( warningKind === 'clamp' || warningKind === 'uncertain' ) ) {
-			return __( 'Update anyway', 'wp-woocommerce-products-list' );
+			return __( 'Update anyway', 'antijante-products-list' );
 		}
 
 		if ( ! bulk ) {
-			return __( 'Update', 'wp-woocommerce-products-list' );
+			return __( 'Update', 'antijante-products-list' );
 		}
 
 		// The staged tool runs go with the Update and say so on its button.
@@ -2986,7 +2986,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			stagedCount
 				? sprintf(
 						/* translators: 1: "Update N items", 2: number of language changes (tool runs) */
-						_n( '%1$s + %2$d language change', '%1$s + %2$d language changes', stagedCount, 'wp-woocommerce-products-list' ),
+						_n( '%1$s + %2$d language change', '%1$s + %2$d language changes', stagedCount, 'antijante-products-list' ),
 						label,
 						stagedCount
 				  )
@@ -2994,7 +2994,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 
 		if ( pendingCount === 0 && stagedCount > 0 ) {
 			/* translators: %d: number of language changes (tool runs) */
-			return sprintf( _n( 'Apply %d language change', 'Apply %d language changes', stagedCount, 'wp-woocommerce-products-list' ), stagedCount );
+			return sprintf( _n( 'Apply %d language change', 'Apply %d language changes', stagedCount, 'antijante-products-list' ), stagedCount );
 		}
 
 		if ( plan ) {
@@ -3007,7 +3007,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			return saleChoice === 'replace' && ending > 0 && plan.writes.length > 0
 				? sprintf(
 						/* translators: 1: "Update N items", 2: number of sales running now */
-						_n( '%1$s, ending %2$d running sale', '%1$s, ending %2$d running sales', ending, 'wp-woocommerce-products-list' ),
+						_n( '%1$s, ending %2$d running sale', '%1$s, ending %2$d running sales', ending, 'antijante-products-list' ),
 						base,
 						ending
 				  )
@@ -3015,7 +3015,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 		}
 
 		/* translators: %d: number of rows */
-		return withTools( sprintf( _n( 'Update %d item', 'Update %d items', items.length, 'wp-woocommerce-products-list' ), items.length ) );
+		return withTools( sprintf( _n( 'Update %d item', 'Update %d items', items.length, 'antijante-products-list' ), items.length ) );
 	} )();
 
 	// Busy buttons stay focusable (a disabled button drops keyboard focus to <body>); the handlers ignore the extra press.
@@ -3028,18 +3028,18 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 		! saving && ! loading && nothingToWrite && pendingCount > 0 && stagedCount === 0 && ! failedIds
 			? stockGated.length > 0 && stockGated.length === stockRows.length
 				? stockGated.length === 1
-					? __( 'Nothing to update: the stock changes need "Manage stock" on (see Inventory).', 'wp-woocommerce-products-list' )
-					: __( 'Nothing to update: none of these items manages stock, so the stock changes are skipped (see Inventory).', 'wp-woocommerce-products-list' )
-				: __( 'Nothing to update: every change is skipped for these items (see the notes in the form).', 'wp-woocommerce-products-list' )
+					? __( 'Nothing to update: the stock changes need "Manage stock" on (see Inventory).', 'antijante-products-list' )
+					: __( 'Nothing to update: none of these items manages stock, so the stock changes are skipped (see Inventory).', 'antijante-products-list' )
+				: __( 'Nothing to update: every change is skipped for these items (see the notes in the form).', 'antijante-products-list' )
 			: null;
 
 	const title = bulk
 		? sprintf(
 				/* translators: %d: number of rows */
-				_n( 'Bulk edit %d item', 'Bulk edit %d items', items.length, 'wp-woocommerce-products-list' ),
+				_n( 'Bulk edit %d item', 'Bulk edit %d items', items.length, 'antijante-products-list' ),
 				items.length
 		  )
-		: __( 'Quick edit', 'wp-woocommerce-products-list' );
+		: __( 'Quick edit', 'antijante-products-list' );
 
 	const listed = items.slice( 0, ITEMS_LISTED );
 
@@ -3048,7 +3048,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 		<span className={ `wc-pl-inline-edit__loading${ tabReady ? ' is-done' : '' }` } role="status" aria-hidden={ tabReady || undefined }>
 			{ tabReady ? null : (
 				<>
-					<Spinner /> { __( 'Loading current values…', 'wp-woocommerce-products-list' ) }
+					<Spinner /> { __( 'Loading current values…', 'antijante-products-list' ) }
 				</>
 			) }
 		</span>
@@ -3090,7 +3090,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 
 		setTimeout( () => {
 			if ( mountedRef.current ) {
-				whenControlShown( () => controlForField( formRef.current, `${ label }: ${ __( 'value', 'wp-woocommerce-products-list' ) }` ) ?? controlForField( formRef.current, label ), ( control ) => mountedRef.current && focusControl( control ) );
+				whenControlShown( () => controlForField( formRef.current, `${ label }: ${ __( 'value', 'antijante-products-list' ) }` ) ?? controlForField( formRef.current, label ), ( control ) => mountedRef.current && focusControl( control ) );
 			}
 		}, 0 );
 	};
@@ -3113,19 +3113,19 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					focusQuantity();
 				} }
 			>
-				{ zeroedStock ? __( 'Undo', 'wp-woocommerce-products-list' ) : __( 'Set Stock quantity to 0', 'wp-woocommerce-products-list' ) }
+				{ zeroedStock ? __( 'Undo', 'antijante-products-list' ) : __( 'Set Stock quantity to 0', 'antijante-products-list' ) }
 			</Button>
 		) : null;
 	// Notice reads a non-string `children` with renderToString during its own render, which runs the hooks of the
 	// controls inside (Button, CheckboxControl, RadioControl) on the Notice: when a control comes or goes, the hook
 	// order changes and the editor crashes. Notices that hold controls are given their spoken text as a string.
 	const statusManagedText = statusRows.some( isVariableParent )
-		? __( 'Stock status follows the stock quantity (a variable product’s follows its variations). To mark these items out of stock, set Stock quantity to 0.', 'wp-woocommerce-products-list' )
-		: __( 'Stock status follows the stock quantity. To mark these items out of stock, set Stock quantity to 0.', 'wp-woocommerce-products-list' );
+		? __( 'Stock status follows the stock quantity (a variable product’s follows its variations). To mark these items out of stock, set Stock quantity to 0.', 'antijante-products-list' )
+		: __( 'Stock status follows the stock quantity. To mark these items out of stock, set Stock quantity to 0.', 'antijante-products-list' );
 	const statusNote =
 		statusDeadEnd === 'parents' ? (
 			<Notice status="info" isDismissible={ false } className="wc-pl-edit__notice wc-pl-edit__status-note">
-				{ __( 'Stock status: a variable product takes it from its variations. To mark sizes in or out of stock, use Select all variations in the selection bar, then Bulk edit.', 'wp-woocommerce-products-list' ) }
+				{ __( 'Stock status: a variable product takes it from its variations. To mark sizes in or out of stock, use Select all variations in the selection bar, then Bulk edit.', 'antijante-products-list' ) }
 			</Notice>
 		) : statusDeadEnd === 'managed' ? (
 			<Notice status="info" isDismissible={ false } className="wc-pl-edit__notice wc-pl-edit__status-note" spokenMessage={ statusManagedText }>
@@ -3133,21 +3133,21 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				{ zeroButton ? (
 					<p className="wc-pl-edit__status-note-action">
 						{ zeroButton }{ ' ' }
-						<span role="status">{ zeroedStock ? __( 'Stock quantity is set to 0 above.', 'wp-woocommerce-products-list' ) : '' }</span>
+						<span role="status">{ zeroedStock ? __( 'Stock quantity is set to 0 above.', 'antijante-products-list' ) : '' }</span>
 					</p>
 				) : null }
 			</Notice>
 		) : null;
 	const stockGatedText =
 		stockGatedTotal === 1
-						? __( 'This item does not manage stock, so WooCommerce ignores Quantity, Low stock threshold and Backorders for it: tick Manage stock to set them.', 'wp-woocommerce-products-list' )
+						? __( 'This item does not manage stock, so WooCommerce ignores Quantity, Low stock threshold and Backorders for it: tick Manage stock to set them.', 'antijante-products-list' )
 						: sprintf(
 						/* translators: 1: number of rows, 2: number of rows in total, 3: their names */
 						_n(
 							'%1$d of the %2$d rows does not manage stock, so WooCommerce ignores Quantity, Low stock threshold and Backorders for it; it will be skipped: %3$s',
 							'%1$d of the %2$d rows do not manage stock, so WooCommerce ignores Quantity, Low stock threshold and Backorders for them; they will be skipped: %3$s',
 							stockGated.length,
-							'wp-woocommerce-products-list'
+							'antijante-products-list'
 						),
 						stockGated.length,
 						stockGatedTotal,
@@ -3164,12 +3164,12 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 								stockEnableable.length === stockGated.length
 									? sprintf(
 											/* translators: %d: number of rows */
-											_n( 'Turn on "Manage stock" for that row and write the values', 'Turn on "Manage stock" for those %d rows and write the values', stockEnableable.length, 'wp-woocommerce-products-list' ),
+											_n( 'Turn on "Manage stock" for that row and write the values', 'Turn on "Manage stock" for those %d rows and write the values', stockEnableable.length, 'antijante-products-list' ),
 											stockEnableable.length
 									  )
 									: sprintf(
 											/* translators: %d: number of rows */
-											_n( 'Turn on "Manage stock" for %d of them and write the values (variable products stay skipped: their variations hold the stock)', 'Turn on "Manage stock" for %d of them and write the values (variable products stay skipped: their variations hold the stock)', stockEnableable.length, 'wp-woocommerce-products-list' ),
+											_n( 'Turn on "Manage stock" for %d of them and write the values (variable products stay skipped: their variations hold the stock)', 'Turn on "Manage stock" for %d of them and write the values (variable products stay skipped: their variations hold the stock)', stockEnableable.length, 'antijante-products-list' ),
 											stockEnableable.length
 									  )
 							}
@@ -3194,7 +3194,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 		) : null;
 	const saleNoticeText = `${ sprintf(
 		/* translators: 1: number of rows with a sale, 2: number of rows in total */
-		_n( '%1$d of the %2$d rows already has a sale price.', '%1$d of the %2$d rows already have a sale price.', existingSales.rows.length, 'wp-woocommerce-products-list' ),
+		_n( '%1$d of the %2$d rows already has a sale price.', '%1$d of the %2$d rows already have a sale price.', existingSales.rows.length, 'antijante-products-list' ),
 		existingSales.rows.length,
 		targetsForValidation.filter( ( item ) => ! item._placeholder && ! isVariableParent( item ) ).length
 	) } ${ runningSales.count > 0 ? runningSales.message : '' }`.trim();
@@ -3204,7 +3204,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					<p>{ saleNoticeText }</p>
 					<RadioControl
 						className="wc-pl-edit__sale-choice"
-						label={ __( 'Existing sales', 'wp-woocommerce-products-list' ) }
+						label={ __( 'Existing sales', 'antijante-products-list' ) }
 						selected={ saleChoice ?? ( runningSales.count > 0 ? '' : 'replace' ) }
 						options={ [
 							{
@@ -3213,16 +3213,16 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 									runningSales.count > 0
 										? sprintf(
 												/* translators: %d: number of rows on sale now */
-												_n( 'Replace them (the %d sale running now ends when you update)', 'Replace them (the %d sales running now end when you update)', runningSales.count, 'wp-woocommerce-products-list' ),
+												_n( 'Replace them (the %d sale running now ends when you update)', 'Replace them (the %d sales running now end when you update)', runningSales.count, 'antijante-products-list' ),
 												runningSales.count
 										  )
-										: __( 'Replace them', 'wp-woocommerce-products-list' ),
+										: __( 'Replace them', 'antijante-products-list' ),
 							},
 							{
 								value: 'skip',
 								label: sprintf(
 									/* translators: %d: number of rows */
-									_n( 'Skip the %d row that already has a sale', 'Skip the %d rows that already have a sale', existingSales.rows.length, 'wp-woocommerce-products-list' ),
+									_n( 'Skip the %d row that already has a sale', 'Skip the %d rows that already have a sale', existingSales.rows.length, 'antijante-products-list' ),
 									existingSales.rows.length
 								),
 							},
@@ -3242,7 +3242,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				<div className="wc-pl-edit__options">
 					<CheckboxControl
 						__nextHasNoMarginBottom
-						label={ __( 'Only where the new sale price is lower than the price the item sells at now', 'wp-woocommerce-products-list' ) }
+						label={ __( 'Only where the new sale price is lower than the price the item sells at now', 'antijante-products-list' ) }
 						checked={ onlyLowerSale }
 						disabled={ saving }
 						onChange={ ( checked ) => {
@@ -3313,7 +3313,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 						<p className="wc-pl-inline-edit__whole">
 							{ sprintf(
 								/* translators: %d: number of products */
-								_n( 'Every product in the list (%d) is selected.', 'Every product in the list (%d) is selected.', items.length, 'wp-woocommerce-products-list' ),
+								_n( 'Every product in the list (%d) is selected.', 'Every product in the list (%d) is selected.', items.length, 'antijante-products-list' ),
 								items.length
 							) }
 						</p>
@@ -3323,7 +3323,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 								<p className="wc-pl-inline-edit__whole">
 									{ sprintf(
 										/* translators: %d: number of selected rows not shown in the current list view */
-										_n( '%d of them is not in this view.', '%d of them are not in this view.', offPageCount, 'wp-woocommerce-products-list' ),
+										_n( '%d of them is not in this view.', '%d of them are not in this view.', offPageCount, 'antijante-products-list' ),
 										offPageCount
 									) }
 								</p>
@@ -3332,11 +3332,11 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 								<summary className="wc-pl-inline-edit__selection-toggle">
 									{ sprintf(
 										/* translators: %d: number of selected rows */
-										__( 'Selected items (%d)', 'wp-woocommerce-products-list' ),
+										__( 'Selected items (%d)', 'antijante-products-list' ),
 										items.length
 									) }
 								</summary>
-								<ul ref={ itemListRef } className="wc-pl-inline-edit__list" aria-label={ __( 'Selected items', 'wp-woocommerce-products-list' ) }>
+								<ul ref={ itemListRef } className="wc-pl-inline-edit__list" aria-label={ __( 'Selected items', 'antijante-products-list' ) }>
 									{ listed.map( ( item, index ) => {
 										const kind = kindLabel( item, settings.productTypes );
 										const parentName = parentNameOf( item );
@@ -3357,7 +3357,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 														className="wc-pl-inline-edit__item-remove"
 														aria-label={ sprintf(
 															/* translators: %s: product name */
-															__( 'Remove %s from the selection', 'wp-woocommerce-products-list' ),
+															__( 'Remove %s from the selection', 'antijante-products-list' ),
 															nameOf( item )
 														) }
 														disabled={ saving }
@@ -3377,7 +3377,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 									<p className="wc-pl-inline-edit__more">
 										{ sprintf(
 											/* translators: %d: number of rows not listed */
-											__( '…and %d more', 'wp-woocommerce-products-list' ),
+											__( '…and %d more', 'antijante-products-list' ),
 											items.length - listed.length
 										) }
 									</p>
@@ -3391,7 +3391,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			<div className="wc-pl-inline-edit__main">
 				{ needsEditOthers ? (
 					<Notice status="warning" isDismissible={ false } className="wc-pl-edit__notice">
-						{ __( 'Saving several items at once needs the "edit others\' products" capability. Edit one item at a time, or ask an administrator.', 'wp-woocommerce-products-list' ) }
+						{ __( 'Saving several items at once needs the "edit others\' products" capability. Edit one item at a time, or ask an administrator.', 'antijante-products-list' ) }
 					</Notice>
 				) : null }
 
@@ -3399,7 +3399,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					<Notice status="warning" isDismissible={ false } className="wc-pl-edit__notice">
 						{ sprintf(
 							/* translators: 1: number of rows, 2: their names */
-							_n( '%1$d of the selected items no longer exists and was left out: %2$s', '%1$d of the selected items no longer exist and were left out: %2$s', excluded.missing.length, 'wp-woocommerce-products-list' ),
+							_n( '%1$d of the selected items no longer exists and was left out: %2$s', '%1$d of the selected items no longer exist and were left out: %2$s', excluded.missing.length, 'antijante-products-list' ),
 							excluded.missing.length,
 							listNames( excluded.missing )
 						) }
@@ -3410,7 +3410,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					<Notice status="warning" isDismissible={ false } className="wc-pl-edit__notice">
 						{ sprintf(
 							/* translators: 1: number of rows, 2: their names */
-							_n( '%1$d of the selected items was moved to the Trash meanwhile and was left out: %2$s', '%1$d of the selected items were moved to the Trash meanwhile and were left out: %2$s', excluded.trashed.length, 'wp-woocommerce-products-list' ),
+							_n( '%1$d of the selected items was moved to the Trash meanwhile and was left out: %2$s', '%1$d of the selected items were moved to the Trash meanwhile and were left out: %2$s', excluded.trashed.length, 'antijante-products-list' ),
 							excluded.trashed.length,
 							listNames( excluded.trashed )
 						) }
@@ -3421,7 +3421,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					<Notice status="warning" isDismissible={ false } className="wc-pl-edit__notice">
 						{ sprintf(
 							/* translators: 1: number of rows in the trash, 2: their names */
-							_n( '%1$d of the selected items is in the trash and will be updated too: %2$s', '%1$d of the selected items are in the trash and will be updated too: %2$s', trashedRows.length, 'wp-woocommerce-products-list' ),
+							_n( '%1$d of the selected items is in the trash and will be updated too: %2$s', '%1$d of the selected items are in the trash and will be updated too: %2$s', trashedRows.length, 'antijante-products-list' ),
 							trashedRows.length,
 							listNames( trashedRows )
 						) }
@@ -3429,7 +3429,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 				) : null }
 
 				{ tabs.length > 1 ? (
-					<div className={ `wc-pl-edit__tabs${ formColumns.narrow ? ' is-narrow' : '' }` } role="tablist" aria-label={ __( 'Edit sections', 'wp-woocommerce-products-list' ) } onKeyDown={ onTabKeyDown }>
+					<div className={ `wc-pl-edit__tabs${ formColumns.narrow ? ' is-narrow' : '' }` } role="tablist" aria-label={ __( 'Edit sections', 'antijante-products-list' ) } onKeyDown={ onTabKeyDown }>
 						{ tabs.map( ( entry ) => {
 							const selectedTab = entry.id === tab.id;
 
@@ -3505,7 +3505,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 						</Notice>
 					) : null }
 					{ ! formShown ? (
-						<p>{ __( 'The selected rows share no editable fields.', 'wp-woocommerce-products-list' ) }</p>
+						<p>{ __( 'The selected rows share no editable fields.', 'antijante-products-list' ) }</p>
 					) : (
 						<ApplyControlContext.Provider value={ applyControl }>
 							<SectionNotesContext.Provider value={ sectionNotes }>
@@ -3553,18 +3553,18 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 							warningKind === 'uncertain'
 								? sprintf(
 										/* translators: %d: number of rows */
-										_n( '%d item may already have this change. Update anyway?', '%d items may already have this change. Update anyway?', shownWarnings.length, 'wp-woocommerce-products-list' ),
+										_n( '%d item may already have this change. Update anyway?', '%d items may already have this change. Update anyway?', shownWarnings.length, 'antijante-products-list' ),
 										shownWarnings.length
 								  )
 								: warningKind === 'stale'
 								? sprintf(
 										/* translators: %d: number of rows */
-										_n( '%d row changed since this editor loaded it', '%d rows changed since this editor loaded them', shownWarnings.length, 'wp-woocommerce-products-list' ),
+										_n( '%d row changed since this editor loaded it', '%d rows changed since this editor loaded them', shownWarnings.length, 'antijante-products-list' ),
 										shownWarnings.length
 								  )
 								: sprintf(
 										/* translators: %d: number of rows */
-										_n( '%d row would go below zero. Update anyway?', '%d rows would go below zero. Update anyway?', shownWarnings.length, 'wp-woocommerce-products-list' ),
+										_n( '%d row would go below zero. Update anyway?', '%d rows would go below zero. Update anyway?', shownWarnings.length, 'antijante-products-list' ),
 										shownWarnings.length
 								  )
 						}
@@ -3573,7 +3573,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 
 				{ staged.size ? (
 					<div className="wc-pl-edit__staged">
-						<strong>{ __( 'Also saved with Update:', 'wp-woocommerce-products-list' ) }</strong>
+						<strong>{ __( 'Also saved with Update:', 'antijante-products-list' ) }</strong>
 						<ul>
 							{ Array.from( staged.values() ).map( ( entry ) => {
 								const count = stagedToolIds( entry, items, parentVariations ).length;
@@ -3583,20 +3583,20 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 										{ parentVariations?.length
 											? sprintf(
 													/* translators: 1: tool label, 2: language, 3: what it runs on, e.g. "606 variations of 28 products" */
-													__( '%1$s (%2$s) on %3$s', 'wp-woocommerce-products-list' ),
+													__( '%1$s (%2$s) on %3$s', 'antijante-products-list' ),
 													entry.def.label,
 													entry.tabLabel,
 													toolTargetsLabel( entry.def, items, parentVariations )
 											  )
 											: sprintf(
 													/* translators: 1: tool label, 2: language, 3: number of items */
-													_n( '%1$s (%2$s) on %3$d item', '%1$s (%2$s) on %3$d items', count, 'wp-woocommerce-products-list' ),
+													_n( '%1$s (%2$s) on %3$d item', '%1$s (%2$s) on %3$d items', count, 'antijante-products-list' ),
 													entry.def.label,
 													entry.tabLabel,
 													count
 											  ) }{ ' ' }
 										<Button variant="link" disabled={ saving } onClick={ () => stageTool( entry.key, null ) }>
-											{ __( 'Take it out', 'wp-woocommerce-products-list' ) }
+											{ __( 'Take it out', 'antijante-products-list' ) }
 										</Button>
 									</li>
 								);
@@ -3616,11 +3616,11 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 											'Apply my edits to the %d item someone else changed, on the values stored now',
 											'Apply my edits to the %d items someone else changed, on the values stored now',
 											conflictCount,
-											'wp-woocommerce-products-list'
+											'antijante-products-list'
 										),
 										conflictCount
 								  )
-								: __( 'Write my values over the other change', 'wp-woocommerce-products-list' )
+								: __( 'Write my values over the other change', 'antijante-products-list' )
 						}
 						checked={ overwriteConfirmed }
 						onChange={ ( checked: boolean ) => setOverwriteConfirmed( checked ) }
@@ -3640,7 +3640,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 						{ saveLabel }
 					</Button>
 					<Button type="button" variant="tertiary" onClick={ requestClose } __next40pxDefaultSize>
-						{ saving ? __( 'Close, keep updating in the background', 'wp-woocommerce-products-list' ) : __( 'Cancel', 'wp-woocommerce-products-list' ) }
+						{ saving ? __( 'Close, keep updating in the background', 'antijante-products-list' ) : __( 'Cancel', 'antijante-products-list' ) }
 					</Button>
 					{ showNext ? (
 						<Button
@@ -3655,11 +3655,11 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 							aria-keyshortcuts="Shift+Enter"
 							__next40pxDefaultSize
 						>
-							{ __( 'Update & next', 'wp-woocommerce-products-list' ) }
+							{ __( 'Update & next', 'antijante-products-list' ) }
 							<kbd className="wc-pl-edit__shortcut" aria-hidden="true">
 								{
 									/* translators: keyboard shortcut for "Update & next" */
-									__( 'Shift+Enter', 'wp-woocommerce-products-list' )
+									__( 'Shift+Enter', 'antijante-products-list' )
 								}
 							</kbd>
 						</Button>
@@ -3672,14 +3672,14 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			{ leaveRequest ? (
 				<ConfirmDialog
 					isOpen
-					confirmButtonText={ __( 'Discard changes', 'wp-woocommerce-products-list' ) }
-					cancelButtonText={ __( 'Keep editing', 'wp-woocommerce-products-list' ) }
+					confirmButtonText={ __( 'Discard changes', 'antijante-products-list' ) }
+					cancelButtonText={ __( 'Keep editing', 'antijante-products-list' ) }
 					onConfirm={ () => settleLeave( true ) }
 					onCancel={ () => settleLeave( false ) }
 				>
 					{ sprintf(
 						/* translators: %d: number of changed fields */
-						_n( 'Discard %d unsaved change?', 'Discard %d unsaved changes?', unsavedCount, 'wp-woocommerce-products-list' ),
+						_n( 'Discard %d unsaved change?', 'Discard %d unsaved changes?', unsavedCount, 'antijante-products-list' ),
 						unsavedCount
 					) }
 				</ConfirmDialog>

@@ -16,7 +16,7 @@ export const createRestoreAction: ActionFactory = ( { settings } ) => {
 
 	const action: ProductAction = {
 		id: 'restore',
-		label: __( 'Restore', 'wp-woocommerce-products-list' ),
+		label: __( 'Restore', 'antijante-products-list' ),
 		icon: backup,
 		isPrimary: true,
 		supportsBulk: true,
@@ -41,7 +41,7 @@ export const createRestoreAction: ActionFactory = ( { settings } ) => {
 						notify.success(
 							sprintf(
 								/* translators: %d: number of products */
-								_n( '%d product restored.', '%d products restored.', ok.length, 'wp-woocommerce-products-list' ),
+								_n( '%d product restored.', '%d products restored.', ok.length, 'antijante-products-list' ),
 								ok.length
 							)
 						);

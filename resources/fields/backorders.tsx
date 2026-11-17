@@ -7,7 +7,7 @@ export function createBackordersField( settings: Settings ): ProductField {
 	return field( {
 		id: 'backorders',
 		type: 'text',
-		label: __( 'Backorders', 'wp-woocommerce-products-list' ),
+		label: __( 'Backorders', 'antijante-products-list' ),
 		elements: settings.backorders,
 		enableSorting: false,
 		filterBy: false,
@@ -15,6 +15,6 @@ export function createBackordersField( settings: Settings ): ProductField {
 		getValue: ( { item } ) => item.backorders ?? 'no',
 		rest: { applies: { product: true, variation: true } },
 		productTypes: [ ...PHYSICAL_TYPES ],
-		edit: { group: 'inventory', bulk: 'default', order: 33, label: __( 'Allow backorders?', 'wp-woocommerce-products-list' ) },
+		edit: { group: 'inventory', bulk: 'default', order: 33, label: __( 'Allow backorders?', 'antijante-products-list' ) },
 	} );
 }

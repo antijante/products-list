@@ -1,5 +1,5 @@
 /**
- * Extension demo for wp-woocommerce-products-list.
+ * Extension demo for antijante-products-list.
  *
  * A drop-in script: no build step, no PHP beyond enqueueing it. It adds
  *
@@ -17,7 +17,7 @@
  *   web/app/mu-plugins/wc-products-list-demo.php
  *
  *     <?php
- *     add_action('wc_products_list/enqueue', function (string $handle) {
+ *     add_action('antijante_products_list/enqueue', function (string $handle) {
  *         wp_enqueue_script(
  *             'wc-products-list-demo',
  *             WPMU_PLUGIN_URL . '/wc-products-list-demo/extension-demo.js',
@@ -30,7 +30,7 @@
  *   web/app/mu-plugins/wc-products-list-demo/extension-demo.js  (this file)
  *
  * The script runs after the app's module code and before it mounts, so
- * `window.wcProductsList` already exists; the `wcProductsList.ready` action
+ * `window.antijanteProductsList` already exists; the `antijanteProductsList.ready` action
  * covers the case where it does not (a script enqueued without the handle
  * as a dependency, or loaded later).
  */
@@ -205,9 +205,9 @@
 		// } );
 	}
 
-	if ( window.wcProductsList ) {
-		setup( window.wcProductsList );
+	if ( window.antijanteProductsList ) {
+		setup( window.antijanteProductsList );
 	} else {
-		wp.hooks.addAction( 'wcProductsList.ready', 'demo/wc-products-list', setup );
+		wp.hooks.addAction( 'antijanteProductsList.ready', 'demo/wc-products-list', setup );
 	}
 } )();

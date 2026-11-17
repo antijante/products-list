@@ -48,7 +48,7 @@ export const createQuickEditAction: ActionFactory = ( context ) => {
 
 	const action: ProductAction = {
 		id: 'quick-edit',
-		label: ( items ) => ( items.length > 1 ? __( 'Bulk edit', 'wp-woocommerce-products-list' ) : __( 'Quick edit', 'wp-woocommerce-products-list' ) ),
+		label: ( items ) => ( items.length > 1 ? __( 'Bulk edit', 'antijante-products-list' ) : __( 'Quick edit', 'antijante-products-list' ) ),
 		icon: pencil,
 		isPrimary: true,
 		// A pencil on every row, not a text button that appears on hover (style.scss keeps it visible).

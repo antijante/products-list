@@ -79,15 +79,15 @@ function pricePoints( decimals: number, spec: string ): { period: number; offset
 function roundingTarget( round: string, settings?: Pick< Settings, 'currency' > ): string {
 	switch ( round ) {
 		case '00':
-			return __( 'whole units', 'wp-woocommerce-products-list' );
+			return __( 'whole units', 'antijante-products-list' );
 		case 'w9':
 			return '…9';
 		case 'w49':
-			return __( '…49 or …99', 'wp-woocommerce-products-list' );
+			return __( '…49 or …99', 'antijante-products-list' );
 		case 'w99':
 			return '…99';
 		case 'w0':
-			return __( 'the nearest 10', 'wp-woocommerce-products-list' );
+			return __( 'the nearest 10', 'antijante-products-list' );
 		default:
 			return `${ settings?.currency.decimalSeparator ?? '.' }${ round }`;
 	}
@@ -99,16 +99,16 @@ export function describeRounding( round: string, settings?: Pick< Settings, 'cur
 
 	if ( mode === 'up' ) {
 		/* translators: %s: a price ending, e.g. ",95" or "…9" */
-		return sprintf( __( 'rounded up to %s', 'wp-woocommerce-products-list' ), target );
+		return sprintf( __( 'rounded up to %s', 'antijante-products-list' ), target );
 	}
 
 	if ( mode === 'down' ) {
 		/* translators: %s: a price ending, e.g. ",95" or "…9" */
-		return sprintf( __( 'rounded down to %s', 'wp-woocommerce-products-list' ), target );
+		return sprintf( __( 'rounded down to %s', 'antijante-products-list' ), target );
 	}
 
 	/* translators: %s: a price ending, e.g. ",95" */
-	return sprintf( __( 'rounded to %s', 'wp-woocommerce-products-list' ), target );
+	return sprintf( __( 'rounded to %s', 'antijante-products-list' ), target );
 }
 
 /**
@@ -188,7 +188,7 @@ export function allowsNegative( fieldId: string ): boolean {
 
 /**
  * The bulk kind of a field: from `edit.bulk`, or `money`/`integer` for ids the
- * `wcProductsList.bulkNumericFields` filter adds (`regular_price`, `sale_price`,
+ * `antijanteProductsList.bulkNumericFields` filter adds (`regular_price`, `sale_price`,
  * `stock_quantity`, `cost_of_goods_sold` by default).
  */
 export function numericKindOf( field: ProductField ): NumericKind | null {
@@ -350,15 +350,15 @@ export function validateNumericOp( op: NumericOp | undefined, kind: NumericKind,
 	const value = parseNumeric( op.value, settings );
 
 	if ( value === undefined ) {
-		return __( 'Enter a number.', 'wp-woocommerce-products-list' );
+		return __( 'Enter a number.', 'antijante-products-list' );
 	}
 
 	if ( value < 0 && ! ( allowNegative && op.operation === 'set' ) ) {
-		return __( 'The value cannot be negative.', 'wp-woocommerce-products-list' );
+		return __( 'The value cannot be negative.', 'antijante-products-list' );
 	}
 
 	if ( kind === 'integer' && ! Number.isInteger( value ) ) {
-		return __( 'Enter a whole number.', 'wp-woocommerce-products-list' );
+		return __( 'Enter a whole number.', 'antijante-products-list' );
 	}
 
 	return null;
@@ -679,17 +679,17 @@ export function validateBulkNumericEdits( items: ProductListItem[], edits: Recor
 			const number = parseNumeric( value, settings );
 
 			if ( number === undefined ) {
-				errors.push( { id: item.id, field: id, message: sprintf( /* translators: %s: field label */ __( '%s is not a number.', 'wp-woocommerce-products-list' ), field.label ?? id ) } );
+				errors.push( { id: item.id, field: id, message: sprintf( /* translators: %s: field label */ __( '%s is not a number.', 'antijante-products-list' ), field.label ?? id ) } );
 				continue;
 			}
 
 			if ( number < 0 && ! allowsNegative( id ) && ! ( isNumericOp( own[ id ] ) && stockMayGoNegative( id, item, readFieldValue( field, item ), settings ) ) ) {
-				errors.push( { id: item.id, field: id, message: sprintf( /* translators: %s: field label */ __( '%s cannot be negative.', 'wp-woocommerce-products-list' ), field.label ?? id ) } );
+				errors.push( { id: item.id, field: id, message: sprintf( /* translators: %s: field label */ __( '%s cannot be negative.', 'antijante-products-list' ), field.label ?? id ) } );
 				continue;
 			}
 
 			if ( kind === 'integer' && ! Number.isInteger( number ) ) {
-				errors.push( { id: item.id, field: id, message: sprintf( /* translators: %s: field label */ __( '%s must be a whole number.', 'wp-woocommerce-products-list' ), field.label ?? id ) } );
+				errors.push( { id: item.id, field: id, message: sprintf( /* translators: %s: field label */ __( '%s must be a whole number.', 'antijante-products-list' ), field.label ?? id ) } );
 			}
 		}
 
@@ -719,7 +719,7 @@ export function validateBulkNumericEdits( items: ProductListItem[], edits: Recor
 				errors.push( {
 					id: item.id,
 					field: saleId,
-					message: __( 'The sale price must be lower than the regular price.', 'wp-woocommerce-products-list' ),
+					message: __( 'The sale price must be lower than the regular price.', 'antijante-products-list' ),
 				} );
 			}
 		}
@@ -750,7 +750,7 @@ export function validateBulkNumericEdits( items: ProductListItem[], edits: Recor
 					errors.push( {
 						id: item.id,
 						field: `${ prefix }schedule_sale`,
-						message: __( 'Schedule sale is on but no start or end date is set: the sale would start immediately. Set a date or untick Schedule sale.', 'wp-woocommerce-products-list' ),
+						message: __( 'Schedule sale is on but no start or end date is set: the sale would start immediately. Set a date or untick Schedule sale.', 'antijante-products-list' ),
 					} );
 				}
 
@@ -761,7 +761,7 @@ export function validateBulkNumericEdits( items: ProductListItem[], edits: Recor
 				errors.push( {
 					id: item.id,
 					field: saleId,
-					message: __( 'A sale is scheduled but there is no sale price: set one, or use "Regular price minus".', 'wp-woocommerce-products-list' ),
+					message: __( 'A sale is scheduled but there is no sale price: set one, or use "Regular price minus".', 'antijante-products-list' ),
 				} );
 			}
 		}
@@ -826,14 +826,14 @@ export function projectWarnings( items: ProductListItem[], edits: Record< string
 					leafOf( id ) === 'stock_quantity'
 						? sprintf(
 								/* translators: 1: field label, 2: the current value, 3: the value the operation gives */
-								__( '%1$s would go from %2$s to %3$s; it will be set to 0 (Out of stock).', 'wp-woocommerce-products-list' ),
+								__( '%1$s would go from %2$s to %3$s; it will be set to 0 (Out of stock).', 'antijante-products-list' ),
 								label,
 								was,
 								would
 						  )
 						: sprintf(
 								/* translators: 1: field label, 2: the current value, 3: the value the operation gives */
-								__( '%1$s would go from %2$s to %3$s; it will be set to 0.', 'wp-woocommerce-products-list' ),
+								__( '%1$s would go from %2$s to %3$s; it will be set to 0.', 'antijante-products-list' ),
 								label,
 								was,
 								would

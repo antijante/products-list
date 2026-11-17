@@ -1,14 +1,14 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\BatchState;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Recorder;
-use GeneroWP\ProductsList\Log\Revert;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\BatchState;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Recorder;
+use Antijante\ProductsList\Log\Revert;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Plugin;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -88,7 +88,7 @@ final class LogController
                     'description' => 'The batch id (a UUID v4) to log the revert under; the same for every chunk of one revert. Generated when absent.',
                     'validate_callback' => static fn ($value): bool|WP_Error => ListMode::isBatchId($value)
                         ? true
-                        : new WP_Error('rest_invalid_param', __('revert_batch_id must be a UUID v4.', 'wp-woocommerce-products-list'), ['status' => 400]),
+                        : new WP_Error('rest_invalid_param', __('revert_batch_id must be a UUID v4.', 'antijante-products-list'), ['status' => 400]),
                 ],
                 'force' => [
                     'type' => 'boolean',
@@ -137,7 +137,7 @@ final class LogController
                     'description' => 'The batch (a UUID v4) the items were left out of.',
                     'validate_callback' => static fn ($value): bool|WP_Error => ListMode::isBatchId($value)
                         ? true
-                        : new WP_Error('rest_invalid_param', __('batch_id must be a UUID v4.', 'wp-woocommerce-products-list'), ['status' => 400]),
+                        : new WP_Error('rest_invalid_param', __('batch_id must be a UUID v4.', 'antijante-products-list'), ['status' => 400]),
                 ],
                 'source' => ['type' => 'string', 'enum' => Table::SOURCES, 'default' => 'bulk'],
                 'action' => [
@@ -145,7 +145,7 @@ final class LogController
                     'description' => 'The row action the items were left out of (a registered action id, e.g. trash); the rows are logged under it. Default: update.',
                     'validate_callback' => static fn ($value): bool|WP_Error => is_string($value) && isset(ActionsController::handlers()[$value])
                         ? true
-                        : new WP_Error('rest_invalid_param', __('action must be a registered action id.', 'wp-woocommerce-products-list'), ['status' => 400]),
+                        : new WP_Error('rest_invalid_param', __('action must be a registered action id.', 'antijante-products-list'), ['status' => 400]),
                 ],
                 'items' => [
                     'type' => 'array',
@@ -189,7 +189,7 @@ final class LogController
         $batchId = (string) $request['batch_id'];
 
         if ($this->isOthers($batchId)) {
-            return new WP_Error('wc_products_list_batch_shared', __('This batch belongs to another user.', 'wp-woocommerce-products-list'), ['status' => 409]);
+            return new WP_Error('wc_products_list_batch_shared', __('This batch belongs to another user.', 'antijante-products-list'), ['status' => 409]);
         }
 
         $items = (array) $request['items'];
@@ -260,7 +260,7 @@ final class LogController
 
         if ($marker !== null && $marker['user'] !== get_current_user_id()) {
             if (BatchState::stateOf($marker) === BatchState::STATE_RUNNING || ! current_user_can(Plugin::logCapability())) {
-                return new WP_Error('wc_products_list_batch_shared', __('This batch belongs to another user.', 'wp-woocommerce-products-list'), ['status' => 403]);
+                return new WP_Error('wc_products_list_batch_shared', __('This batch belongs to another user.', 'antijante-products-list'), ['status' => 403]);
             }
         }
 
@@ -282,7 +282,7 @@ final class LogController
 
         return new WP_Error(
             BatchState::RUNNING_ERROR,
-            __('This update is still running (in another tab or by another user). Revert it when it is done.', 'wp-woocommerce-products-list'),
+            __('This update is still running (in another tab or by another user). Revert it when it is done.', 'antijante-products-list'),
             ['status' => 409]
         );
     }
@@ -290,19 +290,19 @@ final class LogController
     public static function skipMessage(string $reason): string
     {
         return match ($reason) {
-            'trashed' => __('Skipped: moved to the Trash meanwhile.', 'wp-woocommerce-products-list'),
-            'deleted' => __('Skipped: deleted meanwhile.', 'wp-woocommerce-products-list'),
-            'conflict' => __('Skipped: changed by someone else since the editor opened.', 'wp-woocommerce-products-list'),
-            'locked' => __('Skipped: another save of this item was running.', 'wp-woocommerce-products-list'),
-            'editing' => __('Skipped: another user had it open in the product editor.', 'wp-woocommerce-products-list'),
-            'no_stock_management' => __('Skipped: stock is not managed for this item.', 'wp-woocommerce-products-list'),
-            'has_sale' => __('Skipped: it already had a sale.', 'wp-woocommerce-products-list'),
-            'no_sale_price' => __('Skipped: it has no sale price to adjust.', 'wp-woocommerce-products-list'),
-            'below_zero' => __('Skipped: the change would have gone below zero.', 'wp-woocommerce-products-list'),
-            'not_applicable' => __('Skipped: the field does not apply to this item.', 'wp-woocommerce-products-list'),
-            'unchanged' => __('Skipped: it already had this value.', 'wp-woocommerce-products-list'),
-            'failed' => __('Not saved: the request failed.', 'wp-woocommerce-products-list'),
-            default => __('Skipped.', 'wp-woocommerce-products-list'),
+            'trashed' => __('Skipped: moved to the Trash meanwhile.', 'antijante-products-list'),
+            'deleted' => __('Skipped: deleted meanwhile.', 'antijante-products-list'),
+            'conflict' => __('Skipped: changed by someone else since the editor opened.', 'antijante-products-list'),
+            'locked' => __('Skipped: another save of this item was running.', 'antijante-products-list'),
+            'editing' => __('Skipped: another user had it open in the product editor.', 'antijante-products-list'),
+            'no_stock_management' => __('Skipped: stock is not managed for this item.', 'antijante-products-list'),
+            'has_sale' => __('Skipped: it already had a sale.', 'antijante-products-list'),
+            'no_sale_price' => __('Skipped: it has no sale price to adjust.', 'antijante-products-list'),
+            'below_zero' => __('Skipped: the change would have gone below zero.', 'antijante-products-list'),
+            'not_applicable' => __('Skipped: the field does not apply to this item.', 'antijante-products-list'),
+            'unchanged' => __('Skipped: it already had this value.', 'antijante-products-list'),
+            'failed' => __('Not saved: the request failed.', 'antijante-products-list'),
+            default => __('Skipped.', 'antijante-products-list'),
         };
     }
 
@@ -468,7 +468,7 @@ final class LogController
         return $this->paged($items, $total, $perPage);
     }
 
-    public const FILTER_BATCH_SUMMARY = 'wc_products_list/log_batch_summary';
+    public const FILTER_BATCH_SUMMARY = 'antijante_products_list/log_batch_summary';
 
     /**
      * The action and decoded context of log rows by id.
@@ -504,7 +504,7 @@ final class LogController
      * A batch's one-line description for a person: what an action batch
      * did ("Move to Trash", "Duplicate"), null for a batch of field edits
      * (History lists its fields). Integrations name their own actions
-     * through `wc_products_list/log_batch_summary`, from the action's
+     * through `antijante_products_list/log_batch_summary`, from the action's
      * args in the row's context (languages, fields, the operation).
      *
      * @param  array<string, mixed>  $context  the context of the batch's first action row (`args` holds the action's args)
@@ -514,14 +514,14 @@ final class LogController
     {
         $summary = match ($action) {
             null => null,
-            'trash' => __('Move to Trash', 'wp-woocommerce-products-list'),
-            'restore' => __('Restore from Trash', 'wp-woocommerce-products-list'),
-            'delete' => __('Delete permanently', 'wp-woocommerce-products-list'),
-            'duplicate' => __('Duplicate', 'wp-woocommerce-products-list'),
-            'publish' => __('Publish', 'wp-woocommerce-products-list'),
-            'draft' => __('Set to draft', 'wp-woocommerce-products-list'),
-            'feature' => ($context['args']['featured'] ?? true) ? __('Mark as featured', 'wp-woocommerce-products-list') : __('Remove from featured', 'wp-woocommerce-products-list'),
-            Logger::ACTION_TRANSLATE_TERM => __('Translate attribute term', 'wp-woocommerce-products-list'),
+            'trash' => __('Move to Trash', 'antijante-products-list'),
+            'restore' => __('Restore from Trash', 'antijante-products-list'),
+            'delete' => __('Delete permanently', 'antijante-products-list'),
+            'duplicate' => __('Duplicate', 'antijante-products-list'),
+            'publish' => __('Publish', 'antijante-products-list'),
+            'draft' => __('Set to draft', 'antijante-products-list'),
+            'feature' => ($context['args']['featured'] ?? true) ? __('Mark as featured', 'antijante-products-list') : __('Remove from featured', 'antijante-products-list'),
+            Logger::ACTION_TRANSLATE_TERM => __('Translate attribute term', 'antijante-products-list'),
             default => null,
         };
 
@@ -564,7 +564,7 @@ final class LogController
         if (count($labels) > self::SUMMARY_FIELDS) {
             $fields = sprintf(
                 /* translators: 1: the first field names, 2: how many more */
-                __('%1$s +%2$d more', 'wp-woocommerce-products-list'),
+                __('%1$s +%2$d more', 'antijante-products-list'),
                 $fields,
                 count($labels) - self::SUMMARY_FIELDS
             );
@@ -572,7 +572,7 @@ final class LogController
 
         return sprintf(
             /* translators: 1: the edited fields ("Sale price, Date on sale from"), 2: the action's name ("Edit translated text: Svenska Name") */
-            __('%1$s + %2$s', 'wp-woocommerce-products-list'),
+            __('%1$s + %2$s', 'antijante-products-list'),
             $fields,
             $actionSummary
         );
@@ -608,7 +608,7 @@ final class LogController
         ), ARRAY_A);
 
         if (! is_array($counts) || (int) $counts['n'] === 0) {
-            return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'wp-woocommerce-products-list'), ['status' => 404]);
+            return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'antijante-products-list'), ['status' => 404]);
         }
 
         $objects = $wpdb->get_results($wpdb->prepare(
@@ -758,7 +758,7 @@ final class LogController
         if ($ids !== null && ($ids === [] || count($ids) > $chunk)) {
             return new WP_Error('wc_products_list_invalid_ids', sprintf(
                 /* translators: %d: objects per request */
-                __('ids must name between 1 and %d objects.', 'wp-woocommerce-products-list'),
+                __('ids must name between 1 and %d objects.', 'antijante-products-list'),
                 $chunk
             ), ['status' => 400]);
         }
@@ -773,11 +773,11 @@ final class LogController
         // phpcs:enable
 
         if (! is_array($rows) || $rows === []) {
-            return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'wp-woocommerce-products-list'), ['status' => 404]);
+            return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'antijante-products-list'), ['status' => 404]);
         }
 
         if ($this->isShared($batchId)) {
-            return new WP_Error('wc_products_list_batch_shared', __('This batch holds changes by more than one user and cannot be reverted as one.', 'wp-woocommerce-products-list'), ['status' => 409]);
+            return new WP_Error('wc_products_list_batch_shared', __('This batch holds changes by more than one user and cannot be reverted as one.', 'antijante-products-list'), ['status' => 409]);
         }
 
         $running = self::runningError($batchId);
@@ -792,7 +792,7 @@ final class LogController
             if (count($objects) > $chunk) {
                 return new WP_Error('wc_products_list_revert_too_large', sprintf(
                     /* translators: 1: number of objects, 2: objects per request */
-                    __('This batch changed %1$d items; a revert is posted in chunks of %2$d (see GET /log/batch/{id}).', 'wp-woocommerce-products-list'),
+                    __('This batch changed %1$d items; a revert is posted in chunks of %2$d (see GET /log/batch/{id}).', 'antijante-products-list'),
                     count($objects),
                     $chunk
                 ), ['status' => 400, 'objects' => count($objects), 'chunk' => $chunk, 'chunks' => array_chunk($objects, $chunk)]);
@@ -803,7 +803,7 @@ final class LogController
         $revertBatchId = $request->get_param('revert_batch_id');
 
         if (is_string($revertBatchId) && $revertBatchId !== '' && $this->isOthers($revertBatchId)) {
-            return new WP_Error('wc_products_list_batch_shared', __('This batch id belongs to another user.', 'wp-woocommerce-products-list'), ['status' => 409]);
+            return new WP_Error('wc_products_list_batch_shared', __('This batch id belongs to another user.', 'antijante-products-list'), ['status' => 409]);
         }
 
         // One revert of a batch at a time: a second tab (or user) starting
@@ -859,7 +859,7 @@ final class LogController
         if ($ids !== null && ($ids === [] || count($ids) > $chunk)) {
             return new WP_Error('wc_products_list_invalid_ids', sprintf(
                 /* translators: %d: objects per request */
-                __('ids must name between 1 and %d objects.', 'wp-woocommerce-products-list'),
+                __('ids must name between 1 and %d objects.', 'antijante-products-list'),
                 $chunk
             ), ['status' => 400]);
         }
@@ -877,7 +877,7 @@ final class LogController
             $total = $this->revertableObjectCount($batchId);
 
             if ($total === null) {
-                return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'wp-woocommerce-products-list'), ['status' => 404]);
+                return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'antijante-products-list'), ['status' => 404]);
             }
 
             $placeholders = implode(',', array_fill(0, count($ids), '%d'));
@@ -890,7 +890,7 @@ final class LogController
             $rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$table} WHERE batch_id = %s ORDER BY id ASC", $batchId), ARRAY_A);
 
             if (! is_array($rows) || $rows === []) {
-                return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'wp-woocommerce-products-list'), ['status' => 404]);
+                return new WP_Error('wc_products_list_batch_not_found', __('No such batch.', 'antijante-products-list'), ['status' => 404]);
             }
 
             $objects = array_column(Revert::objects($rows)['objects'], 'id');

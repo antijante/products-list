@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Log;
+namespace Antijante\ProductsList\Log;
 
-use GeneroWP\ProductsList\ListMode;
+use Antijante\ProductsList\ListMode;
 
 /**
  * Writes log rows. Rows are buffered for the duration of the REST request
@@ -25,7 +25,7 @@ final class Logger
 {
     public const SOURCE_HEADER = ListMode::SOURCE_HEADER;
 
-    public const ACTION_LOGGED = 'wc_products_list/logged';
+    public const ACTION_LOGGED = 'antijante_products_list/logged';
 
     /** The source name used with wc_get_logger() for errors. */
     public const WC_LOG_SOURCE = 'wc-products-list';
@@ -224,7 +224,7 @@ final class Logger
      * when the INSERT failed). For a row that must exist the moment its
      * change does: a row action logs a trash, restore, status change or
      * delete from the change's own hook, so a request killed right after
-     * leaves no change without its row. `wc_products_list/logged` fires
+     * leaves no change without its row. `antijante_products_list/logged` fires
      * when the row is finalised with `replace()`, not here.
      *
      * @param  array<string, mixed>  $row
@@ -240,7 +240,7 @@ final class Logger
 
     /**
      * Overwrite a row written by `writeNow()` with its final values (same
-     * defaults as `log()`), and fire `wc_products_list/logged` for it.
+     * defaults as `log()`), and fire `antijante_products_list/logged` for it.
      *
      * @param  array<string, mixed>  $row
      */

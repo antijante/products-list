@@ -127,7 +127,7 @@ export function useProductList( view: View, tab: string, fields: ProductField[] 
 	}, [ key ] );
 	const data = result.data;
 
-	// `wcProductsList.loaded` once per completed list request: the cache's
+	// `antijanteProductsList.loaded` once per completed list request: the cache's
 	// `updatedAt` moves on a fetch, not on the optimistic patches that give
 	// `data` a new identity after every save.
 	const loadedAt = result.updatedAt;
@@ -440,7 +440,7 @@ export function invalidateCounts(): void {
 /**
  * The row of this id as the list loaded it (any cached product or
  * variations page, or the expanded variations), for the expected values of
- * a write made outside the editor (`window.wcProductsList.batchUpdate`).
+ * a write made outside the editor (`window.antijanteProductsList.batchUpdate`).
  */
 export function findCachedRow( id: number ): ProductListItem | undefined {
 	for ( const key of [ ...cache.keys( PRODUCTS_PREFIX ), ...cache.keys( VARIATIONS_PREFIX ) ] ) {
@@ -660,7 +660,7 @@ export async function refreshParentIds( ids: number[], fetchList: typeof listPro
 			notify.info(
 				sprintf(
 					/* translators: 1: number of products, 2: their names */
-					_n( '%1$d product was deleted meanwhile and left the list: %2$s', '%1$d products were deleted meanwhile and left the list: %2$s', names.length, 'wp-woocommerce-products-list' ),
+					_n( '%1$d product was deleted meanwhile and left the list: %2$s', '%1$d products were deleted meanwhile and left the list: %2$s', names.length, 'antijante-products-list' ),
 					names.length,
 					names.join( ', ' )
 				),
@@ -673,19 +673,19 @@ export async function refreshParentIds( ids: number[], fetchList: typeof listPro
 }
 
 // The write path: rows a save or a server action actually changed.
-addAction( ACTIONS.saved, 'wcProductsList/products/edited', ( result: BatchResult ) => {
+addAction( ACTIONS.saved, 'antijanteProductsList/products/edited', ( result: BatchResult ) => {
 	if ( Array.isArray( result?.updated ) ) {
 		markEdited( result.updated.map( ( row ) => row.id ) );
 	}
 } );
 
-addAction( ACTIONS.actionPerformed, 'wcProductsList/products/edited', ( result: { ids?: number[] } ) => {
+addAction( ACTIONS.actionPerformed, 'antijanteProductsList/products/edited', ( result: { ids?: number[] } ) => {
 	if ( Array.isArray( result?.ids ) ) {
 		markEdited( result.ids );
 	}
 } );
 
-addAction( ACTIONS.saved, 'wcProductsList/products/parents', ( result: BatchResult ) => {
+addAction( ACTIONS.saved, 'antijanteProductsList/products/parents', ( result: BatchResult ) => {
 	if ( Array.isArray( result?.updated ) && result.updated.length ) {
 		void refreshParentsOf( result.updated ).catch( () => {} );
 	}

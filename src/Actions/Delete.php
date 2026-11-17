@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Actions;
+namespace Antijante\ProductsList\Actions;
 
-use GeneroWP\ProductsList\Bootstrap;
+use Antijante\ProductsList\Bootstrap;
 use WC_Product;
 use WP_Error;
 use WP_REST_Request;
@@ -13,7 +13,7 @@ use WP_REST_Request;
  * says so.
  *
  * As in the classic list, only products in the Trash can be deleted
- * permanently; the `wc_products_list/allow_hard_delete` filter lifts that
+ * permanently; the `antijante_products_list/allow_hard_delete` filter lifts that
  * for the UI and here alike, so a scripted request cannot skip the trash
  * step the UI shows. Variations have no Trash in WooCommerce (the product
  * editor's "Remove" deletes them for good), so a variation is deleted
@@ -48,13 +48,13 @@ final class Delete implements Action
 
         /** This filter is documented in src/Bootstrap.php. */
         if ($old !== 'trash' && ! $product->is_type('variation') && ! apply_filters(Bootstrap::FILTER_ALLOW_HARD_DELETE, false)) {
-            return new WP_Error('wc_products_list_not_trashed', __('Only products in the Trash can be deleted permanently.', 'wp-woocommerce-products-list'));
+            return new WP_Error('wc_products_list_not_trashed', __('Only products in the Trash can be deleted permanently.', 'antijante-products-list'));
         }
 
         $product->delete(true);
 
         if (get_post($id) !== null) {
-            return new WP_Error('wc_products_list_delete_failed', __('The product could not be deleted.', 'wp-woocommerce-products-list'));
+            return new WP_Error('wc_products_list_delete_failed', __('The product could not be deleted.', 'antijante-products-list'));
         }
 
         return ['changes' => ['status' => [$old, null]]];

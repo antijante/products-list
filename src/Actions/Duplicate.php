@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\Actions;
+namespace Antijante\ProductsList\Actions;
 
 use Throwable;
 use WC_Admin_Duplicate_Product;
@@ -77,7 +77,7 @@ final class Duplicate implements Action
         if ($copy->get_id() === 0) {
             return new WP_Error('wc_products_list_duplicate_failed', sprintf(
                 /* translators: %s: product name */
-                __('"%s" could not be duplicated.', 'wp-woocommerce-products-list'),
+                __('"%s" could not be duplicated.', 'antijante-products-list'),
                 $product->get_name()
             ));
         }
@@ -115,15 +115,15 @@ final class Duplicate implements Action
         if ($isSku) {
             return new WP_Error('wc_products_list_duplicate_sku', sprintf(
                 /* translators: 1: product name, 2: SKU */
-                __('Could not duplicate "%1$s": a product with a SKU derived from %2$s already exists (possibly in the Trash).', 'wp-woocommerce-products-list'),
+                __('Could not duplicate "%1$s": a product with a SKU derived from %2$s already exists (possibly in the Trash).', 'antijante-products-list'),
                 $name,
-                $sku !== '' ? $sku : __('its SKU', 'wp-woocommerce-products-list')
+                $sku !== '' ? $sku : __('its SKU', 'antijante-products-list')
             ), ['exception' => $message]);
         }
 
         return new WP_Error('wc_products_list_duplicate_failed', sprintf(
             /* translators: 1: product name, 2: error message */
-            __('Could not duplicate "%1$s": %2$s', 'wp-woocommerce-products-list'),
+            __('Could not duplicate "%1$s": %2$s', 'antijante-products-list'),
             $name,
             wp_strip_all_tags($message)
         ), ['exception' => $message]);

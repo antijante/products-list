@@ -263,7 +263,7 @@ function clean( params: QueryParams ): QueryParams {
 
 /**
  * The wc/v3 products list request for a view and status tab. Extension
- * callbacks (`addQueryParams`) run first, then the `wcProductsList.query`
+ * callbacks (`addQueryParams`) run first, then the `antijanteProductsList.query`
  * filter, both with `{ tab, view, fields }`.
  */
 export function buildProductListQuery( view: View, tab: string, fields: ProductField[], settings: Settings ): QueryParams {

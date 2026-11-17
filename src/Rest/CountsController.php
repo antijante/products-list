@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Plugin;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -16,7 +16,7 @@ use WP_REST_Server;
  */
 class CountsController extends WP_REST_Controller
 {
-    public const FILTER_COUNTS = 'wc_products_list/counts';
+    public const FILTER_COUNTS = 'antijante_products_list/counts';
 
     public const STATUSES = ['publish', 'future', 'draft', 'pending', 'private', 'trash'];
 
@@ -49,7 +49,7 @@ class CountsController extends WP_REST_Controller
 
         return new WP_Error(
             'wc_products_list_forbidden',
-            __('Sorry, you are not allowed to view the product counts.', 'wp-woocommerce-products-list'),
+            __('Sorry, you are not allowed to view the product counts.', 'antijante-products-list'),
             ['status' => rest_authorization_required_code()]
         );
     }

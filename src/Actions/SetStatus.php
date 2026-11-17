@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\Actions;
+namespace Antijante\ProductsList\Actions;
 
 use WC_Product;
 use WP_REST_Request;

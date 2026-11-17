@@ -10,31 +10,31 @@ import type { LogRow, RevertPlan } from '../api/client';
 export function skipReasonLabel( reason: string ): string {
 	switch ( reason ) {
 		case 'unchanged':
-			return __( 'already had the value', 'wp-woocommerce-products-list' );
+			return __( 'already had the value', 'antijante-products-list' );
 		case 'trashed':
-			return __( 'trashed meanwhile', 'wp-woocommerce-products-list' );
+			return __( 'trashed meanwhile', 'antijante-products-list' );
 		case 'deleted':
-			return __( 'deleted meanwhile', 'wp-woocommerce-products-list' );
+			return __( 'deleted meanwhile', 'antijante-products-list' );
 		case 'conflict':
-			return __( 'changed by someone else', 'wp-woocommerce-products-list' );
+			return __( 'changed by someone else', 'antijante-products-list' );
 		case 'locked':
-			return __( 'another save was running', 'wp-woocommerce-products-list' );
+			return __( 'another save was running', 'antijante-products-list' );
 		case 'editing':
-			return __( 'open in the product editor', 'wp-woocommerce-products-list' );
+			return __( 'open in the product editor', 'antijante-products-list' );
 		case 'no_stock_management':
-			return __( 'stock not managed', 'wp-woocommerce-products-list' );
+			return __( 'stock not managed', 'antijante-products-list' );
 		case 'has_sale':
-			return __( 'already had a sale', 'wp-woocommerce-products-list' );
+			return __( 'already had a sale', 'antijante-products-list' );
 		case 'no_sale_price':
-			return __( 'no sale price', 'wp-woocommerce-products-list' );
+			return __( 'no sale price', 'antijante-products-list' );
 		case 'below_zero':
-			return __( 'would go below zero', 'wp-woocommerce-products-list' );
+			return __( 'would go below zero', 'antijante-products-list' );
 		case 'not_applicable':
-			return __( 'field does not apply', 'wp-woocommerce-products-list' );
+			return __( 'field does not apply', 'antijante-products-list' );
 		case 'failed':
-			return __( 'failed to save', 'wp-woocommerce-products-list' );
+			return __( 'failed to save', 'antijante-products-list' );
 		default:
-			return __( 'other reasons', 'wp-woocommerce-products-list' );
+			return __( 'other reasons', 'antijante-products-list' );
 	}
 }
 
@@ -141,20 +141,20 @@ export function nothingToRevert( scope: Pick< BatchScope, 'objects' >, check: { 
 export function describeBatchScope( scope: BatchScope, kept = 0, alreadyReverted = 0 ): string {
 	const changes = sprintf(
 		/* translators: %d: number of changes */
-		_n( '%d change', '%d changes', scope.changes, 'wp-woocommerce-products-list' ),
+		_n( '%d change', '%d changes', scope.changes, 'antijante-products-list' ),
 		scope.changes
 	);
 	const objects = sprintf(
 		/* translators: %d: number of items */
-		_n( '%d item', '%d items', scope.objects, 'wp-woocommerce-products-list' ),
+		_n( '%d item', '%d items', scope.objects, 'antijante-products-list' ),
 		scope.objects
 	);
 
 	const text = scope.fields.length
 		? /* translators: 1: "N changes", 2: "N items", 3: the field names */
-		  sprintf( __( 'This will put back %1$s on %2$s: %3$s.', 'wp-woocommerce-products-list' ), changes, scope.partial ? `${ objects }+` : objects, scope.fields.join( ', ' ) )
+		  sprintf( __( 'This will put back %1$s on %2$s: %3$s.', 'antijante-products-list' ), changes, scope.partial ? `${ objects }+` : objects, scope.fields.join( ', ' ) )
 		: /* translators: 1: "N changes", 2: "N items" */
-		  sprintf( __( 'This will put back %1$s on %2$s.', 'wp-woocommerce-products-list' ), changes, scope.partial ? `${ objects }+` : objects );
+		  sprintf( __( 'This will put back %1$s on %2$s.', 'antijante-products-list' ), changes, scope.partial ? `${ objects }+` : objects );
 
 	const left = itemsLeftToRevert( scope, kept );
 	let head: string = text;
@@ -162,21 +162,21 @@ export function describeBatchScope( scope: BatchScope, kept = 0, alreadyReverted
 	if ( kept > 0 && left === 0 ) {
 		head =
 			alreadyReverted > 0
-				? __( 'Nothing is left to put back: every item of this batch was put back by an earlier revert or changed since (see below).', 'wp-woocommerce-products-list' )
-				: __( 'Nothing is left to put back: every item of this batch changed since (see below).', 'wp-woocommerce-products-list' );
+				? __( 'Nothing is left to put back: every item of this batch was put back by an earlier revert or changed since (see below).', 'antijante-products-list' )
+				: __( 'Nothing is left to put back: every item of this batch changed since (see below).', 'antijante-products-list' );
 	} else if ( kept > 0 ) {
 		const ofItems = sprintf(
 			/* translators: 1: items the revert puts back, 2: items in the batch */
-			_n( '%1$d of %2$d item', '%1$d of %2$d items', scope.objects, 'wp-woocommerce-products-list' ),
+			_n( '%1$d of %2$d item', '%1$d of %2$d items', scope.objects, 'antijante-products-list' ),
 			left,
 			scope.objects
 		);
 
 		head = scope.fields.length
 			? /* translators: 1: "N of M items", 2: the field names */
-			  sprintf( __( 'This will put back the changes on %1$s: %2$s.', 'wp-woocommerce-products-list' ), ofItems, scope.fields.join( ', ' ) )
+			  sprintf( __( 'This will put back the changes on %1$s: %2$s.', 'antijante-products-list' ), ofItems, scope.fields.join( ', ' ) )
 			: /* translators: %s: "N of M items" */
-			  sprintf( __( 'This will put back the changes on %s.', 'wp-woocommerce-products-list' ), ofItems );
+			  sprintf( __( 'This will put back the changes on %s.', 'antijante-products-list' ), ofItems );
 	}
 
 	const parts: string[] = [ head ];
@@ -186,13 +186,13 @@ export function describeBatchScope( scope: BatchScope, kept = 0, alreadyReverted
 			scope.skippedActions?.length
 				? sprintf(
 						/* translators: 1: number of log entries the revert leaves alone, 2: their actions ("Move to Trash, Duplicate") */
-						_n( '%1$d entry (%2$s) is not reverted.', '%1$d entries (%2$s) are not reverted.', scope.skipped, 'wp-woocommerce-products-list' ),
+						_n( '%1$d entry (%2$s) is not reverted.', '%1$d entries (%2$s) are not reverted.', scope.skipped, 'antijante-products-list' ),
 						scope.skipped,
 						scope.skippedActions.join( ', ' )
 				  )
 				: sprintf(
 						/* translators: %d: number of log entries the revert leaves alone */
-						_n( '%d entry cannot be reverted.', '%d entries cannot be reverted.', scope.skipped, 'wp-woocommerce-products-list' ),
+						_n( '%d entry cannot be reverted.', '%d entries cannot be reverted.', scope.skipped, 'antijante-products-list' ),
 						scope.skipped
 				  )
 		);
@@ -202,7 +202,7 @@ export function describeBatchScope( scope: BatchScope, kept = 0, alreadyReverted
 		parts.push(
 			sprintf(
 				/* translators: %d: number of changes that failed when they were made */
-				_n( '%d failed change, nothing to revert.', '%d failed changes, nothing to revert.', scope.failed, 'wp-woocommerce-products-list' ),
+				_n( '%d failed change, nothing to revert.', '%d failed changes, nothing to revert.', scope.failed, 'antijante-products-list' ),
 				scope.failed
 			)
 		);
@@ -217,7 +217,7 @@ export function describeBatchScope( scope: BatchScope, kept = 0, alreadyReverted
 			parts.push(
 				sprintf(
 					/* translators: %d: number of items the batch left out because they already had the value */
-					_n( '%d item was left out because it already had this value; nothing to put back.', '%d items were left out because they already had this value; nothing to put back.', unchanged, 'wp-woocommerce-products-list' ),
+					_n( '%d item was left out because it already had this value; nothing to put back.', '%d items were left out because they already had this value; nothing to put back.', unchanged, 'antijante-products-list' ),
 					unchanged
 				)
 			);
@@ -232,13 +232,13 @@ export function describeBatchScope( scope: BatchScope, kept = 0, alreadyReverted
 				why.length
 					? sprintf(
 							/* translators: 1: number of items the batch left out when it ran, 2: why ("trashed meanwhile, stock not managed") */
-							_n( '%1$d item was left out when the batch ran (%2$s); nothing to put back.', '%1$d items were left out when the batch ran (%2$s); nothing to put back.', other, 'wp-woocommerce-products-list' ),
+							_n( '%1$d item was left out when the batch ran (%2$s); nothing to put back.', '%1$d items were left out when the batch ran (%2$s); nothing to put back.', other, 'antijante-products-list' ),
 							other,
 							why.join( ', ' )
 					  )
 					: sprintf(
 							/* translators: %d: number of items the batch left out when it ran */
-							_n( '%d item was left out when the batch ran (see Show changes); nothing to put back.', '%d items were left out when the batch ran (see Show changes); nothing to put back.', other, 'wp-woocommerce-products-list' ),
+							_n( '%d item was left out when the batch ran (see Show changes); nothing to put back.', '%d items were left out when the batch ran (see Show changes); nothing to put back.', other, 'antijante-products-list' ),
 							other
 					  )
 			);

@@ -1,11 +1,11 @@
 <?php
 
-namespace GeneroWP\ProductsList\Log;
+namespace Antijante\ProductsList\Log;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Registry;
-use GeneroWP\ProductsList\Rest\Concurrency;
-use GeneroWP\ProductsList\Rest\Rows;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Registry;
+use Antijante\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\Rest\Rows;
 use WP_REST_Request;
 
 /**
@@ -48,7 +48,7 @@ final class Revert
     /** Objects per revert request; the app chunks a bigger batch. */
     public const CHUNK = 100;
 
-    public const FILTER_CHUNK = 'wc_products_list/revert_chunk';
+    public const FILTER_CHUNK = 'antijante_products_list/revert_chunk';
 
     /**
      * Actions whose rows a revert never writes back, whatever field they
@@ -210,7 +210,7 @@ final class Revert
         return $body;
     }
 
-    public const FILTER_NULLABLE_FIELDS = 'wc_products_list/revert_nullable_fields';
+    public const FILTER_NULLABLE_FIELDS = 'antijante_products_list/revert_nullable_fields';
 
     public const NULLABLE_FIELDS = ['low_stock_amount', 'stock_quantity'];
 
@@ -338,7 +338,7 @@ final class Revert
         return $conflicts;
     }
 
-    public const FILTER_RELATIVE_FIELDS = 'wc_products_list/revert_relative_fields';
+    public const FILTER_RELATIVE_FIELDS = 'antijante_products_list/revert_relative_fields';
 
     /**
      * Fields a revert can undo relatively: when one of them changed again
@@ -565,7 +565,7 @@ final class Revert
                         self::dropPlanned($plan, $id);
                         $message = sprintf(
                             /* translators: %s: comma-separated field names */
-                            _n('%s was already put back by an earlier revert of this batch and was left as it is.', '%s were already put back by an earlier revert of this batch and were left as they are.', count($done), 'wp-woocommerce-products-list'),
+                            _n('%s was already put back by an earlier revert of this batch and was left as it is.', '%s were already put back by an earlier revert of this batch and were left as they are.', count($done), 'antijante-products-list'),
                             implode(', ', array_map([self::class, 'fieldLabel'], array_keys($done)))
                         );
                         $results[] = ['id' => $id, 'ok' => false, 'code' => 'skipped', 'message' => $message];
@@ -649,12 +649,12 @@ final class Revert
                 $message = $alreadyReverted !== []
                     ? sprintf(
                         /* translators: %s: comma-separated field names */
-                        _n('%s was already put back by an earlier revert of this batch and was left as it is.', '%s were already put back by an earlier revert of this batch and were left as they are.', count($alreadyReverted), 'wp-woocommerce-products-list'),
+                        _n('%s was already put back by an earlier revert of this batch and was left as it is.', '%s were already put back by an earlier revert of this batch and were left as they are.', count($alreadyReverted), 'antijante-products-list'),
                         implode(', ', array_map([self::class, 'fieldLabel'], $alreadyReverted))
                     )
                     : sprintf(
                         /* translators: %s: comma-separated field names */
-                        _n('%s was changed again after this batch (by an order or another edit) and was left as it is.', '%s were changed again after this batch (by an order or another edit) and were left as they are.', count($conflicts), 'wp-woocommerce-products-list'),
+                        _n('%s was changed again after this batch (by an order or another edit) and was left as it is.', '%s were changed again after this batch (by an order or another edit) and were left as they are.', count($conflicts), 'antijante-products-list'),
                         implode(', ', $labels)
                     );
 
@@ -705,12 +705,12 @@ final class Revert
                 'ok' => false,
                 'code' => 'skipped',
                 'message' => match ($item['action']) {
-                    'delete' => __('Permanently deleted products cannot be restored.', 'wp-woocommerce-products-list'),
-                    'masked' => __('Passwords are not stored in the log and cannot be reverted.', 'wp-woocommerce-products-list'),
-                    'failed' => __('This change failed when it was made; there is nothing to revert.', 'wp-woocommerce-products-list'),
+                    'delete' => __('Permanently deleted products cannot be restored.', 'antijante-products-list'),
+                    'masked' => __('Passwords are not stored in the log and cannot be reverted.', 'antijante-products-list'),
+                    'failed' => __('This change failed when it was made; there is nothing to revert.', 'antijante-products-list'),
                     default => sprintf(
                         /* translators: %s: action name */
-                        __('"%s" rows are not reverted.', 'wp-woocommerce-products-list'),
+                        __('"%s" rows are not reverted.', 'antijante-products-list'),
                         $item['action']
                     ),
                 },
@@ -879,7 +879,7 @@ final class Revert
             'already_reverted' => [],
             'message' => sprintf(
                 /* translators: %s: comma-separated field names */
-                _n('%s was changed while this revert was running and was left as it is.', '%s were changed while this revert was running and were left as they are.', max(1, count($conflicts)), 'wp-woocommerce-products-list'),
+                _n('%s was changed while this revert was running and was left as it is.', '%s were changed while this revert was running and were left as they are.', max(1, count($conflicts)), 'antijante-products-list'),
                 implode(', ', $labels)
             ),
         ];
@@ -910,7 +910,7 @@ final class Revert
 
         if ($response->is_error() || ! is_array($data)) {
             $error = $response->as_error();
-            $message = $error ? $error->get_error_message() : __('The revert request failed.', 'wp-woocommerce-products-list');
+            $message = $error ? $error->get_error_message() : __('The revert request failed.', 'antijante-products-list');
             $code = $error ? (string) $error->get_error_code() : 'error';
 
             foreach ($update as $item) {

@@ -21,7 +21,7 @@ export function createSalePriceField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'sale_price',
 		type: 'text',
-		label: __( 'Sale price', 'wp-woocommerce-products-list' ),
+		label: __( 'Sale price', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: false,
 		render: ( { item } ) => <MoneyCell value={ item.sale_price } />,
@@ -30,10 +30,10 @@ export function createSalePriceField( _settings: Settings ): ProductField {
 		isValid: {
 			custom: ( item ) => {
 				if ( ! isValidPrice( item.sale_price ) ) {
-					return __( 'Enter a valid price.', 'wp-woocommerce-products-list' );
+					return __( 'Enter a valid price.', 'antijante-products-list' );
 				}
 
-				return saleBelowRegular( item.sale_price, item.regular_price ) ? null : __( 'The sale price must be lower than the regular price.', 'wp-woocommerce-products-list' );
+				return saleBelowRegular( item.sale_price, item.regular_price ) ? null : __( 'The sale price must be lower than the regular price.', 'antijante-products-list' );
 			},
 		},
 		rest: { fields: [ 'sale_price', 'regular_price' ], applies: { product: true, variation: true } },

@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList;
+namespace Antijante\ProductsList;
 
 interface Module
 {

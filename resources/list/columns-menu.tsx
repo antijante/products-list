@@ -52,12 +52,12 @@ const SECTION_ORDER = [ 'product', 'pricing', 'stock', 'shipping', 'content' ];
 
 function sectionLabels(): Record< string, string > {
 	return {
-		product: __( 'Product', 'wp-woocommerce-products-list' ),
-		pricing: __( 'Pricing', 'wp-woocommerce-products-list' ),
-		stock: __( 'Stock', 'wp-woocommerce-products-list' ),
-		shipping: __( 'Shipping', 'wp-woocommerce-products-list' ),
-		content: __( 'Content', 'wp-woocommerce-products-list' ),
-		other: __( 'Other', 'wp-woocommerce-products-list' ),
+		product: __( 'Product', 'antijante-products-list' ),
+		pricing: __( 'Pricing', 'antijante-products-list' ),
+		stock: __( 'Stock', 'antijante-products-list' ),
+		shipping: __( 'Shipping', 'antijante-products-list' ),
+		content: __( 'Content', 'antijante-products-list' ),
+		other: __( 'Other', 'antijante-products-list' ),
 	};
 }
 
@@ -153,8 +153,8 @@ export function ColumnsPanel( { fields, view, onChangeView, settings }: ColumnsM
 			<input
 				type="search"
 				className="wc-products-list__columns-search"
-				placeholder={ __( 'Find a column…', 'wp-woocommerce-products-list' ) }
-				aria-label={ __( 'Find a column', 'wp-woocommerce-products-list' ) }
+				placeholder={ __( 'Find a column…', 'antijante-products-list' ) }
+				aria-label={ __( 'Find a column', 'antijante-products-list' ) }
 				value={ search }
 				onChange={ ( event ) => setSearch( event.target.value ) }
 				autoFocus
@@ -170,7 +170,7 @@ export function ColumnsPanel( { fields, view, onChangeView, settings }: ColumnsM
 					) ) }
 				</fieldset>
 			) ) }
-			{ shown.length === 0 && <p className="wc-products-list__columns-empty">{ __( 'No column matches.', 'wp-woocommerce-products-list' ) }</p> }
+			{ shown.length === 0 && <p className="wc-products-list__columns-empty">{ __( 'No column matches.', 'antijante-products-list' ) }</p> }
 		</div>
 	);
 }
@@ -185,7 +185,7 @@ export function ColumnsMenu( props: ColumnsMenuProps ) {
 			popoverProps={ { placement: 'bottom-start' } }
 			renderToggle={ ( { isOpen, onToggle } ) => (
 				<Button size="compact" variant="tertiary" onClick={ onToggle } aria-expanded={ isOpen } aria-haspopup="dialog">
-					{ __( 'Columns', 'wp-woocommerce-products-list' ) }
+					{ __( 'Columns', 'antijante-products-list' ) }
 					{ count > 0 && <span className="wc-products-list__columns-count">{ count }</span> }
 				</Button>
 			) }

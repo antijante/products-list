@@ -1,14 +1,14 @@
 <?php
 
-namespace GeneroWP\ProductsList\Modules;
+namespace Antijante\ProductsList\Modules;
 
-use GeneroWP\ProductsList\Module;
-use GeneroWP\ProductsList\Rest\ClientErrorsController;
-use GeneroWP\ProductsList\Rest\CountsController;
-use GeneroWP\ProductsList\Rest\ListQuery;
-use GeneroWP\ProductsList\Rest\Rows;
-use GeneroWP\ProductsList\Rest\TermsController;
-use GeneroWP\ProductsList\Rest\VariationsReadController;
+use Antijante\ProductsList\Module;
+use Antijante\ProductsList\Rest\ClientErrorsController;
+use Antijante\ProductsList\Rest\CountsController;
+use Antijante\ProductsList\Rest\ListQuery;
+use Antijante\ProductsList\Rest\Rows;
+use Antijante\ProductsList\Rest\TermsController;
+use Antijante\ProductsList\Rest\VariationsReadController;
 
 /**
  * The read side of the REST plumbing: the list-mode query parameters, the

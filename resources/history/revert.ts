@@ -66,7 +66,7 @@ export class RevertBusyError extends Error {
 					'%d item of this batch is still being saved in this tab. Wait until the update is done, then undo it.',
 					'%d items of this batch are still being saved in this tab. Wait until the update is done, then undo it.',
 					ids.length,
-					'wp-woocommerce-products-list'
+					'antijante-products-list'
 				),
 				ids.length
 			)
@@ -117,10 +117,10 @@ export function revertNotice( result: Pick< RevertOutcome, 'ok' | 'conflicts' | 
 			status: 'error',
 			message: sprintf(
 				/* translators: 1: items reverted, 2: items that failed, 3: the first failure's message */
-				__( '%1$d reverted, %2$d failed: %3$s', 'wp-woocommerce-products-list' ),
+				__( '%1$d reverted, %2$d failed: %3$s', 'antijante-products-list' ),
 				result.ok,
 				result.failed.length,
-				result.failed[ 0 ]?.message ?? __( 'Some items could not be reverted.', 'wp-woocommerce-products-list' )
+				result.failed[ 0 ]?.message ?? __( 'Some items could not be reverted.', 'antijante-products-list' )
 			),
 		};
 	}
@@ -130,7 +130,7 @@ export function revertNotice( result: Pick< RevertOutcome, 'ok' | 'conflicts' | 
 			status: 'success',
 			message: sprintf(
 				/* translators: %d: number of items reverted */
-				_n( '%d item reverted.', '%d items reverted.', result.ok, 'wp-woocommerce-products-list' ),
+				_n( '%d item reverted.', '%d items reverted.', result.ok, 'antijante-products-list' ),
 				result.ok
 			),
 		};
@@ -143,14 +143,14 @@ export function revertNotice( result: Pick< RevertOutcome, 'ok' | 'conflicts' | 
 	if ( result.skipped ) {
 		const left = sprintf(
 			/* translators: %d: number of items the revert left as they are */
-			_n( 'Nothing was reverted: %d item was left as it is.', 'Nothing was reverted: %d items were left as they are.', result.skipped, 'wp-woocommerce-products-list' ),
+			_n( 'Nothing was reverted: %d item was left as it is.', 'Nothing was reverted: %d items were left as they are.', result.skipped, 'antijante-products-list' ),
 			result.skipped
 		);
 
 		return { status: 'info', message: result.skippedMessage ? `${ left } ${ result.skippedMessage }` : left };
 	}
 
-	return { status: 'info', message: __( 'Nothing was reverted: no item had anything left to put back.', 'wp-woocommerce-products-list' ) };
+	return { status: 'info', message: __( 'Nothing was reverted: no item had anything left to put back.', 'antijante-products-list' ) };
 }
 
 export interface RevertCheckSummary {
@@ -366,7 +366,7 @@ export function describeConflict( result: ActionResult, label: ( key: string ) =
 		if ( result.batch && result.current && key in result.batch && key in result.current ) {
 			return sprintf(
 				/* translators: 1: field label, 2: value the batch left, 3: value now (kept) */
-				__( '%1$s %2$s → %3$s kept', 'wp-woocommerce-products-list' ),
+				__( '%1$s %2$s → %3$s kept', 'antijante-products-list' ),
 				fieldLabel,
 				shown( result.batch[ key ], key, format ),
 				shown( result.current[ key ], key, format )

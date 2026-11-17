@@ -76,8 +76,8 @@ export function stockStatusTakers( rows: ProductListItem[], manageStock: unknown
 
 /** Variations are Active (publish) or Inactive (private): the list's vocabulary, and what the Enable/Disable actions write. */
 export const VARIATION_STATUS_ELEMENTS: Option[] = [
-	{ value: 'publish', label: __( 'Active', 'wp-woocommerce-products-list' ) },
-	{ value: 'private', label: __( 'Inactive', 'wp-woocommerce-products-list' ) },
+	{ value: 'publish', label: __( 'Active', 'antijante-products-list' ) },
+	{ value: 'private', label: __( 'Inactive', 'antijante-products-list' ) },
 ];
 
 /** How much of a reference value (the default-language description) the help text shows. */
@@ -85,12 +85,12 @@ export const REFERENCE_MAX_LENGTH = 200;
 
 /** The shipping classes a variation can pick: its parent's, or one of the store's. */
 export function variationShippingClassElements( settings: Pick< Settings, 'shippingClasses' > ): Option[] {
-	return [ { value: '', label: __( 'Same as parent', 'wp-woocommerce-products-list' ) }, ...settings.shippingClasses.map( ( entry ) => ( { value: String( entry.value ), label: entry.label } ) ) ];
+	return [ { value: '', label: __( 'Same as parent', 'antijante-products-list' ) }, ...settings.shippingClasses.map( ( entry ) => ( { value: String( entry.value ), label: entry.label } ) ) ];
 }
 
 /** The tax classes a variation can pick: its parent's (stored as `parent`, WooCommerce's own value), or one of the store's. */
 export function variationTaxClassElements( settings: Pick< Settings, 'taxClasses' > ): Option[] {
-	return [ { value: 'parent', label: __( 'Same as parent', 'wp-woocommerce-products-list' ) }, ...settings.taxClasses.map( ( entry ) => ( { value: String( entry.value ), label: entry.label } ) ) ];
+	return [ { value: 'parent', label: __( 'Same as parent', 'antijante-products-list' ) }, ...settings.taxClasses.map( ( entry ) => ( { value: String( entry.value ), label: entry.label } ) ) ];
 }
 
 function scheduleIdFor( fieldId: string ): string | null {
@@ -162,10 +162,10 @@ function integerMessage( value: unknown, signed = false ): string | null {
 	const text = String( value ).trim();
 
 	if ( ! INTEGER_PATTERN.test( text ) ) {
-		return __( 'Enter a whole number.', 'wp-woocommerce-products-list' );
+		return __( 'Enter a whole number.', 'antijante-products-list' );
 	}
 
-	return ! signed && Number( text ) < 0 ? __( 'The quantity cannot be negative.', 'wp-woocommerce-products-list' ) : null;
+	return ! signed && Number( text ) < 0 ? __( 'The quantity cannot be negative.', 'antijante-products-list' ) : null;
 }
 
 export function toFormFields( fields: ProductField[], options: FormFieldOptions ): Field< FormData >[] {
@@ -209,13 +209,13 @@ export function toFormFields( fields: ProductField[], options: FormFieldOptions 
 		if ( typeof edited === 'string' && edited !== '' ) {
 			formField.description = sprintf(
 				/* translators: %s: the default-language value as typed on the General tab, not saved yet */
-				__( 'Default (not saved yet): %s', 'wp-woocommerce-products-list' ),
+				__( 'Default (not saved yet): %s', 'antijante-products-list' ),
 				referenceText( field, edited, settings )
 			);
 		} else if ( reference !== null && reference !== '' ) {
 			formField.description = sprintf(
 				/* translators: %s: the default-language value */
-				__( 'Default: %s', 'wp-woocommerce-products-list' ),
+				__( 'Default: %s', 'antijante-products-list' ),
 				referenceText( field, reference, settings )
 			);
 
@@ -225,7 +225,7 @@ export function toFormFields( fields: ProductField[], options: FormFieldOptions 
 			if ( shown ) {
 				formField.description = sprintf(
 					/* translators: 1: "Shown now (English fallback)", 2: that text, 3: "Default: <default-language text>" */
-					__( '%1$s: %2$s · %3$s', 'wp-woocommerce-products-list' ),
+					__( '%1$s: %2$s · %3$s', 'antijante-products-list' ),
 					shown.label,
 					referenceText( field, shown.text, settings ),
 					formField.description
@@ -290,12 +290,12 @@ export function toFormFields( fields: ProductField[], options: FormFieldOptions 
 		if ( onlyVariations && leaf === 'status' && ! field.Edit ) {
 			formField.elements = VARIATION_STATUS_ELEMENTS;
 			formField.getElements = undefined;
-			formField.description ??= __( 'Inactive variations cannot be bought.', 'wp-woocommerce-products-list' );
+			formField.description ??= __( 'Inactive variations cannot be bought.', 'antijante-products-list' );
 		}
 
 		// A variable product's own stock is the whole product's; restocking sizes happens on the variations.
 		if ( onlyVariableParents && field.id === 'manage_stock' ) {
-			formField.description ??= __( 'Stock for the product as a whole. Each variation (a size, a colour) can keep its own stock.', 'wp-woocommerce-products-list' );
+			formField.description ??= __( 'Stock for the product as a whole. Each variation (a size, a colour) can keep its own stock.', 'antijante-products-list' );
 		}
 
 		// WooCommerce works the stock status out from the quantity of a row that manages stock, and a variable product's from
@@ -308,9 +308,9 @@ export function toFormFields( fields: ProductField[], options: FormFieldOptions 
 
 		if ( isParentDerivedField( field ) ) {
 			if ( bulk && someVariableParents ) {
-				formField.description ??= __( 'Skipped for variable products (their variations decide it) and for items that manage stock (their quantity decides it).', 'wp-woocommerce-products-list' );
+				formField.description ??= __( 'Skipped for variable products (their variations decide it) and for items that manage stock (their quantity decides it).', 'antijante-products-list' );
 			} else if ( bulk ) {
-				formField.description ??= __( 'Skipped for items that manage stock: their quantity decides it.', 'wp-woocommerce-products-list' );
+				formField.description ??= __( 'Skipped for items that manage stock: their quantity decides it.', 'antijante-products-list' );
 			}
 		}
 
@@ -327,13 +327,13 @@ export function toFormFields( fields: ProductField[], options: FormFieldOptions 
 		}
 
 		if ( bulk && noRowManagesStock && field.id === 'manage_stock' ) {
-			const none = __( 'None of these items manages stock. Tick it to set the stock quantity, backorders and low stock threshold.', 'wp-woocommerce-products-list' );
+			const none = __( 'None of these items manages stock. Tick it to set the stock quantity, backorders and low stock threshold.', 'antijante-products-list' );
 
 			formField.description = typeof formField.description === 'string' && formField.description ? `${ formField.description } ${ none }` : formField.description ?? none;
 		}
 
 		if ( ! bulk && field.id === 'manage_stock' ) {
-			formField.description ??= onlyVariations ? __( 'Track stock quantity for this variation.', 'wp-woocommerce-products-list' ) : __( 'Track stock quantity for this product.', 'wp-woocommerce-products-list' );
+			formField.description ??= onlyVariations ? __( 'Track stock quantity for this variation.', 'antijante-products-list' ) : __( 'Track stock quantity for this product.', 'antijante-products-list' );
 		}
 
 		// A variation without a class of its own ships like its parent; the product-level "No shipping class" is not a choice here.
@@ -374,7 +374,7 @@ export function toFormFields( fields: ProductField[], options: FormFieldOptions 
 			formField.Edit = createMixedTextControl();
 		} else if ( bulk && isMixed && hasOptionList( field ) ) {
 			// Rows disagree: the select shows "Mixed" until the user picks a value for all of them.
-			const mixedOption: Option = { value: MIXED_VALUE, label: __( '— Mixed (no change) —', 'wp-woocommerce-products-list' ) };
+			const mixedOption: Option = { value: MIXED_VALUE, label: __( '— Mixed (no change) —', 'antijante-products-list' ) };
 
 			if ( formField.getElements ) {
 				const getElements = formField.getElements;

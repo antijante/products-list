@@ -7,7 +7,7 @@ export function createWeightField( settings: Settings ): ProductField {
 	return field( {
 		id: 'weight',
 		type: 'number',
-		label: __( 'Weight', 'wp-woocommerce-products-list' ),
+		label: __( 'Weight', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: false,
 		render: ( { item } ) => <span>{ item.weight ? `${ item.weight } ${ settings.units.weight }` : '—' }</span>,
@@ -22,7 +22,7 @@ export function createDimensionsField( settings: Settings ): ProductField {
 	return field( {
 		id: 'dimensions',
 		type: 'text',
-		label: __( 'Dimensions', 'wp-woocommerce-products-list' ),
+		label: __( 'Dimensions', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: false,
 		readOnly: true,
@@ -47,12 +47,12 @@ export function createDimensionsField( settings: Settings ): ProductField {
 }
 
 export function createShippingClassField( settings: Settings ): ProductField {
-	const options = [ { value: '', label: __( 'No shipping class', 'wp-woocommerce-products-list' ) }, ...settings.shippingClasses.map( ( c ) => ( { value: c.value, label: c.label } ) ) ];
+	const options = [ { value: '', label: __( 'No shipping class', 'antijante-products-list' ) }, ...settings.shippingClasses.map( ( c ) => ( { value: c.value, label: c.label } ) ) ];
 
 	return field( {
 		id: 'shipping_class',
 		type: 'text',
-		label: __( 'Shipping class', 'wp-woocommerce-products-list' ),
+		label: __( 'Shipping class', 'antijante-products-list' ),
 		elements: options,
 		enableSorting: false,
 		filterBy: settings.shippingClasses.length ? { operators: [ 'isAny' ] } : false,

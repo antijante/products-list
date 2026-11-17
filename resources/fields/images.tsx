@@ -44,7 +44,7 @@ export function createImagesField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'images',
 		type: 'media',
-		label: __( 'Image', 'wp-woocommerce-products-list' ),
+		label: __( 'Image', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: false,
 		// The thumbnail opens the row's images for editing (list/inline-edit/image-cell-editor.tsx).
@@ -52,6 +52,6 @@ export function createImagesField( _settings: Settings ): ProductField {
 		getValue: ( { item } ) => firstImage( item )?.src ?? '',
 		Edit: ImagesControl,
 		rest: { fields: [ 'images' ], applies: { product: true, variation: true }, read: ownImages, write: writeImages },
-		edit: { group: 'general', bulk: false, order: 5, label: __( 'Images', 'wp-woocommerce-products-list' ) },
+		edit: { group: 'general', bulk: false, order: 5, label: __( 'Images', 'antijante-products-list' ) },
 	} );
 }

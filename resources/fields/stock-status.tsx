@@ -7,7 +7,7 @@ import { field } from './helpers';
 export function variationStockLabel( summary: VariationStockSummary ): string {
 	return sprintf(
 		/* translators: 1: variations out of stock, 2: variations in total */
-		_n( '%1$d of %2$d variation out of stock', '%1$d of %2$d variations out of stock', summary.total, 'wp-woocommerce-products-list' ),
+		_n( '%1$d of %2$d variation out of stock', '%1$d of %2$d variations out of stock', summary.total, 'antijante-products-list' ),
 		summary.out_of_stock,
 		summary.total
 	);
@@ -35,7 +35,7 @@ export function createStockStatusField( settings: Settings ): ProductField {
 		// only when every variation is) and narrows the expanded variations to
 		// the same status ("3 of 15 variations match"); "Variation stock" is the
 		// any-variation filter.
-		label: __( 'Stock', 'wp-woocommerce-products-list' ),
+		label: __( 'Stock', 'antijante-products-list' ),
 		elements: settings.stockStatuses,
 		// wc/v3 validates `stock_status` against its enum: one value at a time.
 		filterBy: { operators: [ 'is' ], isPrimary: true },
@@ -50,7 +50,7 @@ export function createStockStatusField( settings: Settings ): ProductField {
 				<span className={ `wc-products-list__stock wc-products-list__stock--${ item.stock_status ?? 'unknown' }` }>
 					<OptionCell value={ item.stock_status } options={ settings.stockStatuses } />
 					{ managed && (
-						<span className="wc-products-list__stock-qty" title={ __( 'Stock quantity', 'wp-woocommerce-products-list' ) }>
+						<span className="wc-products-list__stock-qty" title={ __( 'Stock quantity', 'antijante-products-list' ) }>
 							{ item.stock_quantity }
 						</span>
 					) }
@@ -60,7 +60,7 @@ export function createStockStatusField( settings: Settings ): ProductField {
 		},
 		getValue: ( { item } ) => item.stock_status ?? '',
 		rest: { fields: [ 'stock_status', 'stock_quantity', 'manage_stock' ], param: 'stock_status', sortParam: 'stock_quantity', applies: { product: true, variation: true } },
-		edit: { group: 'inventory', bulk: 'default', order: 32, label: __( 'Stock status', 'wp-woocommerce-products-list' ) },
+		edit: { group: 'inventory', bulk: 'default', order: 32, label: __( 'Stock status', 'antijante-products-list' ) },
 	} );
 }
 
@@ -72,11 +72,11 @@ export function createStockStatusField( settings: Settings ): ProductField {
 export function createVariationStockFilter( settings: Settings ): ProductField {
 	return field( {
 		id: 'variation_stock',
-		label: __( 'Variation stock', 'wp-woocommerce-products-list' ),
+		label: __( 'Variation stock', 'antijante-products-list' ),
 		elements: settings.stockStatuses.map( ( option ) => ( {
 			value: option.value,
 			/* translators: %s: a stock status ("Out of stock") */
-			label: sprintf( __( 'Any variation: %s', 'wp-woocommerce-products-list' ), option.label ),
+			label: sprintf( __( 'Any variation: %s', 'antijante-products-list' ), option.label ),
 		} ) ),
 		filterBy: { operators: [ 'is' ] },
 		readOnly: true,

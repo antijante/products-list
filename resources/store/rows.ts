@@ -1,7 +1,7 @@
 /**
  * The rows the Catalog currently renders (parents and expanded variations,
  * placeholders excluded), published by the screen for
- * `window.wcProductsList.getItems()`. Module state, not React state: the
+ * `window.antijanteProductsList.getItems()`. Module state, not React state: the
  * extension API exists before the screen mounts and outlives it.
  */
 import { isPlaceholderRow } from '../types/product';

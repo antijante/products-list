@@ -14,11 +14,11 @@ export const createHistoryAction: ActionFactory = ( { fields } ) => {
 
 	const action: ProductAction = {
 		id: 'history',
-		label: __( 'History', 'wp-woocommerce-products-list' ),
+		label: __( 'History', 'antijante-products-list' ),
 		supportsBulk: false,
 		isEligible: isRealRow,
 		RenderModal: ( props: RenderModalProps< ProductListItem > ) => <RowHistoryModal { ...props } productFields={ fields } />,
-		modalHeader: ( items ) => ( items[ 0 ] ? `${ __( 'History', 'wp-woocommerce-products-list' ) }: ${ nameOf( items[ 0 ] ) }` : __( 'History', 'wp-woocommerce-products-list' ) ),
+		modalHeader: ( items ) => ( items[ 0 ] ? `${ __( 'History', 'antijante-products-list' ) }: ${ nameOf( items[ 0 ] ) }` : __( 'History', 'antijante-products-list' ) ),
 		modalSize: 'large',
 	};
 

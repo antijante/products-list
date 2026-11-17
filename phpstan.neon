@@ -5,7 +5,7 @@ parameters:
     level: 5
     paths:
         - src
-        - wp-woocommerce-products-list.php
+        - antijante-products-list.php
     scanFiles:
         - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
         - tests/phpstan/functions.stub

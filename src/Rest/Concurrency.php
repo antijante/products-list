@@ -1,10 +1,10 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
+use Antijante\ProductsList\Log\Recorder;
+use Antijante\ProductsList\Log\Revert;
 use Automattic\WooCommerce\Internal\Caches\ProductCache;
-use GeneroWP\ProductsList\Log\Recorder;
-use GeneroWP\ProductsList\Log\Revert;
 use WC_Product;
 use WP_Error;
 use WP_REST_Request;
@@ -74,7 +74,7 @@ final class Concurrency
     public const EDITING_ERROR = 'wc_products_list_editing';
 
     /** Seconds a save waits for another save of the same object to finish. */
-    public const FILTER_LOCK_TIMEOUT = 'wc_products_list/lock_timeout';
+    public const FILTER_LOCK_TIMEOUT = 'antijante_products_list/lock_timeout';
 
     public const LOCK_TIMEOUT = 10;
 
@@ -800,7 +800,7 @@ final class Concurrency
                     '%s was changed by someone else since this edit was started. Nothing was saved for this item; reload it and apply the change again.',
                     '%s were changed by someone else since this edit was started. Nothing was saved for this item; reload it and apply the change again.',
                     count($conflicts),
-                    'wp-woocommerce-products-list'
+                    'antijante-products-list'
                 ),
                 implode(', ', $labels)
             ),
@@ -818,7 +818,7 @@ final class Concurrency
     {
         return new WP_Error(
             self::LOCKED_ERROR,
-            __('Another save of this item is still running (another tab, another user or an undo). Nothing was saved for this item; try again in a moment.', 'wp-woocommerce-products-list'),
+            __('Another save of this item is still running (another tab, another user or an undo). Nothing was saved for this item; try again in a moment.', 'antijante-products-list'),
             ['status' => 409, 'id' => $id]
         );
     }
@@ -827,7 +827,7 @@ final class Concurrency
     {
         return new WP_Error(
             self::DELETED_ERROR,
-            __('This item was deleted meanwhile (in another tab or by another user). Nothing was saved for it.', 'wp-woocommerce-products-list'),
+            __('This item was deleted meanwhile (in another tab or by another user). Nothing was saved for it.', 'antijante-products-list'),
             ['status' => 404, 'id' => $id]
         );
     }
@@ -924,7 +924,7 @@ final class Concurrency
         if ($user === get_current_user_id()) {
             return new WP_Error(
                 self::EDITING_ERROR,
-                __('You have this product open in the product editor (in another tab or window). Its Update would put the editor\'s values back, so nothing was saved for this item; save or close it there, then try again.', 'wp-woocommerce-products-list'),
+                __('You have this product open in the product editor (in another tab or window). Its Update would put the editor\'s values back, so nothing was saved for this item; save or close it there, then try again.', 'antijante-products-list'),
                 ['status' => 409, 'id' => $id, 'user' => $user]
             );
         }
@@ -933,8 +933,8 @@ final class Concurrency
             self::EDITING_ERROR,
             sprintf(
                 /* translators: %s: user's display name */
-                __('%s is editing this product in the product editor. Nothing was saved for this item; try again when they are done.', 'wp-woocommerce-products-list'),
-                $who instanceof \WP_User ? $who->display_name : __('Another user', 'wp-woocommerce-products-list')
+                __('%s is editing this product in the product editor. Nothing was saved for this item; try again when they are done.', 'antijante-products-list'),
+                $who instanceof \WP_User ? $who->display_name : __('Another user', 'antijante-products-list')
             ),
             ['status' => 409, 'id' => $id, 'user' => $user]
         );
@@ -1007,7 +1007,7 @@ final class Concurrency
     {
         return new WP_Error(
             self::TRASHED_ERROR,
-            __('This item is in the Trash. Nothing was saved; restore it first.', 'wp-woocommerce-products-list'),
+            __('This item is in the Trash. Nothing was saved; restore it first.', 'antijante-products-list'),
             ['status' => 409, 'id' => $id]
         );
     }
@@ -1118,7 +1118,7 @@ final class Concurrency
     {
         return new WP_Error(
             self::REVERT_RUNNING_ERROR,
-            __('A revert of this batch is already running (in another tab or by another user). Wait for it to finish, then check the batch again.', 'wp-woocommerce-products-list'),
+            __('A revert of this batch is already running (in another tab or by another user). Wait for it to finish, then check the batch again.', 'antijante-products-list'),
             ['status' => 409]
         );
     }

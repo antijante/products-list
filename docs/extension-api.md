@@ -2,8 +2,8 @@
 
 Other plugins add columns, filters, quick-edit tabs and actions to the Catalog screen. There are two layers, and they produce the same field shape:
 
-1. **Declarative, from PHP.** Return array definitions from the `wc_products_list/fields`, `wc_products_list/filters` and `wc_products_list/actions` filters. They are serialised into `window.wcProductsListSettings` and the app turns them into DataViews fields and actions. No JavaScript needed; this is how gds-woo-i18n adds a column per language.
-2. **JavaScript.** A script enqueued on `wc_products_list/enqueue` with the `wc-products-list` handle as a dependency uses `window.wcProductsList` and the `wp.hooks` filters below.
+1. **Declarative, from PHP.** Return array definitions from the `antijante_products_list/fields`, `antijante_products_list/filters` and `antijante_products_list/actions` filters. They are serialised into `window.antijanteProductsListSettings` and the app turns them into DataViews fields and actions. No JavaScript needed; this is how gds-woo-i18n adds a column per language.
+2. **JavaScript.** A script enqueued on `antijante_products_list/enqueue` with the `wc-products-list` handle as a dependency uses `window.antijanteProductsList` and the `wp.hooks` filters below.
 
 Use the declarative layer when the data is a value on the row that the server can read and write. Use JavaScript when you need a custom control, a computed column, or to change what the app does.
 
@@ -12,13 +12,13 @@ Use the declarative layer when the data is a value on the row that the server ca
 ## Declarative definitions (PHP)
 
 ```php
-add_filter('wc_products_list/fields', function (array $fields): array {
+add_filter('antijante_products_list/fields', function (array $fields): array {
     $fields['i18n:se.name'] = [
         'label'     => 'Name (Svenska)',
         'type'      => 'text',
         'path'      => 'i18n.se.name.value',   // where the value is on the row
         'reference' => 'i18n.se.name.source',  // read-only companion, shown muted when the value is empty
-        'writeKey'  => 'i18n',                 // top-level request key: its presence fires wc_products_list/save
+        'writeKey'  => 'i18n',                 // top-level request key: its presence fires antijante_products_list/save
         'writePath' => 'i18n.se.name',         // where the edited value goes in the request body
         'group'     => 'i18n:se',              // one quick-edit tab per group
         'visible'   => true,                   // in the default table
@@ -30,7 +30,7 @@ add_filter('wc_products_list/fields', function (array $fields): array {
 });
 ```
 
-The row data under `path` comes from your `wc_products_list/row` filter; the edited value under `writePath` reaches your `wc_products_list/save` handler. A write that depends on the stored value (an increase by a percent, an append, a copy that keeps existing values) is resolved in `wc_products_list/save`, or on `woocommerce_rest_pre_insert_{product,product_variation}_object` at any priority above `PHP_INT_MIN`, from the `$product` passed in: the list's concurrency guard runs first (`Saves::GUARD_PRIORITY`), so that object is the stored state under the item's lock, and a value saved by someone else meanwhile is built on, not overwritten (`docs/contracts.md` §3.6). `docs/contracts.md` §6 lists every key and its default. The ones the JavaScript side acts on:
+The row data under `path` comes from your `antijante_products_list/row` filter; the edited value under `writePath` reaches your `antijante_products_list/save` handler. A write that depends on the stored value (an increase by a percent, an append, a copy that keeps existing values) is resolved in `antijante_products_list/save`, or on `woocommerce_rest_pre_insert_{product,product_variation}_object` at any priority above `PHP_INT_MIN`, from the `$product` passed in: the list's concurrency guard runs first (`Saves::GUARD_PRIORITY`), so that object is the stored state under the item's lock, and a value saved by someone else meanwhile is built on, not overwritten (`docs/contracts.md` §3.6). `docs/contracts.md` §6 lists every key and its default. The ones the JavaScript side acts on:
 
 | Key | Effect in the app |
 | --- | --- |
@@ -41,15 +41,15 @@ The row data under `path` comes from your `wc_products_list/row` filter; the edi
 | `applies.product` | `true` or a list of parent product types the field is shown and edited for |
 | `applies.variation` | the field exists on variation rows too |
 | `group` / `tab` | the quick-edit tab; `i18n:se` becomes a tab per language |
-| `enableSorting` / `sortParam` | sortable column; `sortParam` is the wc/v3 `orderby` value your `wc_products_list/product_query_args` handles |
+| `enableSorting` / `sortParam` | sortable column; `sortParam` is the wc/v3 `orderby` value your `antijante_products_list/product_query_args` handles |
 | `filter` | `{ param, operators }` offers the column as a filter; the chosen value is sent as `{ [param]: value }` (`isNot`/`isNone` send `exclude_{param}`). Optional `toParams` maps option values to the params to send instead: `['low' => ['max_stock_quantity' => 5]]` |
 | `currency` / `precision` | for `price`: the ISO code and decimals. Without `currency`, a field in group `i18n:{lang}` uses `languages.currencies[lang]` from the bootstrap payload, else the site currency |
 | `referenceLabel` | the `title` of the muted reference value ("Suomi") |
 
-**Filters** (`wc_products_list/filters`) become filter-only fields: options, operators, no column, no edit. An option's `params` are merged into the list query verbatim; without `params`, `{ [param]: value }` is sent. `variations: true` sends the params on variation requests too.
+**Filters** (`antijante_products_list/filters`) become filter-only fields: options, operators, no column, no edit. An option's `params` are merged into the list query verbatim; without `params`, `{ [param]: value }` is sent. `variations: true` sends the params on variation requests too.
 
 ```php
-add_filter('wc_products_list/filters', function (array $filters): array {
+add_filter('antijante_products_list/filters', function (array $filters): array {
     $filters['translation'] = [
         'label'     => 'Translation',
         'type'      => 'select',
@@ -63,17 +63,17 @@ add_filter('wc_products_list/filters', function (array $filters): array {
 });
 ```
 
-**Actions** (`wc_products_list/actions`) show up in the row menu and the bulk toolbar and run `POST /wc-products-list/v1/actions/{id}` with the selected ids. Without `args` and `confirm` the action runs on click. With either, a modal collects the args (`text`, `select`, `boolean`, `integer`, `number`, `array`; `required` blocks the button) and shows the confirm text. The form starts from each arg's `default`; a required `select` without one starts on its first option, so the button is enabled with the value the user sees. An `array` arg is a checkbox group over its `options` and is sent as a list of the ticked values (`'default' => ['name']` or `'name,slug'` pre-ticks them); use it for "which fields" choices instead of a comma-separated text input. `scope` limits the action to products, variations or both; `destructive` styles the button; the handler itself is a `GeneroWP\ProductsList\Actions\Action` registered through `wc_products_list/action_handlers`.
+**Actions** (`antijante_products_list/actions`) show up in the row menu and the bulk toolbar and run `POST /wc-products-list/v1/actions/{id}` with the selected ids. Without `args` and `confirm` the action runs on click. With either, a modal collects the args (`text`, `select`, `boolean`, `integer`, `number`, `array`; `required` blocks the button) and shows the confirm text. The form starts from each arg's `default`; a required `select` without one starts on its first option, so the button is enabled with the value the user sees. An `array` arg is a checkbox group over its `options` and is sent as a list of the ticked values (`'default' => ['name']` or `'name,slug'` pre-ticks them); use it for "which fields" choices instead of a comma-separated text input. `scope` limits the action to products, variations or both; `destructive` styles the button; the handler itself is a `Antijante\ProductsList\Actions\Action` registered through `antijante_products_list/action_handlers`.
 
 **Actions hosted in the editor.** A declarative action with a non-null `group` and a `select` arg with id `lang` (gds-woo-i18n's `i18n_copy` and `i18n_clear`) runs inline in the quick/bulk editor instead: on each `<group>:<lang>` tab a "Copy or clear <Language> for the selected items" panel shows the action with `lang` fixed to that tab's language and the other args as inline controls; a `destructive` action asks through an in-page confirm, and the tab's values reload after a run. While an editor is available the action is not listed in the row menu or the bulk toolbar.
 
 ## JavaScript API
 
-`window.wcProductsList` exists when your script runs (enqueue it on `wc_products_list/enqueue` with the handle you receive as a dependency). If you cannot guarantee the order, register in a `wcProductsList.ready` handler; both work, before and after the app mounts.
+`window.antijanteProductsList` exists when your script runs (enqueue it on `antijante_products_list/enqueue` with the handle you receive as a dependency). If you cannot guarantee the order, register in a `antijanteProductsList.ready` handler; both work, before and after the app mounts.
 
 ```js
-( window.wcProductsList ? Promise.resolve( window.wcProductsList )
-    : new Promise( ( resolve ) => wp.hooks.addAction( 'wcProductsList.ready', 'my-plugin/wc-products-list', resolve ) )
+( window.antijanteProductsList ? Promise.resolve( window.antijanteProductsList )
+    : new Promise( ( resolve ) => wp.hooks.addAction( 'antijanteProductsList.ready', 'my-plugin/wc-products-list', resolve ) )
 ).then( ( api ) => { /* … */ } );
 ```
 
@@ -115,7 +115,7 @@ api.registerField( {
 
 A registered field is offered under **Add filter** only when the list query can act on it: give it `rest.param` (sent as `{ [param]: value }`), `rest.toParams( value, operator )`, or `elements` whose entries carry `params`; otherwise `filterBy` defaults to `false` (an explicit `filterBy` is kept either way).
 
-Give a field that writes its own storage `rest.expect( item, payload )` to have its writes checked for clashes like the core fields: return `{ [ path ]: loaded value }` for the paths your payload writes (or nothing when the payload does not write the field). The server compares it with the stored value it reads through the `wc_products_list/log_value` filter (meta-backed fields written as `meta_data` are checked without it: the editor sends the key's loaded value, or `null` when the row's loaded `meta_data` list lacks the key, as the form showed it empty). Example for the field above: `expect: ( item, payload ) => ( payload.meta_data ? { 'meta_data._note': ( item.meta_data || [] ).find( ( m ) => m.key === '_note' )?.value ?? '' } : null )`.
+Give a field that writes its own storage `rest.expect( item, payload )` to have its writes checked for clashes like the core fields: return `{ [ path ]: loaded value }` for the paths your payload writes (or nothing when the payload does not write the field). The server compares it with the stored value it reads through the `antijante_products_list/log_value` filter (meta-backed fields written as `meta_data` are checked without it: the editor sends the key's loaded value, or `null` when the row's loaded `meta_data` list lacks the key, as the form showed it empty). Example for the field above: `expect: ( item, payload ) => ( payload.meta_data ? { 'meta_data._note': ( item.meta_data || [] ).find( ( m ) => m.key === '_note' )?.value ?? '' } : null )`.
 
 **Edit in table.** A registered field that quick edit shows is also typed into in its table cell while the toolbar's "Edit in table" is on, when it is a plain value: a text field without its own `Edit` control or options, a money or integer field (`edit.bulk: 'money' | 'integer'`, or a `currency`), a field with `elements` (a select), or a boolean. HTML fields (`html: true`), lists, dates and text fields with their own `Edit` component keep their cell; a money, select or boolean field gets the table's own input whatever its `Edit` (a price parsed in the shop's or its `currency`'s notation). A price typed ten times the stored one or more (or a tenth or less) is asked about once before it saves. The cell saves through the same path as quick edit (`rest.write`, `rest.expect`, the log).
 
@@ -148,25 +148,25 @@ Names are exported from `resources/extensions/hooks.ts` and available as `api.ho
 
 | Filter | Value | Extra args |
 | --- | --- | --- |
-| `wcProductsList.fields` | `ProductField[]` | `settings` |
-| `wcProductsList.actions` | `ProductAction[]` | `settings` |
-| `wcProductsList.query` | wc/v3 list params | `{ tab, view, fields }` |
-| `wcProductsList.variationsQuery` | variation list params | `{ parentId, page }` |
-| `wcProductsList.item` | a row, after fetch, before cache | — |
-| `wcProductsList.savePayload` | the request body for one item | `item, edits` |
-| `wcProductsList.defaultView` | the DataViews `View` | `settings` |
-| `wcProductsList.statusTabs` | `{ id, label, count }[]` | `counts` |
-| `wcProductsList.quickEdit.tabs` | `QuickEditTab[]` | `items` |
-| `wcProductsList.quickEdit.layout` | the DataForm `Form` of a tab (the General tab is a `row` layout of up to three `regular` columns, each holding labelled `regular` groups; other tabs one or two columns) | `tab, items` |
-| `wcProductsList.bulkNumericFields` | field ids with the set/increase/decrease (and, for sale prices, regular-price-minus) control | — |
+| `antijanteProductsList.fields` | `ProductField[]` | `settings` |
+| `antijanteProductsList.actions` | `ProductAction[]` | `settings` |
+| `antijanteProductsList.query` | wc/v3 list params | `{ tab, view, fields }` |
+| `antijanteProductsList.variationsQuery` | variation list params | `{ parentId, page }` |
+| `antijanteProductsList.item` | a row, after fetch, before cache | — |
+| `antijanteProductsList.savePayload` | the request body for one item | `item, edits` |
+| `antijanteProductsList.defaultView` | the DataViews `View` | `settings` |
+| `antijanteProductsList.statusTabs` | `{ id, label, count }[]` | `counts` |
+| `antijanteProductsList.quickEdit.tabs` | `QuickEditTab[]` | `items` |
+| `antijanteProductsList.quickEdit.layout` | the DataForm `Form` of a tab (the General tab is a `row` layout of up to three `regular` columns, each holding labelled `regular` groups; other tabs one or two columns) | `tab, items` |
+| `antijanteProductsList.bulkNumericFields` | field ids with the set/increase/decrease (and, for sale prices, regular-price-minus) control | — |
 
 | Action | Payload |
 | --- | --- |
-| `wcProductsList.ready` | `api` |
-| `wcProductsList.loaded` | `items, { tab, view, total }` — once per completed list request; optimistic patches (a save, a trash) do not fire it |
-| `wcProductsList.saved` | `{ updated, errors, batchId }, { source }` |
-| `wcProductsList.deleted` | `ids, { action: 'trash' | 'delete', batchId }` |
-| `wcProductsList.actionPerformed` | `{ action, ids, batchId, items }` — a declarative (PHP) action finished; `ids` are the rows it processed without error. The Catalog keeps them selected and keeps them on screen after a refetch of the same view (marked "No longer matches"). |
+| `antijanteProductsList.ready` | `api` |
+| `antijanteProductsList.loaded` | `items, { tab, view, total }` — once per completed list request; optimistic patches (a save, a trash) do not fire it |
+| `antijanteProductsList.saved` | `{ updated, errors, batchId }, { source }` |
+| `antijanteProductsList.deleted` | `ids, { action: 'trash' | 'delete', batchId }` |
+| `antijanteProductsList.actionPerformed` | `{ action, ids, batchId, items }` — a declarative (PHP) action finished; `ids` are the rows it processed without error. The Catalog keeps them selected and keeps them on screen after a refetch of the same view (marked "No longer matches"). |
 
 Register with a namespace of your own, for example `api.hooks.hookNamespace( 'my-plugin' )` → `my-plugin/wc-products-list`.
 
@@ -174,5 +174,5 @@ Register with a namespace of your own, for example `api.hooks.hookNamespace( 'my
 
 - Ask only for what you render: `rest.fields` keeps `_fields` small, and the list page budget is one second for 100 rows.
 - Patch, do not refetch: after your own writes call `patchItems` with the rows the server returned (or `batchUpdate`, which does it for you) and `refresh` only when the row set changed.
-- `addQueryParams` callbacks and `wcProductsList.item` run on every request and row; keep them cheap and pure.
+- `addQueryParams` callbacks and `antijanteProductsList.item` run on every request and row; keep them cheap and pure.
 - A `render` or `Edit` that imports its own component library doubles the bundle; the dataviews edit configs (`{ control: 'textarea' }`, `{ control: 'text', suffix }`) cover most cases.

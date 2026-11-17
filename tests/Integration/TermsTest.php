@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Rest\TermsController;
+use Antijante\ProductsList\Rest\TermsController;
 
 class TermsTest extends RestTestCase
 {

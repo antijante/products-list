@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\ListMode;
+use Antijante\ProductsList\ListMode;
 use WC_Product;
 use WeakMap;
 use WP_REST_Request;
@@ -14,7 +14,7 @@ use WP_REST_Response;
  * `can_delete`, `parent_id`, and on variable products `variation_stock`
  * and `sale_summary`, one query per page; on a searched page also
  * `variation_sku_match`) and the integrations' keys through
- * `wc_products_list/row`. Only in list mode.
+ * `antijante_products_list/row`. Only in list mode.
  *
  * Kept cheap on purpose: a page of 100 rows must not add a query per row.
  * The variation count reads the children WooCommerce has already loaded
@@ -26,11 +26,11 @@ final class Rows
 {
     public const KEY = 'wc_products_list';
 
-    public const FILTER_ROW = 'wc_products_list/row';
+    public const FILTER_ROW = 'antijante_products_list/row';
 
     public const BRANDS_FILTER = 'woocommerce_rest_prepare_product_object';
 
-    public const FILTER_VARIATION_TAXONOMIES = 'wc_products_list/variation_term_taxonomies';
+    public const FILTER_VARIATION_TAXONOMIES = 'antijante_products_list/variation_term_taxonomies';
 
     /** The read param that keeps the gallery in list mode (the image editor's load). */
     public const GALLERY_PARAM = 'wcpl_gallery';
@@ -256,7 +256,7 @@ final class Rows
          *
          * @param  bool  $drop
          */
-        if (! apply_filters('wc_products_list/drop_gallery', true)) {
+        if (! apply_filters('antijante_products_list/drop_gallery', true)) {
             return $ids;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Plugin;
 
 /**
  * Boots WordPress, WooCommerce and the plugin for the integration suite.
@@ -56,7 +56,7 @@ tests_add_filter('muplugins_loaded', function (): void {
 
     require_once $woocommerce;
 
-    require dirname(__DIR__).'/wp-woocommerce-products-list.php';
+    require dirname(__DIR__).'/antijante-products-list.php';
 });
 
 tests_add_filter('init', function (): void {
@@ -64,7 +64,7 @@ tests_add_filter('init', function (): void {
      * A test site is a fresh database on every run, so nothing has been
      * activated: WooCommerce's tables, roles and pages have to be installed,
      * and this plugin's activation run (the Log module creates its table
-     * on `wc_products_list/activate`), before the first test.
+     * on `antijante_products_list/activate`), before the first test.
      *
      * On init rather than setup_theme, and after priority 5: WooCommerce's
      * installer schedules actions and looks for existing orders, and it

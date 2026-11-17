@@ -8,7 +8,7 @@ export function createIdentityFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'id',
 			type: 'integer',
-			label: __( 'ID', 'wp-woocommerce-products-list' ),
+			label: __( 'ID', 'antijante-products-list' ),
 			enableSorting: true,
 			filterBy: false,
 			readOnly: true,
@@ -19,7 +19,7 @@ export function createIdentityFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'slug',
 			type: 'text',
-			label: __( 'Slug', 'wp-woocommerce-products-list' ),
+			label: __( 'Slug', 'antijante-products-list' ),
 			enableSorting: true,
 			filterBy: false,
 			getValue: ( { item } ) => item.slug ?? '',
@@ -29,7 +29,7 @@ export function createIdentityFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'menu_order',
 			type: 'integer',
-			label: __( 'Menu order', 'wp-woocommerce-products-list' ),
+			label: __( 'Menu order', 'antijante-products-list' ),
 			enableSorting: true,
 			filterBy: false,
 			getValue: ( { item } ) => item.menu_order ?? 0,
@@ -39,7 +39,7 @@ export function createIdentityFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'permalink',
 			type: 'url',
-			label: __( 'Permalink', 'wp-woocommerce-products-list' ),
+			label: __( 'Permalink', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			readOnly: true,
@@ -48,7 +48,7 @@ export function createIdentityFields( _settings: Settings ): ProductField[] {
 
 				return typeof url === 'string' && url ? (
 					<a href={ url } target="_blank" rel="noreferrer">
-						{ __( 'View', 'wp-woocommerce-products-list' ) }
+						{ __( 'View', 'antijante-products-list' ) }
 					</a>
 				) : (
 					<span>—</span>

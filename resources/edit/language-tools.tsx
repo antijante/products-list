@@ -126,7 +126,7 @@ export function toolTargetsLabel( def: Pick< DeclarativeAction, 'args' | 'scope'
 	if ( reached.length === 0 ) {
 		return sprintf(
 			/* translators: %d: number of items */
-			_n( '%d item', '%d items', ids.length, 'wp-woocommerce-products-list' ),
+			_n( '%d item', '%d items', ids.length, 'antijante-products-list' ),
 			ids.length
 		);
 	}
@@ -136,15 +136,15 @@ export function toolTargetsLabel( def: Pick< DeclarativeAction, 'args' | 'scope'
 	const own = ids.length - reached.length;
 	const variations = sprintf(
 		/* translators: 1: "N variations", 2: "M products" */
-		__( '%1$s of %2$s', 'wp-woocommerce-products-list' ),
+		__( '%1$s of %2$s', 'antijante-products-list' ),
 		sprintf(
 			/* translators: %d: number of variations */
-			_n( '%d variation', '%d variations', reached.length, 'wp-woocommerce-products-list' ),
+			_n( '%d variation', '%d variations', reached.length, 'antijante-products-list' ),
 			reached.length
 		),
 		sprintf(
 			/* translators: %d: number of variable products */
-			_n( '%d product', '%d products', parents, 'wp-woocommerce-products-list' ),
+			_n( '%d product', '%d products', parents, 'antijante-products-list' ),
 			parents
 		)
 	);
@@ -152,7 +152,7 @@ export function toolTargetsLabel( def: Pick< DeclarativeAction, 'args' | 'scope'
 	return own > 0
 		? sprintf(
 				/* translators: 1: "N variations of M products", 2: number of other items */
-				_n( '%1$s and %2$d other item', '%1$s and %2$d other items', own, 'wp-woocommerce-products-list' ),
+				_n( '%1$s and %2$d other item', '%1$s and %2$d other items', own, 'antijante-products-list' ),
 				variations,
 				own
 		  )
@@ -435,17 +435,17 @@ export function previewTransform(
 					note = named.from
 						? sprintf(
 								/* translators: 1: language the name comes from, 2: the tab's language */
-								__( '{name} is the %1$s name: no %2$s name', 'wp-woocommerce-products-list' ),
+								__( '{name} is the %1$s name: no %2$s name', 'antijante-products-list' ),
 								labelOf( named.from ),
 								labelOf( lang )
 						  )
 						: sprintf(
 								/* translators: %s: the tab's language */
-								__( '{name} is another language\'s name: no %s name', 'wp-woocommerce-products-list' ),
+								__( '{name} is another language\'s name: no %s name', 'antijante-products-list' ),
 								labelOf( lang )
 						  );
 				} else if ( usesName && named.text === null ) {
-					note = __( '{name} is filled in on save: the name is not loaded here', 'wp-woocommerce-products-list' );
+					note = __( '{name} is filled in on save: the name is not loaded here', 'antijante-products-list' );
 				}
 			}
 
@@ -460,7 +460,7 @@ export function previewTransform(
 					id: item.id,
 					label: itemLabel( item ),
 					field: field.label ?? name,
-					before: plainText( old ) || __( '(not translated)', 'wp-woocommerce-products-list' ),
+					before: plainText( old ) || __( '(not translated)', 'antijante-products-list' ),
 					after: plainText( next ),
 					...( note ? { note } : {} ),
 				} );
@@ -677,7 +677,7 @@ export function previewPrices( def: DeclarativeAction, data: Record< string, unk
 					id: item.id,
 					label: itemLabel( item ),
 					field: priceField?.label ?? field,
-					before: current[ field ] !== '' ? priceText( current[ field ], priceField, settings ) : __( '(no sale)', 'wp-woocommerce-products-list' ),
+					before: current[ field ] !== '' ? priceText( current[ field ], priceField, settings ) : __( '(no sale)', 'antijante-products-list' ),
 					after: priceText( value, priceField, settings ),
 				} );
 			}
@@ -821,20 +821,20 @@ function nothingAppliesText( def: DeclarativeAction, items: readonly ProductList
 		if ( ! applyToVariations ) {
 			// Name the control the editor shows: quick edit has "Set the price of all its variations", bulk edit (even down to one item) "Also apply to the variations".
 			return bulk
-				? __( 'Variable products have no prices of their own. Tick "Also apply to the variations" in Prices to change their variations\' prices.', 'wp-woocommerce-products-list' )
-				: __( 'This variable product has no prices of its own. Tick "Set the price of all its variations" in Prices to change its variations\' prices.', 'wp-woocommerce-products-list' );
+				? __( 'Variable products have no prices of their own. Tick "Also apply to the variations" in Prices to change their variations\' prices.', 'antijante-products-list' )
+				: __( 'This variable product has no prices of its own. Tick "Set the price of all its variations" in Prices to change its variations\' prices.', 'antijante-products-list' );
 		}
 
 		if ( ! parentVariations?.length ) {
-			return __( 'Loading the variations of the selected variable products…', 'wp-woocommerce-products-list' );
+			return __( 'Loading the variations of the selected variable products…', 'antijante-products-list' );
 		}
 	}
 
 	if ( isSellableTool( def ) ) {
-		return __( 'None of the selected items has a price of its own.', 'wp-woocommerce-products-list' );
+		return __( 'None of the selected items has a price of its own.', 'antijante-products-list' );
 	}
 
-	return __( 'None of these fields exists on the selected items (variations have no name or SEO fields of their own).', 'wp-woocommerce-products-list' );
+	return __( 'None of these fields exists on the selected items (variations have no name or SEO fields of their own).', 'antijante-products-list' );
 }
 
 function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, run, onDone, onDirty, stage, staged, applyToVariations, parentVariations, draft, bulk }: ToolProps ) {
@@ -927,7 +927,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 				setApplied( count );
 				onDone();
 			} )
-			.catch( ( reason: unknown ) => setError( reason instanceof Error ? reason.message : __( 'The action failed.', 'wp-woocommerce-products-list' ) ) )
+			.catch( ( reason: unknown ) => setError( reason instanceof Error ? reason.message : __( 'The action failed.', 'antijante-products-list' ) ) )
 			.finally( () => setRunning( false ) );
 	};
 
@@ -942,7 +942,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 
 		if ( missing ) {
 			/* translators: %s: the label of an input, e.g. "Amount" */
-			setError( sprintf( __( 'Fill in "%s" first.', 'wp-woocommerce-products-list' ), missing.label ) );
+			setError( sprintf( __( 'Fill in "%s" first.', 'antijante-products-list' ), missing.label ) );
 
 			return;
 		}
@@ -952,7 +952,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 			const sent = sentArgs();
 
 			if ( stagedEntries.some( ( entry ) => sameData( entry.args, sent ) ) ) {
-				setError( __( 'This run is already added to Update.', 'wp-woocommerce-products-list' ) );
+				setError( __( 'This run is already added to Update.', 'antijante-products-list' ) );
 
 				return;
 			}
@@ -1006,7 +1006,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 							<span>
 								{ sprintf(
 									/* translators: 1: action label, 2: language, 3: the run's settings, 4: "N items" */
-									__( '%1$s (%2$s): %3$s, runs on %4$s with Update.', 'wp-woocommerce-products-list' ),
+									__( '%1$s (%2$s): %3$s, runs on %4$s with Update.', 'antijante-products-list' ),
 									def.label,
 									tabLabel,
 									describeToolArgs( def, entry.args ),
@@ -1014,7 +1014,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 								) }
 							</span>{ ' ' }
 							<Button variant="link" onClick={ () => stage( entry.key, null ) }>
-								{ __( 'Take it out', 'wp-woocommerce-products-list' ) }
+								{ __( 'Take it out', 'antijante-products-list' ) }
 							</Button>
 						</li>
 					) ) }
@@ -1063,13 +1063,13 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 									<p className="wc-pl-language-tools__description">
 										{ sprintf(
 											/* translators: %d: number of fields hidden */
-											_n( '%d field is hidden: the selected items do not have it.', '%d fields are hidden: the selected items do not have them.', inapplicable, 'wp-woocommerce-products-list' ),
+											_n( '%d field is hidden: the selected items do not have it.', '%d fields are hidden: the selected items do not have them.', inapplicable, 'antijante-products-list' ),
 											inapplicable
 										) }
 									</p>
 								) : null }
 								{ options.length < arg.options.length - inapplicable ? (
-									<p className="wc-pl-language-tools__description">{ __( 'Prices are not copied between languages that sell in different currencies.', 'wp-woocommerce-products-list' ) }</p>
+									<p className="wc-pl-language-tools__description">{ __( 'Prices are not copied between languages that sell in different currencies.', 'antijante-products-list' ) }</p>
 								) : null }
 							</fieldset>
 						);
@@ -1101,7 +1101,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 				<p className="wc-pl-language-tools__applied" role="status">
 					{ sprintf(
 						/* translators: 1: action label, 2: number of items */
-						_n( '%1$s applied to %2$d item. Undo it from the notice; Cancel does not undo it.', '%1$s applied to %2$d items. Undo it from the notice; Cancel does not undo it.', applied, 'wp-woocommerce-products-list' ),
+						_n( '%1$s applied to %2$d item. Undo it from the notice; Cancel does not undo it.', '%1$s applied to %2$d items. Undo it from the notice; Cancel does not undo it.', applied, 'antijante-products-list' ),
 						def.label,
 						applied
 					) }
@@ -1112,21 +1112,21 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 						<p className="wc-pl-language-tools__warning">
 							{ sprintf(
 								/* translators: %d: number of items */
-								_n( '%d item is skipped: its sale price would not be below its regular price.', '%d items are skipped: their sale price would not be below their regular price.', pricePreview.invalid, 'wp-woocommerce-products-list' ),
+								_n( '%d item is skipped: its sale price would not be below its regular price.', '%d items are skipped: their sale price would not be below their regular price.', pricePreview.invalid, 'antijante-products-list' ),
 								pricePreview.invalid
 							) }
 						</p>
 					) : null }
 					{ pricePreview.changes === 0 ? (
 						<p className="wc-pl-language-tools__description">
-							{ pricePreview.unloaded > 0 ? __( 'No preview: the market prices of these items are not loaded in this editor.', 'wp-woocommerce-products-list' ) : __( 'Preview: this changes none of the loaded prices.', 'wp-woocommerce-products-list' ) }
+							{ pricePreview.unloaded > 0 ? __( 'No preview: the market prices of these items are not loaded in this editor.', 'antijante-products-list' ) : __( 'Preview: this changes none of the loaded prices.', 'antijante-products-list' ) }
 						</p>
 					) : (
 						<>
 							<p className="wc-pl-language-tools__description">
 								{ sprintf(
 									/* translators: 1: number of prices that change, 2: lowest new price, 3: highest new price */
-									_n( 'Preview: %1$d price changes (new prices %2$s – %3$s).', 'Preview: %1$d prices change (new prices %2$s – %3$s).', pricePreview.changes, 'wp-woocommerce-products-list' ),
+									_n( 'Preview: %1$d price changes (new prices %2$s – %3$s).', 'Preview: %1$d prices change (new prices %2$s – %3$s).', pricePreview.changes, 'antijante-products-list' ),
 									pricePreview.changes,
 									pricePreview.lowest ?? '',
 									pricePreview.highest ?? ''
@@ -1134,7 +1134,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 								{ pricePreview.unloaded > 0
 									? ` ${ sprintf(
 											/* translators: %d: number of items */
-											_n( '%d item not previewed: its prices are not loaded here.', '%d items not previewed: their prices are not loaded here.', pricePreview.unloaded, 'wp-woocommerce-products-list' ),
+											_n( '%d item not previewed: its prices are not loaded here.', '%d items not previewed: their prices are not loaded here.', pricePreview.unloaded, 'antijante-products-list' ),
 											pricePreview.unloaded
 									  ) }`
 									: '' }
@@ -1161,7 +1161,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 									'%d value is skipped: every token in the template is empty for it.',
 									'%d values are skipped: every token in the template is empty for them.',
 									preview.emptyTemplate,
-									'wp-woocommerce-products-list'
+									'antijante-products-list'
 								),
 								preview.emptyTemplate
 							) }
@@ -1175,7 +1175,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 									'%1$d value uses another language\'s name for {name}: the product has no %2$s name. Tick "Skip products without their own name" to leave it out.',
 									'%1$d values use another language\'s name for {name}: those products have no %2$s name. Tick "Skip products without their own name" to leave them out.',
 									preview.fallbackName,
-									'wp-woocommerce-products-list'
+									'antijante-products-list'
 								),
 								preview.fallbackName,
 								tabLabel
@@ -1186,22 +1186,22 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 						<p className="wc-pl-language-tools__description">
 							{ sprintf(
 								/* translators: 1: number of values, 2: language */
-								_n( '%1$d value is left as it is: no %2$s name.', '%1$d values are left as they are: no %2$s name.', preview.skippedNoName, 'wp-woocommerce-products-list' ),
+								_n( '%1$d value is left as it is: no %2$s name.', '%1$d values are left as they are: no %2$s name.', preview.skippedNoName, 'antijante-products-list' ),
 								preview.skippedNoName,
 								tabLabel
 							) }
 						</p>
 					) : null }
 					{ preview.changes === 0 && preview.unloaded > 0 ? (
-						<p className="wc-pl-language-tools__description">{ __( 'No preview: the current values of these fields are not loaded in this editor.', 'wp-woocommerce-products-list' ) }</p>
+						<p className="wc-pl-language-tools__description">{ __( 'No preview: the current values of these fields are not loaded in this editor.', 'antijante-products-list' ) }</p>
 					) : preview.changes === 0 ? (
-						<p className="wc-pl-language-tools__description">{ __( 'Preview: this changes none of the loaded values.', 'wp-woocommerce-products-list' ) }</p>
+						<p className="wc-pl-language-tools__description">{ __( 'Preview: this changes none of the loaded values.', 'antijante-products-list' ) }</p>
 					) : (
 						<>
 							<p className="wc-pl-language-tools__description">
 								{ sprintf(
 									/* translators: %d: number of values that change */
-									_n( 'Preview: %d value changes.', 'Preview: %d values change.', preview.changes, 'wp-woocommerce-products-list' ),
+									_n( 'Preview: %d value changes.', 'Preview: %d values change.', preview.changes, 'antijante-products-list' ),
 									preview.changes
 								) }
 							</p>
@@ -1223,12 +1223,12 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 				</p>
 			) : null }
 			{ confirming ? (
-				<div className="wc-pl-language-tools__confirm" ref={ confirmRef } tabIndex={ -1 } role="group" aria-label={ sprintf( /* translators: %s: action label */ __( 'Confirm %s', 'wp-woocommerce-products-list' ), def.label ) }>
+				<div className="wc-pl-language-tools__confirm" ref={ confirmRef } tabIndex={ -1 } role="group" aria-label={ sprintf( /* translators: %s: action label */ __( 'Confirm %s', 'antijante-products-list' ), def.label ) }>
 					<p>
 						{ def.confirm ? `${ def.confirm } ` : '' }
 						{ sprintf(
 							/* translators: 1: action label, 2: language, 3: "N items" */
-							__( '%1$s (%2$s) saves now to %3$s, separately from Update: Cancel will not undo it (the notice that follows has Undo).', 'wp-woocommerce-products-list' ),
+							__( '%1$s (%2$s) saves now to %3$s, separately from Update: Cancel will not undo it (the notice that follows has Undo).', 'antijante-products-list' ),
 							def.label,
 							tabLabel,
 							itemsCount
@@ -1246,12 +1246,12 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 						>
 							{ sprintf(
 								/* translators: %s: "N items" */
-								__( 'Apply now to %s', 'wp-woocommerce-products-list' ),
+								__( 'Apply now to %s', 'antijante-products-list' ),
 								itemsCount
 							) }
 						</Button>
 						<Button variant="tertiary" onClick={ () => setConfirming( false ) } __next40pxDefaultSize>
-							{ __( 'Back', 'wp-woocommerce-products-list' ) }
+							{ __( 'Back', 'antijante-products-list' ) }
 						</Button>
 					</div>
 				</div>
@@ -1259,7 +1259,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 				<Button variant="secondary" isDestructive={ def.destructive } aria-disabled={ blocked } onClick={ start } __next40pxDefaultSize>
 					{ sprintf(
 						/* translators: 1: action label, 2: language, 3: "N items" */
-						stagedEntries.length ? __( '%1$s: %2$s, add another run to Update (%3$s)', 'wp-woocommerce-products-list' ) : __( '%1$s: %2$s, add to Update (%3$s)', 'wp-woocommerce-products-list' ),
+						stagedEntries.length ? __( '%1$s: %2$s, add another run to Update (%3$s)', 'antijante-products-list' ) : __( '%1$s: %2$s, add to Update (%3$s)', 'antijante-products-list' ),
 						def.label,
 						tabLabel,
 						itemsCount
@@ -1269,7 +1269,7 @@ function Tool( { def, lang, tabId, tabLabel, items, settings, fields, disabled, 
 				<Button variant="secondary" isDestructive={ def.destructive } isBusy={ running } aria-disabled={ blocked } onClick={ start } __next40pxDefaultSize>
 					{ sprintf(
 						/* translators: 1: action label, 2: language, 3: "N items" */
-						__( '%1$s: %2$s, apply now to %3$s…', 'wp-woocommerce-products-list' ),
+						__( '%1$s: %2$s, apply now to %3$s…', 'antijante-products-list' ),
 						def.label,
 						tabLabel,
 						itemsCount
@@ -1287,7 +1287,7 @@ export function toolsSummary( tools: DeclarativeAction[], tabLabel: string ): st
 
 	return sprintf(
 		/* translators: 1: language name, 2: number of tools, 3: the first tools' names */
-		__( '%1$s tools (%2$d): %3$s', 'wp-woocommerce-products-list' ),
+		__( '%1$s tools (%2$d): %3$s', 'antijante-products-list' ),
 		tabLabel,
 		tools.length,
 		names.length > 3 ? `${ shown }…` : shown

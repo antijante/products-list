@@ -278,20 +278,20 @@ function stringValue( value: unknown ): string {
 
 /** The default language's description, inert: no script runs in a sandboxed frame. */
 function Reference( { html, label }: { html: string | null; label: string } ) {
-	const heading = sprintf( /* translators: %s: language name */ __( '%s (for reference)', 'wp-woocommerce-products-list' ), label );
+	const heading = sprintf( /* translators: %s: language name */ __( '%s (for reference)', 'antijante-products-list' ), label );
 
 	if ( html === null ) {
 		return (
 			<section className="wc-pl-desc-modal__reference">
 				<h2>{ heading }</h2>
 				<p className="wc-pl-desc-modal__loading">
-					<Spinner /> { __( 'Loading…', 'wp-woocommerce-products-list' ) }
+					<Spinner /> { __( 'Loading…', 'antijante-products-list' ) }
 				</p>
 			</section>
 		);
 	}
 
-	const doc = `<!doctype html><meta charset="utf-8"><style>body{font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#1e1e1e;margin:16px 20px}img,iframe{max-width:100%;height:auto}h1,h2,h3,h4{line-height:1.25}table{border-collapse:collapse}td,th{border:1px solid #ddd;padding:4px 8px}</style>${ html || `<p style="color:#757575">${ __( 'No description.', 'wp-woocommerce-products-list' ) }</p>` }`;
+	const doc = `<!doctype html><meta charset="utf-8"><style>body{font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#1e1e1e;margin:16px 20px}img,iframe{max-width:100%;height:auto}h1,h2,h3,h4{line-height:1.25}table{border-collapse:collapse}td,th{border:1px solid #ddd;padding:4px 8px}</style>${ html || `<p style="color:#757575">${ __( 'No description.', 'antijante-products-list' ) }</p>` }`;
 
 	return (
 		<section className="wc-pl-desc-modal__reference" aria-label={ heading }>
@@ -418,14 +418,14 @@ function Editor( { html, placeholder, autoFocus, onChange }: { html: string; pla
 						}
 					} }
 				>
-					<div className="wc-pl-desc-modal__toolbar" role="group" aria-label={ __( 'Description tools', 'wp-woocommerce-products-list' ) }>
+					<div className="wc-pl-desc-modal__toolbar" role="group" aria-label={ __( 'Description tools', 'antijante-products-list' ) }>
 						<be.Inserter position="bottom right" />
-						<Button size="compact" icon={ undoIcon } label={ __( 'Undo', 'wp-woocommerce-products-list' ) } shortcut="⌘Z" disabled={ ! hasUndo } accessibleWhenDisabled onClick={ () => undo() } />
-						<Button size="compact" icon={ redoIcon } label={ __( 'Redo', 'wp-woocommerce-products-list' ) } shortcut="⇧⌘Z" disabled={ ! hasRedo } accessibleWhenDisabled onClick={ () => redo() } />
+						<Button size="compact" icon={ undoIcon } label={ __( 'Undo', 'antijante-products-list' ) } shortcut="⌘Z" disabled={ ! hasUndo } accessibleWhenDisabled onClick={ () => undo() } />
+						<Button size="compact" icon={ redoIcon } label={ __( 'Redo', 'antijante-products-list' ) } shortcut="⇧⌘Z" disabled={ ! hasRedo } accessibleWhenDisabled onClick={ () => redo() } />
 						<div className="wc-pl-desc-modal__block-toolbar">
 							<be.BlockToolbar hideDragHandle />
 						</div>
-						<span className="wc-pl-desc-modal__hint">{ __( 'Type / in an empty line to add a heading, list, image or table.', 'wp-woocommerce-products-list' ) }</span>
+						<span className="wc-pl-desc-modal__hint">{ __( 'Type / in an empty line to add a heading, list, image or table.', 'antijante-products-list' ) }</span>
 					</div>
 					{ /* wp-embed-responsive: videos take their 16:9 height (block library styles size them under it). */ }
 					<div className="wc-pl-desc-modal__canvas editor-styles-wrapper wp-embed-responsive" ref={ canvas } tabIndex={ -1 }>
@@ -438,7 +438,7 @@ function Editor( { html, placeholder, autoFocus, onChange }: { html: string; pla
 							</be.WritingFlow>
 						</be.BlockTools>
 					</div>
-					<aside className="wc-pl-desc-modal__inspector" aria-label={ __( 'Block settings', 'wp-woocommerce-products-list' ) }>
+					<aside className="wc-pl-desc-modal__inspector" aria-label={ __( 'Block settings', 'antijante-products-list' ) }>
 						<be.BlockInspector />
 					</aside>
 				</div>
@@ -535,7 +535,7 @@ export function DescriptionModal( { languages, initialFieldId, data, loadedTabs,
 		// block's "Create table") updates and closes the panel: they stop here.
 		<div className="wc-pl-desc-modal__boundary" { ...STOP_EVENTS }>
 			<Modal
-				title={ sprintf( /* translators: %s: language name */ __( 'Description – %s', 'wp-woocommerce-products-list' ), current?.label ?? '' ) }
+				title={ sprintf( /* translators: %s: language name */ __( 'Description – %s', 'antijante-products-list' ), current?.label ?? '' ) }
 				onRequestClose={ requestClose }
 				className="wc-pl-desc-modal"
 				overlayClassName="wc-pl-desc-modal__overlay"
@@ -544,10 +544,10 @@ export function DescriptionModal( { languages, initialFieldId, data, loadedTabs,
 				headerActions={
 					<div className="wc-pl-desc-modal__actions">
 						<Button variant="tertiary" onClick={ requestClose }>
-							{ __( 'Cancel', 'wp-woocommerce-products-list' ) }
+							{ __( 'Cancel', 'antijante-products-list' ) }
 						</Button>
 						<Button variant="primary" onClick={ done } shortcut="⌘↵">
-							{ __( 'Done', 'wp-woocommerce-products-list' ) }
+							{ __( 'Done', 'antijante-products-list' ) }
 						</Button>
 					</div>
 				}
@@ -565,7 +565,7 @@ export function DescriptionModal( { languages, initialFieldId, data, loadedTabs,
 					<div
 						className="wc-pl-desc-modal__tabs"
 						role="tablist"
-						aria-label={ __( 'Language', 'wp-woocommerce-products-list' ) }
+						aria-label={ __( 'Language', 'antijante-products-list' ) }
 						onKeyDown={ ( event ) => {
 							const index = languages.findIndex( ( entry ) => entry.fieldId === fieldId );
 							const next = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: languages.length - 1 }[ event.key ];
@@ -603,8 +603,8 @@ export function DescriptionModal( { languages, initialFieldId, data, loadedTabs,
 							>
 								{ entry.label }
 								{ changed.includes( entry.fieldId ) ? (
-									<span className="wc-pl-desc-modal__dot" title={ __( 'Changed', 'wp-woocommerce-products-list' ) }>
-										<span className="screen-reader-text">{ __( '(changed)', 'wp-woocommerce-products-list' ) }</span>
+									<span className="wc-pl-desc-modal__dot" title={ __( 'Changed', 'antijante-products-list' ) }>
+										<span className="screen-reader-text">{ __( '(changed)', 'antijante-products-list' ) }</span>
 									</span>
 								) : null }
 							</Button>
@@ -618,17 +618,17 @@ export function DescriptionModal( { languages, initialFieldId, data, loadedTabs,
 					>
 						{ showsReference && reference ? <Reference html={ referenceHtml } label={ reference.label } /> : null }
 						<div className="wc-pl-desc-modal__main">
-							{ failed ? <p className="wc-pl-desc-modal__error">{ sprintf( /* translators: %s: error message */ __( 'The block editor could not be loaded: %s', 'wp-woocommerce-products-list' ), failed ) }</p> : null }
+							{ failed ? <p className="wc-pl-desc-modal__error">{ sprintf( /* translators: %s: error message */ __( 'The block editor could not be loaded: %s', 'antijante-products-list' ), failed ) }</p> : null }
 							{ ! failed && ( ! ready || ! loaded ) ? (
 								<p className="wc-pl-desc-modal__loading">
-									<Spinner /> { ready ? __( 'Loading this language…', 'wp-woocommerce-products-list' ) : __( 'Loading the block editor…', 'wp-woocommerce-products-list' ) }
+									<Spinner /> { ready ? __( 'Loading this language…', 'antijante-products-list' ) : __( 'Loading the block editor…', 'antijante-products-list' ) }
 								</p>
 							) : null }
 							{ ready && loaded && current && showsReference && reference && isEmptyHtml( value ) && referenceHtml && ! isEmptyHtml( referenceHtml ) ? (
 								<div className="wc-pl-desc-modal__empty">
-									<span>{ sprintf( /* translators: %s: language name */ __( 'No %s description yet.', 'wp-woocommerce-products-list' ), current.label ) }</span>
+									<span>{ sprintf( /* translators: %s: language name */ __( 'No %s description yet.', 'antijante-products-list' ), current.label ) }</span>
 									<Button variant="secondary" size="compact" onClick={ startFromReference }>
-										{ sprintf( /* translators: %s: language name */ __( 'Start from the %s text', 'wp-woocommerce-products-list' ), reference.label ) }
+										{ sprintf( /* translators: %s: language name */ __( 'Start from the %s text', 'antijante-products-list' ), reference.label ) }
 									</Button>
 								</div>
 							) : null }
@@ -638,7 +638,7 @@ export function DescriptionModal( { languages, initialFieldId, data, loadedTabs,
 										key={ `${ current.fieldId }:${ generation }` }
 										html={ value }
 									autoFocus={ editorTakesFocus }
-										placeholder={ sprintf( /* translators: %s: language name */ __( 'Write the %s description…', 'wp-woocommerce-products-list' ), current.label ) }
+										placeholder={ sprintf( /* translators: %s: language name */ __( 'Write the %s description…', 'antijante-products-list' ), current.label ) }
 										onChange={ ( blocks ) => setEdits( ( previous ) => ( { ...previous, [ current.fieldId ]: toStored( blocks, isBlockMarkup( stringValue( data[ current.fieldId ] ) ) ) } ) ) }
 									/>
 									<Popover.Slot />
@@ -650,14 +650,14 @@ export function DescriptionModal( { languages, initialFieldId, data, loadedTabs,
 				{ confirming ? (
 					<ConfirmDialog
 						isOpen
-						confirmButtonText={ __( 'Discard changes', 'wp-woocommerce-products-list' ) }
-						cancelButtonText={ __( 'Keep editing', 'wp-woocommerce-products-list' ) }
+						confirmButtonText={ __( 'Discard changes', 'antijante-products-list' ) }
+						cancelButtonText={ __( 'Keep editing', 'antijante-products-list' ) }
 						onConfirm={ close }
 						onCancel={ () => setConfirming( false ) }
 					>
 						{ sprintf(
 							/* translators: %s: comma-separated language names */
-							__( 'Discard your changes to the description (%s)?', 'wp-woocommerce-products-list' ),
+							__( 'Discard your changes to the description (%s)?', 'antijante-products-list' ),
 							languages.filter( ( entry ) => changed.includes( entry.fieldId ) ).map( ( entry ) => entry.label ).join( ', ' )
 						) }
 					</ConfirmDialog>

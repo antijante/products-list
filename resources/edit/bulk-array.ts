@@ -48,9 +48,9 @@ export function hasArrayOp( fields: ProductField[], id: string ): boolean {
 
 export function arrayOperationElements(): Option[] {
 	return [
-		{ value: 'add', label: __( 'Add to the existing ones', 'wp-woocommerce-products-list' ) },
-		{ value: 'remove', label: __( 'Remove from the existing ones', 'wp-woocommerce-products-list' ) },
-		{ value: 'replace', label: __( 'Replace all with these', 'wp-woocommerce-products-list' ) },
+		{ value: 'add', label: __( 'Add to the existing ones', 'antijante-products-list' ) },
+		{ value: 'remove', label: __( 'Remove from the existing ones', 'antijante-products-list' ) },
+		{ value: 'replace', label: __( 'Replace all with these', 'antijante-products-list' ) },
 	];
 }
 
@@ -74,7 +74,7 @@ export function withArrayOps( fields: ProductField[] ): ProductField[] {
 			result.push( {
 				id: arrayOpFieldId( field.id ),
 				/* translators: %s: a field label such as "Categories" */
-				label: sprintf( __( '%s: how to apply', 'wp-woocommerce-products-list' ), field.label ?? field.id ),
+				label: sprintf( __( '%s: how to apply', 'antijante-products-list' ), field.label ?? field.id ),
 				type: 'text',
 				elements: arrayOperationElements(),
 				productTypes: field.productTypes,
@@ -137,11 +137,11 @@ export function applyArrayOp( current: unknown, operation: ArrayOperation, value
 export function describeArrayOperation( operation: ArrayOperation ): string {
 	switch ( operation ) {
 		case 'add':
-			return __( 'add', 'wp-woocommerce-products-list' );
+			return __( 'add', 'antijante-products-list' );
 		case 'remove':
-			return __( 'remove', 'wp-woocommerce-products-list' );
+			return __( 'remove', 'antijante-products-list' );
 		case 'replace':
 		default:
-			return __( 'replace all with', 'wp-woocommerce-products-list' );
+			return __( 'replace all with', 'antijante-products-list' );
 	}
 }

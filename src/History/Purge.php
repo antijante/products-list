@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
 /**
  * Removes what the revisions POC stored: the revisions of products and

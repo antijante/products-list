@@ -7,7 +7,7 @@ export function createFeaturedField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'featured',
 		type: 'boolean',
-		label: __( 'Featured', 'wp-woocommerce-products-list' ),
+		label: __( 'Featured', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: { operators: [ 'is' ] },
 		render: ( { item } ) => <BooleanCell value={ valueOf( item, 'featured' ) } />,

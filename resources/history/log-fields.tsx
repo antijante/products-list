@@ -14,21 +14,21 @@ import type { Settings } from '../types';
 import type { LogQuery, LogRow } from './use-log';
 
 export const SOURCE_OPTIONS = [
-	{ value: 'quick', label: __( 'Quick edit', 'wp-woocommerce-products-list' ) },
-	{ value: 'bulk', label: __( 'Bulk edit', 'wp-woocommerce-products-list' ) },
-	{ value: 'action', label: __( 'Action', 'wp-woocommerce-products-list' ) },
-	{ value: 'extension', label: __( 'Extension', 'wp-woocommerce-products-list' ) },
-	{ value: 'revert', label: __( 'Revert', 'wp-woocommerce-products-list' ) },
-	{ value: 'i18n', label: __( 'Translations', 'wp-woocommerce-products-list' ) },
+	{ value: 'quick', label: __( 'Quick edit', 'antijante-products-list' ) },
+	{ value: 'bulk', label: __( 'Bulk edit', 'antijante-products-list' ) },
+	{ value: 'action', label: __( 'Action', 'antijante-products-list' ) },
+	{ value: 'extension', label: __( 'Extension', 'antijante-products-list' ) },
+	{ value: 'revert', label: __( 'Revert', 'antijante-products-list' ) },
+	{ value: 'i18n', label: __( 'Translations', 'antijante-products-list' ) },
 ];
 
 export const ACTION_OPTIONS = [
-	{ value: 'update', label: __( 'Update', 'wp-woocommerce-products-list' ) },
-	{ value: 'trash', label: __( 'Trash', 'wp-woocommerce-products-list' ) },
-	{ value: 'restore', label: __( 'Restore', 'wp-woocommerce-products-list' ) },
-	{ value: 'delete', label: __( 'Delete', 'wp-woocommerce-products-list' ) },
-	{ value: 'duplicate', label: __( 'Duplicate', 'wp-woocommerce-products-list' ) },
-	{ value: 'translate_term', label: __( 'Translate attribute term', 'wp-woocommerce-products-list' ) },
+	{ value: 'update', label: __( 'Update', 'antijante-products-list' ) },
+	{ value: 'trash', label: __( 'Trash', 'antijante-products-list' ) },
+	{ value: 'restore', label: __( 'Restore', 'antijante-products-list' ) },
+	{ value: 'delete', label: __( 'Delete', 'antijante-products-list' ) },
+	{ value: 'duplicate', label: __( 'Duplicate', 'antijante-products-list' ) },
+	{ value: 'translate_term', label: __( 'Translate attribute term', 'antijante-products-list' ) },
 ];
 
 /**
@@ -64,7 +64,7 @@ function text( value: string | null ): string {
 	}
 
 	if ( value === '' ) {
-		return __( '(empty)', 'wp-woocommerce-products-list' );
+		return __( '(empty)', 'antijante-products-list' );
 	}
 
 	// Values are JSON-encoded when they were not scalar.
@@ -73,7 +73,7 @@ function text( value: string | null ): string {
 			const parsed: unknown = JSON.parse( value );
 
 			if ( Array.isArray( parsed ) ) {
-				return parsed.map( ( entry ) => ( typeof entry === 'object' && entry !== null && 'name' in entry ? String( ( entry as { name: unknown } ).name ) : String( entry ) ) ).join( ', ' ) || __( '(none)', 'wp-woocommerce-products-list' );
+				return parsed.map( ( entry ) => ( typeof entry === 'object' && entry !== null && 'name' in entry ? String( ( entry as { name: unknown } ).name ) : String( entry ) ) ).join( ', ' ) || __( '(none)', 'antijante-products-list' );
 			}
 		} catch {
 			// Not JSON after all; show as is.
@@ -183,8 +183,8 @@ export function ChangeCell( { item }: { item: LogRow } ) {
 
 		return (
 			<span className="wc-pl-history__change">
-				{ __( 'Copied to', 'wp-woocommerce-products-list' ) }{ ' ' }
-				{ copy?.edit_link ? <a href={ copy.edit_link }>{ label }</a> : label ? <span>{ label }</span> : <span>{ __( '(the copy no longer exists)', 'wp-woocommerce-products-list' ) }</span> }
+				{ __( 'Copied to', 'antijante-products-list' ) }{ ' ' }
+				{ copy?.edit_link ? <a href={ copy.edit_link }>{ label }</a> : label ? <span>{ label }</span> : <span>{ __( '(the copy no longer exists)', 'antijante-products-list' ) }</span> }
 			</span>
 		);
 	}
@@ -208,7 +208,7 @@ export function ChangeCell( { item }: { item: LogRow } ) {
 			<ins className="wc-pl-history__value" style={ { textDecoration: 'none' } }>
 				{ after }
 			</ins>
-			{ item.status === 'error' ? <span className="screen-reader-text">{ __( '(attempted, not saved)', 'wp-woocommerce-products-list' ) }</span> : null }
+			{ item.status === 'error' ? <span className="screen-reader-text">{ __( '(attempted, not saved)', 'antijante-products-list' ) }</span> : null }
 		</span>
 	);
 }
@@ -229,7 +229,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'created_at',
 			type: 'datetime',
-			label: __( 'Time', 'wp-woocommerce-products-list' ),
+			label: __( 'Time', 'antijante-products-list' ),
 			enableSorting: false,
 			enableHiding: false,
 			filterBy: { operators: [ 'after', 'before' ] },
@@ -238,7 +238,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'user',
 			type: 'text',
-			label: __( 'User', 'wp-woocommerce-products-list' ),
+			label: __( 'User', 'antijante-products-list' ),
 			enableSorting: false,
 			// The id is the filter value (the `user` param); the name is what the cell shows.
 			getValue: ( { item } ) => ( users.length ? String( item.user?.id ?? '' ) : item.user?.name ?? '' ),
@@ -257,7 +257,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 			{
 				id: 'object',
 				type: 'text',
-				label: __( 'Item', 'wp-woocommerce-products-list' ),
+				label: __( 'Item', 'antijante-products-list' ),
 				enableSorting: false,
 				enableHiding: false,
 				filterBy: false,
@@ -266,9 +266,9 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 					const label = logObjectName( item );
 					const kind =
 						item.object_type === 'variation'
-							? ` (${ __( 'variation', 'wp-woocommerce-products-list' ) })`
+							? ` (${ __( 'variation', 'antijante-products-list' ) })`
 							: item.object_type === 'term'
-							? ` (${ __( 'attribute term', 'wp-woocommerce-products-list' ) })`
+							? ` (${ __( 'attribute term', 'antijante-products-list' ) })`
 							: '';
 
 					return item.edit_link ? (
@@ -287,7 +287,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 			{
 				id: 'object_id',
 				type: 'integer',
-				label: __( 'Item ID', 'wp-woocommerce-products-list' ),
+				label: __( 'Item ID', 'antijante-products-list' ),
 				enableSorting: false,
 				filterBy: { operators: [ 'is' ] },
 				// An id, not a quantity: 40561, never 40,561 (the cell, and the filter's summary "Item ID is: 40561").
@@ -301,7 +301,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'source',
 			type: 'text',
-			label: __( 'Source', 'wp-woocommerce-products-list' ),
+			label: __( 'Source', 'antijante-products-list' ),
 			enableSorting: false,
 			elements: SOURCE_OPTIONS,
 			filterBy: { operators: [ 'is' ] },
@@ -309,7 +309,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'action',
 			type: 'text',
-			label: __( 'Action', 'wp-woocommerce-products-list' ),
+			label: __( 'Action', 'antijante-products-list' ),
 			enableSorting: false,
 			elements: actionOptions( settings ),
 			filterBy: { operators: [ 'is' ] },
@@ -319,7 +319,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'field',
 			type: 'text',
-			label: __( 'Field', 'wp-woocommerce-products-list' ),
+			label: __( 'Field', 'antijante-products-list' ),
 			enableSorting: false,
 			...( fieldOptions.length ? { elements: fieldOptions } : {} ),
 			filterBy: { operators: [ 'is' ] },
@@ -334,7 +334,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'change',
 			type: 'text',
-			label: __( 'Change', 'wp-woocommerce-products-list' ),
+			label: __( 'Change', 'antijante-products-list' ),
 			enableSorting: false,
 			enableHiding: false,
 			filterBy: false,
@@ -344,19 +344,19 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'status',
 			type: 'text',
-			label: __( 'Result', 'wp-woocommerce-products-list' ),
+			label: __( 'Result', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			getValue: ( { item } ) => item.status,
 			// The reason is text in the cell, not a tooltip: readable without a mouse.
 			render: ( { item } ) =>
 				item.status === 'ok' ? (
-					<span>{ __( 'OK', 'wp-woocommerce-products-list' ) }</span>
+					<span>{ __( 'OK', 'antijante-products-list' ) }</span>
 				) : item.status === 'skipped' ? (
-					<span className="wc-pl-history__skipped">{ historyMessage( item.message, fieldOptions ) || __( 'Skipped.', 'wp-woocommerce-products-list' ) }</span>
+					<span className="wc-pl-history__skipped">{ historyMessage( item.message, fieldOptions ) || __( 'Skipped.', 'antijante-products-list' ) }</span>
 				) : (
 					<span className="wc-pl-history__error">
-						<strong>{ __( 'Error', 'wp-woocommerce-products-list' ) }</strong>
+						<strong>{ __( 'Error', 'antijante-products-list' ) }</strong>
 						{ item.message ? `: ${ historyMessage( item.message, fieldOptions ) }` : '' }
 					</span>
 				),
@@ -364,7 +364,7 @@ export function createLogFields( settings: Settings, options: LogFieldOptions = 
 		{
 			id: 'batch_id',
 			type: 'text',
-			label: __( 'Batch', 'wp-woocommerce-products-list' ),
+			label: __( 'Batch', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: { operators: [ 'is' ] },
 			getValue: ( { item } ) => item.batch_id,

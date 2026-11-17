@@ -18,7 +18,7 @@ export const createDuplicateAction: ActionFactory = ( context ) => {
 
 	const action: ProductAction = {
 		id: 'duplicate',
-		label: __( 'Duplicate', 'wp-woocommerce-products-list' ),
+		label: __( 'Duplicate', 'antijante-products-list' ),
 		icon: copy,
 		supportsBulk: true,
 		scope: 'product',
@@ -40,10 +40,10 @@ export const createDuplicateAction: ActionFactory = ( context ) => {
 						notify.success(
 							sprintf(
 								/* translators: %d: number of products copied */
-								_n( '%d product duplicated as a draft.', '%d products duplicated as drafts.', ok.length, 'wp-woocommerce-products-list' ),
+								_n( '%d product duplicated as a draft.', '%d products duplicated as drafts.', ok.length, 'antijante-products-list' ),
 								ok.length
 							),
-							single ? { actions: [ { label: __( 'Edit copy', 'wp-woocommerce-products-list' ), url: single } ] } : undefined
+							single ? { actions: [ { label: __( 'Edit copy', 'antijante-products-list' ), url: single } ] } : undefined
 						);
 					}
 

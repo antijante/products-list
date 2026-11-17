@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Bootstrap;
+use Antijante\ProductsList\Bootstrap;
 
 /**
  * What a role with `edit_products` but without `edit_others_products` can

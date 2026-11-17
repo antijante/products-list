@@ -18,7 +18,7 @@ import { useSaveActivity } from '../store/save-activity';
 /** What the live region says: changes only at the start and at each quarter of the rows written. */
 export function saveAnnouncement( done: number, total: number, reverting = false ): string {
 	if ( ! total ) {
-		return reverting ? __( 'Preparing the revert…', 'wp-woocommerce-products-list' ) : __( 'Preparing the update…', 'wp-woocommerce-products-list' );
+		return reverting ? __( 'Preparing the revert…', 'antijante-products-list' ) : __( 'Preparing the update…', 'antijante-products-list' );
 	}
 
 	const quarter = Math.min( 4, Math.floor( ( done / total ) * 4 ) );
@@ -26,18 +26,18 @@ export function saveAnnouncement( done: number, total: number, reverting = false
 	if ( quarter === 0 ) {
 		return sprintf(
 			/* translators: %s: rows in total */
-			reverting ? __( 'Reverting %s rows.', 'wp-woocommerce-products-list' ) : __( 'Updating %s rows.', 'wp-woocommerce-products-list' ),
+			reverting ? __( 'Reverting %s rows.', 'antijante-products-list' ) : __( 'Updating %s rows.', 'antijante-products-list' ),
 			total.toLocaleString()
 		);
 	}
 
 	if ( quarter === 4 ) {
-		return reverting ? __( 'All rows put back; finishing the revert…', 'wp-woocommerce-products-list' ) : __( 'All rows written; finishing the update…', 'wp-woocommerce-products-list' );
+		return reverting ? __( 'All rows put back; finishing the revert…', 'antijante-products-list' ) : __( 'All rows written; finishing the update…', 'antijante-products-list' );
 	}
 
 	return sprintf(
 		/* translators: %d: percentage of the rows written (25, 50 or 75) */
-		reverting ? __( 'Revert %d %% done.', 'wp-woocommerce-products-list' ) : __( 'Update %d %% done.', 'wp-woocommerce-products-list' ),
+		reverting ? __( 'Revert %d %% done.', 'antijante-products-list' ) : __( 'Update %d %% done.', 'antijante-products-list' ),
 		quarter * 25
 	);
 }
@@ -75,7 +75,7 @@ export function SaveActivityBar() {
 					{ total
 						? sprintf(
 								/* translators: 1: rows written, 2: rows in total */
-								activity.reverting ? __( 'Reverting %1$s of %2$s rows…', 'wp-woocommerce-products-list' ) : __( 'Updating %1$s of %2$s rows…', 'wp-woocommerce-products-list' ),
+								activity.reverting ? __( 'Reverting %1$s of %2$s rows…', 'antijante-products-list' ) : __( 'Updating %1$s of %2$s rows…', 'antijante-products-list' ),
 								done.toLocaleString(),
 								total.toLocaleString()
 						  )
@@ -84,7 +84,7 @@ export function SaveActivityBar() {
 				{ total ? ` ${ value } %` : '' }
 				{ left ? ` · ${ left }` : '' }
 				{ ' · ' }
-				{ __( 'Rows marked “Updating…” are locked until the update is done. The update runs in this tab: leaving the page stops it.', 'wp-woocommerce-products-list' ) }
+				{ __( 'Rows marked “Updating…” are locked until the update is done. The update runs in this tab: leaving the page stops it.', 'antijante-products-list' ) }
 			</span>
 			{ total ? <ProgressBar value={ value } /> : <ProgressBar /> }
 		</div>

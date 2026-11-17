@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
 /**
  * The list-mode batch priming loads every item of a write batch up front.

@@ -7,7 +7,7 @@ export function createTaxStatusField( settings: Settings ): ProductField {
 	return field( {
 		id: 'tax_status',
 		type: 'text',
-		label: __( 'Tax status', 'wp-woocommerce-products-list' ),
+		label: __( 'Tax status', 'antijante-products-list' ),
 		elements: settings.taxStatuses,
 		enableSorting: false,
 		filterBy: false,
@@ -20,12 +20,12 @@ export function createTaxStatusField( settings: Settings ): ProductField {
 
 export function createTaxClassField( settings: Settings ): ProductField {
 	// A variation's `parent` (use the parent's class) is shown, never offered to a product.
-	const shown = [ { value: 'parent', label: __( 'Same as parent', 'wp-woocommerce-products-list' ) }, ...settings.taxClasses ];
+	const shown = [ { value: 'parent', label: __( 'Same as parent', 'antijante-products-list' ) }, ...settings.taxClasses ];
 
 	return field( {
 		id: 'tax_class',
 		type: 'text',
-		label: __( 'Tax class', 'wp-woocommerce-products-list' ),
+		label: __( 'Tax class', 'antijante-products-list' ),
 		elements: settings.taxClasses,
 		enableSorting: false,
 		filterBy: false,

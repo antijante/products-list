@@ -25,7 +25,7 @@ export function describeBatchObjects( batch: Pick< LogBatch, 'objects' | 'produc
 		const skipped = batch.skipped ?? 0;
 
 		/* translators: %d: number of items the batch left unwritten */
-		return sprintf( _n( '%d item, not written', '%d items, none written', skipped, 'wp-woocommerce-products-list' ), skipped );
+		return sprintf( _n( '%d item, not written', '%d items, none written', skipped, 'antijante-products-list' ), skipped );
 	}
 	const products = batch.products ?? 0;
 	const variations = batch.variations ?? 0;
@@ -35,25 +35,25 @@ export function describeBatchObjects( batch: Pick< LogBatch, 'objects' | 'produc
 			( batch.parents ?? 0 ) > 0
 				? sprintf(
 						/* translators: 1: "N variations", 2: "N products" */
-						__( '%1$s of %2$s', 'wp-woocommerce-products-list' ),
+						__( '%1$s of %2$s', 'antijante-products-list' ),
 						/* translators: %d: number of variations */
-						sprintf( _n( '%d variation', '%d variations', variations, 'wp-woocommerce-products-list' ), variations ),
+						sprintf( _n( '%d variation', '%d variations', variations, 'antijante-products-list' ), variations ),
 						/* translators: %d: number of products */
-						sprintf( _n( '%d product', '%d products', batch.parents ?? 0, 'wp-woocommerce-products-list' ), batch.parents ?? 0 )
+						sprintf( _n( '%d product', '%d products', batch.parents ?? 0, 'antijante-products-list' ), batch.parents ?? 0 )
 				  )
 				: /* translators: %d: number of variations */
-				  sprintf( _n( '%d variation', '%d variations', variations, 'wp-woocommerce-products-list' ), variations )
+				  sprintf( _n( '%d variation', '%d variations', variations, 'antijante-products-list' ), variations )
 		);
 	}
 
 	if ( products > 0 ) {
 		/* translators: %d: number of products */
-		parts.push( sprintf( _n( '%d product', '%d products', products, 'wp-woocommerce-products-list' ), products ) );
+		parts.push( sprintf( _n( '%d product', '%d products', products, 'antijante-products-list' ), products ) );
 	}
 
 	if ( ! parts.length ) {
 		/* translators: %d: number of items */
-		return sprintf( _n( '%d item', '%d items', batch.objects, 'wp-woocommerce-products-list' ), batch.objects );
+		return sprintf( _n( '%d item', '%d items', batch.objects, 'antijante-products-list' ), batch.objects );
 	}
 
 	return parts.join( ', ' );
@@ -80,24 +80,24 @@ export function describeBatchChanges( batch: Pick< LogBatch, 'fields' | 'actions
 	const rest = named.length - FIELDS_SHOWN;
 
 	/* translators: 1: the first names, 2: how many more */
-	return rest > 0 ? sprintf( __( '%1$s +%2$d more', 'wp-woocommerce-products-list' ), shown, rest ) : shown;
+	return rest > 0 ? sprintf( __( '%1$s +%2$d more', 'antijante-products-list' ), shown, rest ) : shown;
 }
 
 /** "Still running…" / "Interrupted: 312 of 900 written": a batch a save is still writing, or stopped writing before it was done. */
 export function describeBatchState( batch: Pick< LogBatch, 'state' | 'planned' | 'objects' > ): string {
 	if ( batch.state === 'running' ) {
-		return __( 'Still running…', 'wp-woocommerce-products-list' );
+		return __( 'Still running…', 'antijante-products-list' );
 	}
 
 	if ( batch.state === 'interrupted' ) {
 		return batch.planned
 			? sprintf(
 					/* translators: 1: items written, 2: items the save planned to write */
-					__( 'Interrupted: %1$d of %2$d written', 'wp-woocommerce-products-list' ),
+					__( 'Interrupted: %1$d of %2$d written', 'antijante-products-list' ),
 					Math.min( batch.objects, batch.planned ),
 					batch.planned
 			  )
-			: __( 'Interrupted', 'wp-woocommerce-products-list' );
+			: __( 'Interrupted', 'antijante-products-list' );
 	}
 
 	return '';
@@ -111,13 +111,13 @@ export function describeSkipped( batch: Pick< LogBatch, 'skipped' | 'skipped_rea
 	return reasons.length
 		? sprintf(
 				/* translators: 1: number of items the batch left out, 2: why ("already had the value") */
-				_n( '%1$d skipped (%2$s)', '%1$d skipped (%2$s)', count, 'wp-woocommerce-products-list' ),
+				_n( '%1$d skipped (%2$s)', '%1$d skipped (%2$s)', count, 'antijante-products-list' ),
 				count,
 				reasons.join( ', ' )
 		  )
 		: sprintf(
 				/* translators: %d: number of items the batch left out */
-				_n( '%d skipped', '%d skipped', count, 'wp-woocommerce-products-list' ),
+				_n( '%d skipped', '%d skipped', count, 'antijante-products-list' ),
 				count
 		  );
 }
@@ -136,7 +136,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 		{
 			id: 'created_at',
 			type: 'datetime',
-			label: __( 'Time', 'wp-woocommerce-products-list' ),
+			label: __( 'Time', 'antijante-products-list' ),
 			enableSorting: false,
 			enableHiding: false,
 			filterBy: { operators: [ 'after', 'before' ] },
@@ -145,7 +145,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 		{
 			id: 'user',
 			type: 'text',
-			label: __( 'User', 'wp-woocommerce-products-list' ),
+			label: __( 'User', 'antijante-products-list' ),
 			enableSorting: false,
 			getValue: ( { item } ) => ( users.length ? String( item.user?.id ?? '' ) : item.user?.name ?? '' ),
 			render: ( { item } ) => <span>{ item.user?.name || ( item.user?.id ? `#${ item.user.id }` : '—' ) }</span>,
@@ -159,7 +159,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 		{
 			id: 'source',
 			type: 'text',
-			label: __( 'Source', 'wp-woocommerce-products-list' ),
+			label: __( 'Source', 'antijante-products-list' ),
 			enableSorting: false,
 			elements: SOURCE_OPTIONS,
 			filterBy: { operators: [ 'is' ] },
@@ -167,7 +167,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 		{
 			id: 'changes',
 			type: 'text',
-			label: __( 'Changed', 'wp-woocommerce-products-list' ),
+			label: __( 'Changed', 'antijante-products-list' ),
 			enableSorting: false,
 			enableHiding: false,
 			filterBy: false,
@@ -181,7 +181,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 						<strong>{ changes }</strong>
 						<span className="wc-pl-history__batch-scope">
 							{ ' ' }
-							{ /* translators: %s: "348 variations of 5 products" */ sprintf( __( 'on %s', 'wp-woocommerce-products-list' ), describeBatchObjects( item ) ) }
+							{ /* translators: %s: "348 variations of 5 products" */ sprintf( __( 'on %s', 'antijante-products-list' ), describeBatchObjects( item ) ) }
 						</span>
 					</span>
 				);
@@ -190,7 +190,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 		{
 			id: 'result',
 			type: 'text',
-			label: __( 'Result', 'wp-woocommerce-products-list' ),
+			label: __( 'Result', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			getValue: ( { item } ) => String( item.errors ?? 0 ),
@@ -206,7 +206,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 						<span className="wc-pl-history__error">
 							{ sprintf(
 								/* translators: 1: changes that failed, 2: changes in the batch */
-								__( '%1$d of %2$d failed', 'wp-woocommerce-products-list' ),
+								__( '%1$d of %2$d failed', 'antijante-products-list' ),
 								item.errors,
 								item.rows
 							) }
@@ -215,7 +215,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 						<span>
 							{ sprintf(
 								/* translators: %d: number of logged changes */
-								_n( '%d change', '%d changes', item.rows, 'wp-woocommerce-products-list' ),
+								_n( '%d change', '%d changes', item.rows, 'antijante-products-list' ),
 								item.rows
 							) }
 						</span>
@@ -232,7 +232,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 		{
 			id: 'reverted',
 			type: 'text',
-			label: __( 'Reverted', 'wp-woocommerce-products-list' ),
+			label: __( 'Reverted', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			getValue: ( { item } ) => item.reverted_by?.batch_id ?? '',
@@ -242,7 +242,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 						<span className="wc-pl-history__reverted">
 							{ sprintf(
 								/* translators: 1: user name, 2: date and time */
-								__( 'Reverted by %1$s at %2$s', 'wp-woocommerce-products-list' ),
+								__( 'Reverted by %1$s at %2$s', 'antijante-products-list' ),
 								item.reverted_by.user?.name || `#${ item.reverted_by.user?.id ?? 0 }`,
 								options.formatTime( item.reverted_by )
 							) }
@@ -255,7 +255,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 						<span title={ item.reverts }>
 							{ sprintf(
 								/* translators: %s: the short id of the batch this revert put back */
-								__( 'Revert of %s', 'wp-woocommerce-products-list' ),
+								__( 'Revert of %s', 'antijante-products-list' ),
 								item.reverts.slice( 0, 8 )
 							) }
 						</span>
@@ -268,7 +268,7 @@ export function createBatchFields( settings: Settings, options: BatchFieldOption
 		{
 			id: 'batch_id',
 			type: 'text',
-			label: __( 'Batch', 'wp-woocommerce-products-list' ),
+			label: __( 'Batch', 'antijante-products-list' ),
 			enableSorting: false,
 			// The server takes the full id or its first characters (4 or more).
 			filterBy: { operators: [ 'is' ] },

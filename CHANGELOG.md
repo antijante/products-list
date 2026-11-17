@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased: Antijante Products List
+
+The plugin is Antijante's fork of Genero's WooCommerce Products List (https://github.com/generoi/wp-woocommerce-products-list, 0.5.2), renamed to an Antijante plugin. Nothing it does changes.
+
+- New names: the Composer package `antijante/products-list`, the plugin folder and file `antijante-products-list`, the namespace `Antijante\ProductsList`, the text domain `antijante-products-list`, the hooks `antijante_products_list/*`, the constants `ANTIJANTE_PRODUCTS_LIST_*`, the script handle `antijante-products-list`, and in JavaScript the globals `window.antijanteProductsList` and `window.antijanteProductsListSettings` and the hooks `antijanteProductsList.*`.
+- The old names keep answering beside the new ones, deprecated (src/Compat.php, resources/extensions/compat.ts): `GeneroWP\ProductsList\…` classes are aliases, each `antijante_products_list/{name}` hook also runs `wc_products_list/{name}` (and `antijanteProductsList.{name}` runs `wcProductsList.{name}`), `WC_PRODUCTS_LIST_*` are defined, the `wc-products-list` script handle and the `window.wcProductsList` and `window.wcProductsListSettings` globals exist. Extensions written for the old names, such as woo-i18n, work unchanged.
+- Unchanged, as stored data and links depend on them: the REST namespace `wc-products-list/v1`, the error codes, the log table, options and meta keys, the user preferences scope, capabilities, CSS classes, the admin page `wc-products-list`, the WooCommerce log source and the browser storage keys.
+- A site that ran the original activates `antijante-products-list` in its place: the plugin's file and folder are new to WordPress.
+
 ## 0.5.2 - 2026-10-29
 
 - A save from the table refused because the product is open in the product editor (or was, and its lock has not lapsed: up to 2½ minutes after the editor is left) offers **Take over** in its snackbar, which stays until answered; the images popover offers it beside its error. Taking over saves the change and takes WordPress's post lock, as core's own "Take over" does: another user's editor then shows core's "taken over" dialog instead of letting its Update put the form back. The lock taken over is no clash for the next saves and their Undo, until an editor of the user's own refreshes it (`_wcpl_take_over` per item, `_wcpl_taken_lock` post meta, docs/contracts.md §3.6).

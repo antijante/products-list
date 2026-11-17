@@ -4,7 +4,7 @@
  * 1. Declarative definitions serialised by PHP (src/Registry.php) into the
  *    settings payload; the JS core turns them into ProductFields.
  * 2. ProductField / ProductAction objects registered from JavaScript through
- *    `window.wcProductsList`.
+ *    `window.antijanteProductsList`.
  */
 import type { Action, Field, View } from '@wordpress/dataviews';
 import type { ProductListItem, ProductType, ProductUpdate, VariationUpdate } from './product';
@@ -42,7 +42,7 @@ export interface DeclarativeField {
 	path: string;
 	/** Dot path to a read-only companion value (e.g. the default-language name). */
 	reference: string | null;
-	/** Top-level request key the value is written under; `wc_products_list/save` fires when present. */
+	/** Top-level request key the value is written under; `antijante_products_list/save` fires when present. */
 	writeKey: string | null;
 	/** Dot path under the request body; defaults to `path`. */
 	writePath: string | null;
@@ -152,7 +152,7 @@ export interface ProductField< Item = ProductListItem > extends Field< Item > {
 		write?: ( value: unknown, item: Item ) => Record< string, unknown >;
 		/**
 		 * The expected values (`_wcpl_expect`, docs/contracts.md §3.6) of a write that changes this field: log field path
-		 * => the value the row loaded, in the stored form the server reads (`wc_products_list/log_value` for an extension
+		 * => the value the row loaded, in the stored form the server reads (`antijante_products_list/log_value` for an extension
 		 * path). Called for every write with that row's payload; return nothing when the payload does not write the field.
 		 * A stored value that differs refuses the item with 409 `wc_products_list_conflict`.
 		 */
@@ -252,7 +252,7 @@ export interface NoticeOptions {
 	explicitDismiss?: boolean;
 }
 
-/** `window.wcProductsList`. Created before `wcProductsList.ready` fires. */
+/** `window.antijanteProductsList`. Created before `antijanteProductsList.ready` fires. */
 export interface ExtensionApi {
 	version: string;
 	settings: Settings;
@@ -277,7 +277,11 @@ export interface ExtensionApi {
 
 declare global {
 	interface Window {
+		antijanteProductsList?: ExtensionApi;
+		/** @deprecated The name from before the fork: use antijanteProductsList. */
 		wcProductsList?: ExtensionApi;
+		antijanteProductsListSettings?: Settings;
+		/** @deprecated The name from before the fork: use antijanteProductsListSettings. */
 		wcProductsListSettings?: Settings;
 	}
 }

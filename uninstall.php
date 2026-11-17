@@ -7,10 +7,10 @@
  * terms). Deactivating keeps everything. See docs/revisions.md.
  */
 
-use GeneroWP\ProductsList\History\Purge;
-use GeneroWP\ProductsList\Log\BatchState;
-use GeneroWP\ProductsList\Log\Prune;
-use GeneroWP\ProductsList\Log\Table;
+use Antijante\ProductsList\History\Purge;
+use Antijante\ProductsList\Log\BatchState;
+use Antijante\ProductsList\Log\Prune;
+use Antijante\ProductsList\Log\Table;
 
 if (! defined('WP_UNINSTALL_PLUGIN')) {
     exit;
@@ -21,7 +21,7 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
 }
 
 spl_autoload_register(static function (string $class): void {
-    $prefix = 'GeneroWP\\ProductsList\\';
+    $prefix = 'Antijante\\ProductsList\\';
 
     if (strncmp($class, $prefix, strlen($prefix)) === 0) {
         $file = __DIR__.'/src/'.str_replace('\\', '/', substr($class, strlen($prefix))).'.php';

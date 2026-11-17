@@ -1,8 +1,8 @@
 /**
  * The actions the list offers, in menu order: core actions, then the
  * declarative ones from the settings payload (`POST /actions/{id}`), then
- * those registered through `window.wcProductsList.registerAction`, then
- * the `wcProductsList.actions` filter. Capability keys and scope are
+ * those registered through `window.antijanteProductsList.registerAction`, then
+ * the `antijanteProductsList.actions` filter. Capability keys and scope are
  * enforced here so action files only state intent.
  */
 import { useEffect, useMemo, useRef } from '@wordpress/element';
@@ -80,26 +80,26 @@ export function declarativeSummary( label: string, changed: number, unchanged: n
 	if ( changed === 0 ) {
 		summary = sprintf(
 			/* translators: %d: number of items the action left as they were */
-			_n( 'nothing changed, %d item already had these values.', 'nothing changed, %d items already had these values.', unchanged, 'wp-woocommerce-products-list' ),
+			_n( 'nothing changed, %d item already had these values.', 'nothing changed, %d items already had these values.', unchanged, 'antijante-products-list' ),
 			unchanged
 		);
 	} else if ( unchanged === 0 ) {
 		summary = sprintf(
 			/* translators: %d: number of items updated */
-			_n( '%d item updated.', '%d items updated.', changed, 'wp-woocommerce-products-list' ),
+			_n( '%d item updated.', '%d items updated.', changed, 'antijante-products-list' ),
 			changed
 		);
 	} else {
 		summary = sprintf(
 			/* translators: 1: items updated, 2: items the action left as they were */
-			__( '%1$d updated, %2$d already had these values.', 'wp-woocommerce-products-list' ),
+			__( '%1$d updated, %2$d already had these values.', 'antijante-products-list' ),
 			changed,
 			unchanged
 		);
 	}
 
 	/* translators: 1: action label, 2: what happened ("2 items updated.") */
-	return sprintf( __( '%1$s: %2$s', 'wp-woocommerce-products-list' ), label, summary );
+	return sprintf( __( '%1$s: %2$s', 'antijante-products-list' ), label, summary );
 }
 
 /**
@@ -124,7 +124,7 @@ export interface RunDeclarativeOptions {
 	/** No success snackbar: the caller reports the whole Update itself. */
 	silent?: boolean;
 	/**
-	 * Fire `wcProductsList.actionPerformed` for the rows that changed (the editor's language tools): the
+	 * Fire `antijanteProductsList.actionPerformed` for the rows that changed (the editor's language tools): the
 	 * rows are then marked edited and stay in a filter they left, as DataViews' own action callbacks do.
 	 */
 	announce?: boolean;
@@ -237,12 +237,12 @@ export async function runDeclarativeAction( action: string, label: string, ids: 
 			ok.length
 				? sprintf(
 						/* translators: 1: items updated, 2: items that failed, 3: the first failure's message */
-						__( '%1$d updated, %2$d failed: %3$s', 'wp-woocommerce-products-list' ),
+						__( '%1$d updated, %2$d failed: %3$s', 'antijante-products-list' ),
 						ok.length,
 						failed.length,
 						failed[ 0 ]?.message ?? ''
 				  )
-				: failed[ 0 ]?.message || __( 'The action failed.', 'wp-woocommerce-products-list' ),
+				: failed[ 0 ]?.message || __( 'The action failed.', 'antijante-products-list' ),
 			failed
 		);
 	}
@@ -260,7 +260,7 @@ export async function runDeclarativeAction( action: string, label: string, ids: 
 			ok.length
 				? sprintf(
 						/* translators: 1: items updated, 2: items that failed, 3: the failed items and why */
-						__( '%1$d updated, %2$d failed: %3$s', 'wp-woocommerce-products-list' ),
+						__( '%1$d updated, %2$d failed: %3$s', 'antijante-products-list' ),
 						ok.length,
 						failed.length,
 						describeFailedRows( failed, names )
@@ -296,7 +296,7 @@ function notifyDeclarativeSuccess( response: ActionResponse, label: string ): vo
 					...( changed > 1 ? { explicitDismiss: true } : {} ),
 					actions: [
 						{
-							label: __( 'Undo', 'wp-woocommerce-products-list' ),
+							label: __( 'Undo', 'antijante-products-list' ),
 							onClick: () => {
 								notify.remove( id );
 								void undoBatch( response.batch_id );

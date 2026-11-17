@@ -1,11 +1,12 @@
 <?php
 
-namespace GeneroWP\ProductsList\Modules;
+namespace Antijante\ProductsList\Modules;
 
-use GeneroWP\ProductsList\Bootstrap;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Module;
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Bootstrap;
+use Antijante\ProductsList\Compat;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Module;
+use Antijante\ProductsList\Plugin;
 
 /**
  * Products → Catalog: the screen the app mounts on. One script, one style,
@@ -19,7 +20,7 @@ class AdminPage implements Module
     public const ROOT_ID = 'wc-products-list-root';
 
     /** Fired after the app script is enqueued so extensions can add theirs. */
-    public const ACTION_ENQUEUE = 'wc_products_list/enqueue';
+    public const ACTION_ENQUEUE = 'antijante_products_list/enqueue';
 
     /** Chunks webpack loads on demand: their strings ride along with the app's translations. */
     public const LAZY_CHUNKS = ['build/edit.js', 'build/history.js'];
@@ -93,8 +94,8 @@ class AdminPage implements Module
     {
         add_submenu_page(
             'edit.php?post_type=product',
-            __('All Products (New)', 'wp-woocommerce-products-list'),
-            __('All Products (New)', 'wp-woocommerce-products-list'),
+            __('All Products (New)', 'antijante-products-list'),
+            __('All Products (New)', 'antijante-products-list'),
             Plugin::capability(),
             Plugin::PAGE,
             [$this, 'render'],
@@ -120,7 +121,7 @@ class AdminPage implements Module
     public const PREFETCH_STORAGE_KEY = 'wc-products-list:prefetch';
 
     /** The global the prefetch script fills: `{ [path]: Promise<{ok, status, headers, data}> }`. */
-    public const PREFETCH_GLOBAL = 'wcProductsListPrefetch';
+    public const PREFETCH_GLOBAL = 'antijanteProductsListPrefetch';
 
     /** Paths the prefetch script starts at most. */
     public const PREFETCH_MAX = 4;
@@ -160,11 +161,11 @@ class AdminPage implements Module
 
         return '<style>'.$style.'</style>'
             .'<div class="wc-pl-skeleton" aria-busy="true">'
-            .'<h1 class="wp-heading-inline wc-products-list__title">'.esc_html__('All Products (New)', 'wp-woocommerce-products-list').'</h1>'
+            .'<h1 class="wp-heading-inline wc-products-list__title">'.esc_html__('All Products (New)', 'antijante-products-list').'</h1>'
             .'<div class="wc-pl-skeleton__tabs" aria-hidden="true">'.str_repeat('<span class="wc-pl-skeleton__tab"></span>', 5).'</div>'
             .'<div class="wc-pl-skeleton__toolbar" aria-hidden="true"><span class="wc-pl-skeleton__search"></span><span class="wc-pl-skeleton__button"></span></div>'
             .'<div class="wc-pl-skeleton__table" aria-hidden="true">'.$rows.'</div>'
-            .'<p class="screen-reader-text">'.esc_html__('Loading products…', 'wp-woocommerce-products-list').'</p>'
+            .'<p class="screen-reader-text">'.esc_html__('Loading products…', 'antijante-products-list').'</p>'
             .'</div>';
     }
 
@@ -217,11 +218,16 @@ JS;
         // term name or an extension's label cannot end the script block.
         wp_add_inline_script(
             Plugin::HANDLE,
-            'window.wcProductsListSettings = '.wp_json_encode(Bootstrap::settings(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT).';',
+            // The second name is the one from before the fork (deprecated, src/Compat.php).
+            'window.antijanteProductsListSettings = window.wcProductsListSettings = '.wp_json_encode(Bootstrap::settings(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT).';',
             'before'
         );
 
         wp_enqueue_script(Plugin::HANDLE);
+
+        // The handle from before the fork, for extensions that name it as a
+        // dependency (deprecated, src/Compat.php).
+        wp_register_script(Compat::OLD_SCRIPT_HANDLE, false, [Plugin::HANDLE], $asset['version']);
 
         // DataViews' stylesheet reads the --wpds-* design tokens that core's
         // wp-components stylesheet defines, so it has to come after it.
@@ -235,9 +241,9 @@ JS;
         /**
          * Fires after the app script is enqueued. Enqueue extension scripts
          * here with the handle as a dependency; they run before the app
-         * mounts and may call `window.wcProductsList` once `ready` fires.
+         * mounts and may call `window.antijanteProductsList` once `ready` fires.
          *
-         * @param  string  $handle  The app's script handle, `wc-products-list`.
+         * @param  string  $handle  The app's script handle, `antijante-products-list`.
          */
         do_action(self::ACTION_ENQUEUE, Plugin::HANDLE);
     }
@@ -252,7 +258,7 @@ JS;
 
         return [
             'dependencies' => is_array($asset['dependencies'] ?? null) ? $asset['dependencies'] : [],
-            'version' => (string) ($asset['version'] ?? WC_PRODUCTS_LIST_VERSION),
+            'version' => (string) ($asset['version'] ?? ANTIJANTE_PRODUCTS_LIST_VERSION),
         ];
     }
 }

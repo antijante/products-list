@@ -7,7 +7,7 @@ export function createManageStockField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'manage_stock',
 		type: 'boolean',
-		label: __( 'Manage stock', 'wp-woocommerce-products-list' ),
+		label: __( 'Manage stock', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: false,
 		render: ( { item } ) => <BooleanCell value={ item.manage_stock } />,

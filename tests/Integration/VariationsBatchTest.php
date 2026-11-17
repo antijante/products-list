@@ -1,9 +1,9 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Table;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Table;
 use WP_REST_Request;
 
 /**

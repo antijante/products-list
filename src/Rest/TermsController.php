@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Plugin;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -67,7 +67,7 @@ class TermsController extends WP_REST_Controller
 
         return new WP_Error(
             'wc_products_list_forbidden',
-            __('Sorry, you are not allowed to list product terms.', 'wp-woocommerce-products-list'),
+            __('Sorry, you are not allowed to list product terms.', 'antijante-products-list'),
             ['status' => rest_authorization_required_code()]
         );
     }
@@ -83,7 +83,7 @@ class TermsController extends WP_REST_Controller
         if (! self::allows($taxonomy)) {
             return new WP_Error(
                 'wc_products_list_taxonomy_invalid',
-                __('Unknown taxonomy.', 'wp-woocommerce-products-list'),
+                __('Unknown taxonomy.', 'antijante-products-list'),
                 ['status' => 404]
             );
         }

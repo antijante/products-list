@@ -173,14 +173,14 @@ export async function optimisticBatch( items: ProductListItem[], options: Optimi
 				const item = byRowId.get( row.id );
 				const parentId = item && isVariation( item ) ? parentIdOf( item ) : undefined;
 
-				// The same normalisation as a list read (hierarchy keys, the `wcProductsList.item` filter), thumbnails kept.
+				// The same normalisation as a list read (hierarchy keys, the `antijanteProductsList.item` filter), thumbnails kept.
 				returned.push( withoutUntouchedImages( toRow( row, parentId ) as unknown as Record< string, unknown >, patchOf.get( row.id ) ?? {} ) as unknown as Patch );
 			}
 		}
 
 		for ( const item of sent ) {
 			if ( ! seen.has( item.id ) ) {
-				failed.push( { id: item.id, message: __( 'No result returned for this item.', 'wp-woocommerce-products-list' ) } );
+				failed.push( { id: item.id, message: __( 'No result returned for this item.', 'antijante-products-list' ) } );
 			}
 		}
 
@@ -341,7 +341,7 @@ export async function optimisticBatch( items: ProductListItem[], options: Optimi
 	if ( ok ) {
 		// The batch is in the change log: Undo reverts it (disable a colour's variations, feature 99 products…).
 		const noticeId = `wc-pl-action-${ batchId }`;
-		const history = settings.links.history ? [ { label: __( 'View in History', 'wp-woocommerce-products-list' ), url: addQueryArgs( settings.links.history, { batch: batchId } ) } ] : [];
+		const history = settings.links.history ? [ { label: __( 'View in History', 'antijante-products-list' ), url: addQueryArgs( settings.links.history, { batch: batchId } ) } ] : [];
 
 		notify.success( options.success( ok ), {
 			id: noticeId,
@@ -351,7 +351,7 @@ export async function optimisticBatch( items: ProductListItem[], options: Optimi
 				? history
 				: [
 						{
-							label: __( 'Undo', 'wp-woocommerce-products-list' ),
+							label: __( 'Undo', 'antijante-products-list' ),
 							onClick: () => {
 								notify.remove( noticeId );
 								void undoBatch( batchId );
@@ -402,12 +402,12 @@ export const createPublishAction: ActionFactory = ( context ) => {
 		...statusAction(
 			context,
 			'publish',
-			__( 'Publish', 'wp-woocommerce-products-list' ),
+			__( 'Publish', 'antijante-products-list' ),
 			'publish',
 			( item ) => item.status !== 'publish' && item.status !== 'trash',
 			published,
 			/* translators: %d: number of products */
-			( count ) => sprintf( _n( '%d product published.', '%d products published.', count, 'wp-woocommerce-products-list' ), count )
+			( count ) => sprintf( _n( '%d product published.', '%d products published.', count, 'antijante-products-list' ), count )
 		),
 		scope: 'product',
 	};
@@ -422,12 +422,12 @@ export const createDraftAction: ActionFactory = ( context ) => {
 		...statusAction(
 			context,
 			'draft',
-			__( 'Move to draft', 'wp-woocommerce-products-list' ),
+			__( 'Move to draft', 'antijante-products-list' ),
 			'draft',
 			( item ) => item.status !== 'draft' && item.status !== 'trash',
 			drafts,
 			/* translators: %d: number of products */
-			( count ) => sprintf( _n( '%d product moved to draft.', '%d products moved to draft.', count, 'wp-woocommerce-products-list' ), count )
+			( count ) => sprintf( _n( '%d product moved to draft.', '%d products moved to draft.', count, 'antijante-products-list' ), count )
 		),
 		scope: 'product',
 	};
@@ -443,12 +443,12 @@ export const createEnableVariationAction: ActionFactory = ( context ) => {
 		...statusAction(
 			context,
 			'enable',
-			__( 'Enable', 'wp-woocommerce-products-list' ),
+			__( 'Enable', 'antijante-products-list' ),
 			'publish',
 			( item ) => item.status === 'private',
 			published,
 			/* translators: %d: number of variations */
-			( count ) => sprintf( _n( '%d variation enabled.', '%d variations enabled.', count, 'wp-woocommerce-products-list' ), count ),
+			( count ) => sprintf( _n( '%d variation enabled.', '%d variations enabled.', count, 'antijante-products-list' ), count ),
 			false
 		),
 		scope: 'variation',
@@ -464,12 +464,12 @@ export const createDisableVariationAction: ActionFactory = ( context ) => {
 		...statusAction(
 			context,
 			'disable',
-			__( 'Disable', 'wp-woocommerce-products-list' ),
+			__( 'Disable', 'antijante-products-list' ),
 			'private',
 			( item ) => item.status !== 'private',
 			drafts,
 			/* translators: %d: number of variations */
-			( count ) => sprintf( _n( '%d variation disabled.', '%d variations disabled.', count, 'wp-woocommerce-products-list' ), count ),
+			( count ) => sprintf( _n( '%d variation disabled.', '%d variations disabled.', count, 'antijante-products-list' ), count ),
 			false
 		),
 		scope: 'variation',

@@ -5,17 +5,17 @@ let cached: Settings | undefined;
 /**
  * The payload src/Bootstrap.php printed before the script. Read once; the
  * app never mutates it (extensions change it server-side through the
- * `wc_products_list/bootstrap` filter).
+ * `antijante_products_list/bootstrap` filter).
  */
 export function getSettings(): Settings {
 	if ( cached ) {
 		return cached;
 	}
 
-	const settings = window.wcProductsListSettings;
+	const settings = window.antijanteProductsListSettings;
 
 	if ( ! settings || typeof settings !== 'object' ) {
-		throw new Error( 'wcProductsListSettings is missing: the script was enqueued without its inline settings.' );
+		throw new Error( 'antijanteProductsListSettings is missing: the script was enqueued without its inline settings.' );
 	}
 
 	cached = settings;
@@ -26,7 +26,7 @@ export function getSettings(): Settings {
 /** For tests: replace the payload. */
 export function setSettings( settings: Settings | undefined ): void {
 	cached = undefined;
-	window.wcProductsListSettings = settings;
+	window.antijanteProductsListSettings = settings;
 }
 
 export function currentUserCan( cap: keyof Settings[ 'caps' ] ): boolean {

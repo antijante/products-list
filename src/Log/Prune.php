@@ -1,17 +1,17 @@
 <?php
 
-namespace GeneroWP\ProductsList\Log;
+namespace Antijante\ProductsList\Log;
 
 /**
  * Drops log rows older than the retention period, daily. 180 days by
- * default; `wc_products_list/log_retention_days` changes it, 0 keeps
+ * default; `antijante_products_list/log_retention_days` changes it, 0 keeps
  * everything.
  */
 final class Prune
 {
     public const HOOK = 'wc_products_list_prune_log';
 
-    public const FILTER_RETENTION = 'wc_products_list/log_retention_days';
+    public const FILTER_RETENTION = 'antijante_products_list/log_retention_days';
 
     public const DEFAULT_DAYS = 180;
 

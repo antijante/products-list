@@ -69,11 +69,11 @@ function makeDeps( overrides: Partial< ExtensionApiDeps > = {} ): ExtensionApiDe
 const item = { id: 1, _kind: 'product', _level: 0, _parentId: null, _hasChildren: false, _childCount: 0 } as ProductListItem;
 
 describe( 'hook names', () => {
-	it( 'are stable strings under the wcProductsList namespace', () => {
-		expect( Object.values( FILTERS ).every( ( name ) => name.startsWith( 'wcProductsList.' ) ) ).toBe( true );
-		expect( Object.values( ACTIONS ) ).toEqual( [ 'wcProductsList.ready', 'wcProductsList.loaded', 'wcProductsList.saved', 'wcProductsList.deleted', 'wcProductsList.actionPerformed' ] );
-		expect( FILTERS.quickEditTabs ).toBe( 'wcProductsList.quickEdit.tabs' );
-		expect( FILTERS.quickEditLayout ).toBe( 'wcProductsList.quickEdit.layout' );
+	it( 'are stable strings under the antijanteProductsList namespace', () => {
+		expect( Object.values( FILTERS ).every( ( name ) => name.startsWith( 'antijanteProductsList.' ) ) ).toBe( true );
+		expect( Object.values( ACTIONS ) ).toEqual( [ 'antijanteProductsList.ready', 'antijanteProductsList.loaded', 'antijanteProductsList.saved', 'antijanteProductsList.deleted', 'antijanteProductsList.actionPerformed' ] );
+		expect( FILTERS.quickEditTabs ).toBe( 'antijanteProductsList.quickEdit.tabs' );
+		expect( FILTERS.quickEditLayout ).toBe( 'antijanteProductsList.quickEdit.layout' );
 		expect( hookNamespace( 'gds-woo-i18n' ) ).toBe( 'gds-woo-i18n/wc-products-list' );
 	} );
 } );
@@ -162,21 +162,21 @@ describe( 'createExtensionApi', () => {
 
 	afterEach( () => resetRegistry() );
 
-	it( 'assigns window.wcProductsList and fires ready with it', () => {
+	it( 'assigns window.antijanteProductsList and fires ready with it', () => {
 		const ready = vi.fn();
 		addAction( ACTIONS.ready, 'test/ready', ready );
 
 		const deps = makeDeps();
 		const api = createExtensionApi( deps );
 
-		expect( window.wcProductsList ).toBe( api );
+		expect( window.antijanteProductsList ).toBe( api );
 		expect( getExtensionApi() ).toBe( api );
 		expect( ready ).toHaveBeenCalledWith( api );
 		expect( api.version ).toBe( '0.1.0' );
 		expect( api.settings ).toBe( deps.settings );
 		expect( api.hooks.filters ).toBe( FILTERS );
 		expect( api.hooks.actions ).toBe( ACTIONS );
-		expect( api.hooks.namespace ).toBe( 'wcProductsList' );
+		expect( api.hooks.namespace ).toBe( 'antijanteProductsList' );
 	} );
 
 	it( 'registers fields, actions, query callbacks and tabs before or after ready', () => {
@@ -253,7 +253,7 @@ describe( 'createExtensionApi', () => {
 		createExtensionApi( makeDeps() );
 		resetRegistry();
 
-		expect( window.wcProductsList ).toBeUndefined();
+		expect( window.antijanteProductsList ).toBeUndefined();
 		expect( getExtensionApi() ).toBeUndefined();
 		expect( getRegisteredFields() ).toEqual( [] );
 	} );

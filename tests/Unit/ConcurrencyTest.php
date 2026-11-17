@@ -1,10 +1,10 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Unit;
+namespace Antijante\ProductsList\Tests\Unit;
 
-use GeneroWP\ProductsList\Log\Recorder;
-use GeneroWP\ProductsList\Rest\Concurrency;
-use GeneroWP\ProductsList\Rest\LogController;
+use Antijante\ProductsList\Log\Recorder;
+use Antijante\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\Rest\LogController;
 use PHPUnit\Framework\TestCase;
 
 /**

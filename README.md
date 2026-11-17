@@ -1,6 +1,8 @@
-# WooCommerce Products List
+# Antijante Products List
 
-A fast product catalog for the WooCommerce admin, built on `@wordpress/dataviews` 20. Variations expand inline under their parents. Quick edit and bulk edit open in a slide-in panel beside the list, like WooCommerce's DataViews product editor, so the list, your place in it and the ticked rows stay in view; no modal and no page reload. That includes scheduled sales across all variations of the selected variable products. Every change made through the list is logged and can be reverted. Extensions add columns, filters, quick-edit tabs and actions from PHP alone, or from JavaScript through `window.wcProductsList`.
+Antijante's fork of Genero's [WooCommerce Products List](https://github.com/generoi/wp-woocommerce-products-list). The names changed and the old ones still answer (see CHANGELOG.md); what it does is the same.
+
+A fast product catalog for the WooCommerce admin, built on `@wordpress/dataviews` 20. Variations expand inline under their parents. Quick edit and bulk edit open in a slide-in panel beside the list, like WooCommerce's DataViews product editor, so the list, your place in it and the ticked rows stay in view; no modal and no page reload. That includes scheduled sales across all variations of the selected variable products. Every change made through the list is logged and can be reverted. Extensions add columns, filters, quick-edit tabs and actions from PHP alone, or from JavaScript through `window.antijanteProductsList`.
 
 Requires WordPress 6.8+ (developed on 7.1), WooCommerce 11.0+ (developed on 11.1) and PHP 8.2+. The plugin adds **Products → Catalog** and leaves the classic list untouched.
 
@@ -29,14 +31,14 @@ The package is on GitHub, not Packagist. In the site's `composer.json`:
     { "type": "vcs", "url": "https://github.com/generoi/wp-woocommerce-products-list" }
   ],
   "require": {
-    "generoi/wp-woocommerce-products-list": "^0.1.1"
+    "antijante/products-list": "^0.1.1"
   }
 }
 ```
 
 ```sh
-composer update generoi/wp-woocommerce-products-list
-wp plugin activate wp-woocommerce-products-list
+composer update antijante/products-list
+wp plugin activate antijante-products-list
 ```
 
 `build/` is committed, so a Composer install needs no Node. Activation creates the `{prefix}wc_products_list_log` table and schedules the daily prune.
@@ -54,7 +56,7 @@ Open **Products → Catalog** (`edit.php?post_type=product&page=wc-products-list
 The change log (`{prefix}wc_products_list_log`) is the History and Undo of the app, and stays the default. A proof of concept records native WordPress revisions next to it, switched by a constant in `wp-config.php` (`config/application.php` on Bedrock):
 
 ```php
-define('WC_PRODUCTS_LIST_HISTORY', 'both'); // log (default) | both | revisions
+define('ANTIJANTE_PRODUCTS_LIST_HISTORY', 'both'); // log (default) | both | revisions
 ```
 
 - `log` or unset: as before; the revisions module is not loaded.
@@ -65,7 +67,7 @@ define('WC_PRODUCTS_LIST_HISTORY', 'both'); // log (default) | both | revisions
 
 ## Capabilities
 
-The Catalog screen and the plugin's REST routes need `edit_products` (shop managers and administrators have it; the `wc_products_list/capability` filter changes it). Saves go through WooCommerce's `wc/v3` endpoints, which have requirements of their own:
+The Catalog screen and the plugin's REST routes need `edit_products` (shop managers and administrators have it; the `antijante_products_list/capability` filter changes it). Saves go through WooCommerce's `wc/v3` endpoints, which have requirements of their own:
 
 - Quick edit of one product: `POST /wc/v3/products/{id}` needs `edit_post` on that product.
 - Bulk edit and every multi-row save: `POST /wc/v3/products/batch` and `/wc-products-list/v1/variations/batch` need **`edit_others_products`** (WooCommerce's rule for batch writes). The settings payload exposes it as `caps.editOthers`.
@@ -76,7 +78,7 @@ A role with `edit_products` but not `edit_others_products` can browse and quick-
 
 ### Personal data and retention
 
-Every log row stores who made the change (`user_id`) and, in its `context` column, the request's IP address and user agent. The REST API never returns `context`. Rows are pruned after 180 days by a daily cron (`wc_products_list/log_retention_days`). Mention the log in the site's privacy policy if the store has several editors.
+Every log row stores who made the change (`user_id`) and, in its `context` column, the request's IP address and user agent. The REST API never returns `context`. Rows are pruned after 180 days by a daily cron (`antijante_products_list/log_retention_days`). Mention the log in the site's privacy policy if the store has several editors.
 
 ## Speed
 
@@ -118,7 +120,7 @@ pnpm lint:js && pnpm lint:types && pnpm test         # eslint, tsc, vitest
 Integration tests boot WordPress and WooCommerce. With wp-env: `pnpm env:start && pnpm test:php`. On a Bedrock site under DDEV (test DB `wp_tests`, config in `tests/wp-tests-config.php`):
 
 ```sh
-ddev exec -d /var/www/html/web/app/plugins/wp-woocommerce-products-list \
+ddev exec -d /var/www/html/web/app/plugins/antijante-products-list \
   env WP_PHPUNIT__TESTS_CONFIG=tests/wp-tests-config.php \
   vendor/bin/phpunit --bootstrap tests/bootstrap.php --testsuite integration
 ```

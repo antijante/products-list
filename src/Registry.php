@@ -1,11 +1,11 @@
 <?php
 
-namespace GeneroWP\ProductsList;
+namespace Antijante\ProductsList;
 
 /**
  * The declarative extension layer: PHP-side field, filter and action
  * definitions are collected through filters, normalised to one shape and
- * serialised into `window.wcProductsListSettings`, where the JS core turns
+ * serialised into `window.antijanteProductsListSettings`, where the JS core turns
  * them into DataViews fields, filters and actions. An integration such as
  * gds-woo-i18n needs no JavaScript for this.
  *
@@ -41,11 +41,11 @@ namespace GeneroWP\ProductsList;
  */
 final class Registry
 {
-    public const FILTER_FIELDS = 'wc_products_list/fields';
+    public const FILTER_FIELDS = 'antijante_products_list/fields';
 
-    public const FILTER_FILTERS = 'wc_products_list/filters';
+    public const FILTER_FILTERS = 'antijante_products_list/filters';
 
-    public const FILTER_ACTIONS = 'wc_products_list/actions';
+    public const FILTER_ACTIONS = 'antijante_products_list/actions';
 
     public const FIELD_TYPES = ['text', 'html', 'price', 'integer', 'number', 'boolean', 'select', 'date', 'datetime', 'media', 'array'];
 
@@ -148,7 +148,7 @@ final class Registry
 
     /**
      * The top-level request keys that extension fields write under. The Saves
-     * hook only fires `wc_products_list/save` when one of these is present.
+     * hook only fires `antijante_products_list/save` when one of these is present.
      *
      * @return array<int, string>
      */

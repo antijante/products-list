@@ -1,8 +1,8 @@
 /**
  * The field list the app runs on: core fields in display order, then the
  * declarative definitions from the settings payload, then fields registered
- * through `window.wcProductsList.registerField`, then the
- * `wcProductsList.fields` filter. Later definitions replace earlier ones
+ * through `window.antijanteProductsList.registerField`, then the
+ * `antijanteProductsList.fields` filter. Later definitions replace earlier ones
  * with the same id.
  */
 import { applyFilters } from '@wordpress/hooks';

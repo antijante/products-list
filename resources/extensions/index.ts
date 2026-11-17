@@ -1,5 +1,5 @@
 /**
- * The extension model: hook names, the `window.wcProductsList` api and its
+ * The extension model: hook names, the `window.antijanteProductsList` api and its
  * registries, and the declarative (PHP) definitions → field/action
  * conversion. See docs/extension-api.md.
  */

@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\Actions;
+namespace Antijante\ProductsList\Actions;
 
 use WC_Product;
 use WP_Error;
@@ -37,13 +37,13 @@ final class Restore implements Action
     {
         if ($product->get_status() !== 'trash') {
             // Restored another way already: nothing to undo, logged as a no-op (skipped, unchanged), not a failure.
-            return new WP_Error('wc_products_list_not_trashed', __('The product is not in the trash.', 'wp-woocommerce-products-list'), ['skip_reason' => 'unchanged']);
+            return new WP_Error('wc_products_list_not_trashed', __('The product is not in the trash.', 'antijante-products-list'), ['skip_reason' => 'unchanged']);
         }
 
         $previous = (string) get_post_meta($product->get_id(), '_wp_trash_meta_status', true);
 
         if (! wp_untrash_post($product->get_id())) {
-            return new WP_Error('wc_products_list_restore_failed', __('The product could not be restored.', 'wp-woocommerce-products-list'));
+            return new WP_Error('wc_products_list_restore_failed', __('The product could not be restored.', 'antijante-products-list'));
         }
 
         $status = (string) get_post_status($product->get_id());

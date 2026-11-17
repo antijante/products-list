@@ -10,7 +10,7 @@ import { setInlineEditing, useInlineEditing } from './mode';
 
 export const INLINE_HINT_ID = 'wc-products-list-inline-hint';
 
-const HINT = () => __( 'Saves on Enter or when you leave the row. Esc takes a change back.', 'wp-woocommerce-products-list' );
+const HINT = () => __( 'Saves on Enter or when you leave the row. Esc takes a change back.', 'antijante-products-list' );
 
 /** A mode, so a switch (beside the status tabs, where the crowded toolbar never pushes it out of view). */
 export function InlineEditToggle() {
@@ -25,7 +25,7 @@ export function InlineEditToggle() {
 			) }
 			<ToggleControl
 				__nextHasNoMarginBottom
-				label={ __( 'Edit in table', 'wp-woocommerce-products-list' ) }
+				label={ __( 'Edit in table', 'antijante-products-list' ) }
 				checked={ enabled }
 				aria-describedby={ enabled ? INLINE_HINT_ID : undefined }
 				onChange={ ( next: boolean ) => setInlineEditing( next ) }

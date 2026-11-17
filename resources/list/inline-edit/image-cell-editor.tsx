@@ -92,8 +92,8 @@ function ImageButton( { item }: { item: ProductListItem } ) {
 	const variation = isVariation( item );
 	const name = decodeEntities( itemLabel( item ) );
 	const label = variation
-		? sprintf( /* translators: %s: variation name */ __( 'Change the image of %s', 'wp-woocommerce-products-list' ), name )
-		: sprintf( /* translators: %s: product name */ __( 'Change the images of %s', 'wp-woocommerce-products-list' ), name );
+		? sprintf( /* translators: %s: variation name */ __( 'Change the image of %s', 'antijante-products-list' ), name )
+		: sprintf( /* translators: %s: product name */ __( 'Change the images of %s', 'antijante-products-list' ), name );
 
 	const intentRef = useRef< number | undefined >( undefined );
 	const prepare = () => {
@@ -223,7 +223,7 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 
 		if ( ! outcome.ok ) {
 			setSaving( false );
-			setError( outcome.message ?? __( 'The images were not saved.', 'wp-woocommerce-products-list' ) );
+			setError( outcome.message ?? __( 'The images were not saved.', 'antijante-products-list' ) );
 			setLockedOut( outcome.code === EDITING_ERROR );
 
 			// Someone else saved the product meanwhile: its images now are the base, what was arranged here stays.
@@ -245,7 +245,7 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 			} )
 			.catch( ( caught: unknown ) => {
 				if ( live ) {
-					setError( caught instanceof Error ? caught.message : __( 'The images could not be loaded.', 'wp-woocommerce-products-list' ) );
+					setError( caught instanceof Error ? caught.message : __( 'The images could not be loaded.', 'antijante-products-list' ) );
 				}
 			} );
 
@@ -256,7 +256,7 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
-	const title = variation ? __( 'Variation image', 'wp-woocommerce-products-list' ) : __( 'Product images', 'wp-woocommerce-products-list' );
+	const title = variation ? __( 'Variation image', 'antijante-products-list' ) : __( 'Product images', 'antijante-products-list' );
 	// Beside the thumbnail (under it on a phone), moved up as far as a big gallery needs: style.scss caps its height
 	// below the admin bar. Shrunk to the room below the thumbnail, as `resize` would, it could not move. The images
 	// scroll if need be.
@@ -298,7 +298,7 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 
 				if ( dirty && ! askDiscard ) {
 					setAskDiscard( true );
-					speak( __( 'Discard the changes to the images? Press Escape again to discard them.', 'wp-woocommerce-products-list' ), 'assertive' );
+					speak( __( 'Discard the changes to the images? Press Escape again to discard them.', 'antijante-products-list' ), 'assertive' );
 
 					return;
 				}
@@ -322,7 +322,7 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 						{ error }{ ' ' }
 						{ lockedOut && (
 							<Button variant="link" onClick={ () => void save( true ) }>
-								{ __( 'Take over', 'wp-woocommerce-products-list' ) }
+								{ __( 'Take over', 'antijante-products-list' ) }
 							</Button>
 						) }
 					</p>
@@ -330,7 +330,7 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 				{ ! base && ! error ? (
 					<div className="wc-pl-images-popover__loading">
 						<Spinner />
-						<span className="screen-reader-text">{ __( 'Loading the images…', 'wp-woocommerce-products-list' ) }</span>
+						<span className="screen-reader-text">{ __( 'Loading the images…', 'antijante-products-list' ) }</span>
 					</div>
 				) : null }
 				{ base && (
@@ -341,7 +341,7 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 				) }
 				{ askDiscard && dirty && (
 					<div className="wc-pl-images-popover__confirm" role="alert">
-						<span>{ __( 'Discard the changes to the images?', 'wp-woocommerce-products-list' ) }</span>
+						<span>{ __( 'Discard the changes to the images?', 'antijante-products-list' ) }</span>
 						<Button
 							ref={ keepRef }
 							variant="link"
@@ -351,19 +351,19 @@ function ImagesPopover( { anchor, item, name, onClose, onSave }: ImagesPopoverPr
 								window.requestAnimationFrame( () => firstTool( bodyRef.current )?.focus() );
 							} }
 						>
-							{ __( 'Keep editing', 'wp-woocommerce-products-list' ) }
+							{ __( 'Keep editing', 'antijante-products-list' ) }
 						</Button>
 						<Button variant="link" isDestructive onClick={ () => onClose() }>
-							{ __( 'Discard', 'wp-woocommerce-products-list' ) }
+							{ __( 'Discard', 'antijante-products-list' ) }
 						</Button>
 					</div>
 				) }
 				<div className="wc-pl-images-popover__footer">
 					<Button variant="tertiary" size="compact" disabled={ saving } accessibleWhenDisabled onClick={ () => onClose() }>
-						{ __( 'Cancel', 'wp-woocommerce-products-list' ) }
+						{ __( 'Cancel', 'antijante-products-list' ) }
 					</Button>
 					<Button variant="primary" size="compact" isBusy={ saving } disabled={ ! dirty || busy || saving } accessibleWhenDisabled onClick={ () => void save() }>
-						{ __( 'Save', 'wp-woocommerce-products-list' ) }
+						{ __( 'Save', 'antijante-products-list' ) }
 					</Button>
 				</div>
 			</div>

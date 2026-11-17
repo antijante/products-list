@@ -23,7 +23,7 @@ export interface MergedItems {
 	mixed: Record< string, MixedState >;
 }
 
-export const MIXED_LABEL = __( 'Mixed', 'wp-woocommerce-products-list' );
+export const MIXED_LABEL = __( 'Mixed', 'antijante-products-list' );
 
 /**
  * The form value of a mixed select/radio field. A select shows its first

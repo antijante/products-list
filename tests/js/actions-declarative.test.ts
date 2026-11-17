@@ -52,7 +52,7 @@ describe( 'runDeclarativeAction', () => {
 		expect( undoBatch ).toHaveBeenCalledWith( 'b1' );
 	} );
 
-	it( 'announces the changed rows (wcProductsList.actionPerformed) for an editor tool run, so they stay in a filter they left', async () => {
+	it( 'announces the changed rows (antijanteProductsList.actionPerformed) for an editor tool run, so they stay in a filter they left', async () => {
 		const performed = vi.fn();
 
 		addAction( ACTIONS.actionPerformed, 'test/performed', performed );

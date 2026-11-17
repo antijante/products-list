@@ -119,8 +119,8 @@ export function createDateTimeControl( settings: Pick< Settings, 'timezone' >, o
 		const [ dateValue = '', timeValue = '' ] = value.split( 'T' );
 		const problem = options.problem ? options.problem( data, field.id ) : null;
 		/* translators: %s: the site's timezone, e.g. Europe/Helsinki */
-		const zone = settings.timezone ? sprintf( __( 'Site time (%s).', 'wp-woocommerce-products-list' ), settings.timezone ) : '';
-		const wholeDay = end ? __( 'Without a time the sale ends at 23:59 that day.', 'wp-woocommerce-products-list' ) : __( 'Without a time the sale starts at 00:00 that day.', 'wp-woocommerce-products-list' );
+		const zone = settings.timezone ? sprintf( __( 'Site time (%s).', 'antijante-products-list' ), settings.timezone ) : '';
+		const wholeDay = end ? __( 'Without a time the sale ends at 23:59 that day.', 'antijante-products-list' ) : __( 'Without a time the sale starts at 00:00 that day.', 'antijante-products-list' );
 		const help = problem ?? [ field.description, wholeDay, zone ].filter( Boolean ).join( ' ' );
 		const store = ( source: 'date' | 'time' ) => {
 			const date = dateRef.current;
@@ -145,7 +145,7 @@ export function createDateTimeControl( settings: Pick< Settings, 'timezone' >, o
 			}
 		};
 		/* translators: %s: the date field's label, e.g. "Sale from" */
-		const timeLabel = sprintf( __( '%s, time (optional)', 'wp-woocommerce-products-list' ), field.label );
+		const timeLabel = sprintf( __( '%s, time (optional)', 'antijante-products-list' ), field.label );
 
 		return (
 			<div className={ `wc-pl-date-control${ problem ? ' is-invalid' : '' }` }>

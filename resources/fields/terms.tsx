@@ -13,7 +13,7 @@ import { field, valueOf } from './helpers';
 
 const termCache = new Map< string, Promise< Option[] > >();
 
-export const TERMS_STORAGE_PREFIX = 'wcProductsList.terms.';
+export const TERMS_STORAGE_PREFIX = 'antijanteProductsList.terms.';
 
 /** How long a stored term list serves filter chips before it is fetched again (ms). */
 export const TERMS_STORAGE_TTL = 60 * 1000;
@@ -243,12 +243,12 @@ function termsField( spec: TermsFieldSpec ): ProductField {
 
 export function createTermsFields( settings: Settings ): ProductField[] {
 	const fields = [
-		termsField( { id: 'categories', taxonomy: 'product_cat', label: __( 'Categories', 'wp-woocommerce-products-list' ), param: 'category', order: 40 } ),
-		termsField( { id: 'tags', taxonomy: 'product_tag', label: __( 'Tags', 'wp-woocommerce-products-list' ), param: 'tag', order: 41 } ),
+		termsField( { id: 'categories', taxonomy: 'product_cat', label: __( 'Categories', 'antijante-products-list' ), param: 'category', order: 40 } ),
+		termsField( { id: 'tags', taxonomy: 'product_tag', label: __( 'Tags', 'antijante-products-list' ), param: 'tag', order: 41 } ),
 	];
 
 	if ( settings.features.brands ) {
-		fields.push( termsField( { id: 'brands', taxonomy: 'product_brand', label: __( 'Brands', 'wp-woocommerce-products-list' ), param: 'brand', order: 42 } ) );
+		fields.push( termsField( { id: 'brands', taxonomy: 'product_brand', label: __( 'Brands', 'antijante-products-list' ), param: 'brand', order: 42 } ) );
 	}
 
 	return fields;

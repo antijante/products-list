@@ -12,7 +12,7 @@ export const createExpandAction: ActionFactory = ( { hierarchy } ) => {
 			const ids = idsOf( items );
 			const allExpanded = ids.length > 0 && ids.every( ( id ) => hierarchy.isExpanded( id ) );
 
-			return allExpanded ? __( 'Collapse variations', 'wp-woocommerce-products-list' ) : __( 'Expand variations', 'wp-woocommerce-products-list' );
+			return allExpanded ? __( 'Collapse variations', 'antijante-products-list' ) : __( 'Expand variations', 'antijante-products-list' );
 		},
 		icon: chevronDown,
 		supportsBulk: true,

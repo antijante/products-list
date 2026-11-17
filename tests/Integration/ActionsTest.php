@@ -1,17 +1,17 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Actions\Action;
-use GeneroWP\ProductsList\Actions\Duplicate;
-use GeneroWP\ProductsList\Bootstrap;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\BatchState;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Rest\ActionsController;
-use GeneroWP\ProductsList\Rest\Concurrency;
-use GeneroWP\ProductsList\Rest\LogController;
+use Antijante\ProductsList\Actions\Action;
+use Antijante\ProductsList\Actions\Duplicate;
+use Antijante\ProductsList\Bootstrap;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\BatchState;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Rest\ActionsController;
+use Antijante\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\Rest\LogController;
 use WC_Product;
 use WP_Error;
 use WP_REST_Request;
@@ -160,7 +160,7 @@ class ActionsTest extends RestTestCase
 
     /**
      * The UI offers "Delete permanently" outside the Trash only behind
-     * `wc_products_list/allow_hard_delete`; the route enforces the same.
+     * `antijante_products_list/allow_hard_delete`; the route enforces the same.
      */
     public function test_delete_outside_the_trash_needs_the_hard_delete_filter(): void
     {
@@ -457,7 +457,7 @@ class ActionsTest extends RestTestCase
 
     public function test_extension_actions_are_run_and_logged_with_their_changes(): void
     {
-        add_filter('wc_products_list/action_handlers', static function (array $handlers): array {
+        add_filter('antijante_products_list/action_handlers', static function (array $handlers): array {
             $handlers['i18n_copy'] = new class implements Action
             {
                 public function id(): string
@@ -804,7 +804,7 @@ class ActionsTest extends RestTestCase
 
         $this->assertSame('Move to Trash', $this->data($this->request('GET', '/wc-products-list/v1/log/batches'))['items'][0]['summary']);
 
-        add_filter('wc_products_list/log_batch_summary', static fn (?string $summary, ?string $action, array $args): ?string => $action === 'trash' ? 'Binned' : $summary, 10, 3);
+        add_filter('antijante_products_list/log_batch_summary', static fn (?string $summary, ?string $action, array $args): ?string => $action === 'trash' ? 'Binned' : $summary, 10, 3);
         $this->assertSame('Binned', $this->data($this->request('GET', '/wc-products-list/v1/log/batches'))['items'][0]['summary']);
 
         // A batch of field edits has none: History lists its fields.

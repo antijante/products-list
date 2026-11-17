@@ -5,7 +5,7 @@
  * next to the server-rendered skeleton. It reads, for the page's query
  * string, the GET paths this module stored on the previous visit (the
  * product list and the tab counts) and fetches them at once with the REST
- * nonce and the list-mode header, into `window.wcProductsListPrefetch`
+ * nonce and the list-mode header, into `window.antijanteProductsListPrefetch`
  * (`{ [path]: Promise<{ ok, status, headers: { total, totalPages }, data }> }`).
  * The app then takes the response for the exact path it is about to request
  * instead of asking again, so the first rows no longer wait for the 2 MB
@@ -26,7 +26,7 @@ import { addQueryArgs } from '@wordpress/url';
 export const PREFETCH_STORAGE_KEY = 'wc-products-list:prefetch';
 
 /** Keep in sync with AdminPage::PREFETCH_GLOBAL. */
-export const PREFETCH_GLOBAL = 'wcProductsListPrefetch';
+export const PREFETCH_GLOBAL = 'antijanteProductsListPrefetch';
 
 /** Keep in sync with AdminPage::PREFETCH_MAX. */
 export const PREFETCH_MAX_PATHS = 4;

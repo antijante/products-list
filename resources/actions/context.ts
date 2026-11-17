@@ -110,7 +110,7 @@ export function summarize( response: ActionResponse ): ResultSummary {
 }
 
 export function errorMessage( error: unknown ): string {
-	return error instanceof Error && error.message ? error.message : __( 'The request failed.', 'wp-woocommerce-products-list' );
+	return error instanceof Error && error.message ? error.message : __( 'The request failed.', 'antijante-products-list' );
 }
 
 /**
@@ -132,8 +132,8 @@ export function withoutLockedRows( items: ProductListItem[] ): ProductListItem[]
 	if ( free.length < items.length ) {
 		notify.info(
 			free.length
-				? __( 'Some selected rows are still being updated; they were left out.', 'wp-woocommerce-products-list' )
-				: __( 'These rows are still being updated. Try again once the update is done.', 'wp-woocommerce-products-list' )
+				? __( 'Some selected rows are still being updated; they were left out.', 'antijante-products-list' )
+				: __( 'These rows are still being updated. Try again once the update is done.', 'antijante-products-list' )
 		);
 	}
 

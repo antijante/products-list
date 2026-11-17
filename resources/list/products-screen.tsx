@@ -88,14 +88,14 @@ function getItemLevel( item: ProductListItem ): number {
  */
 export function listErrorMessage( error: Error ): { message: string; reload: boolean } {
 	if ( error instanceof ApiError && error.code === 'rest_cookie_invalid_nonce' ) {
-		return { message: __( 'Your session has expired. Reload the page to keep working.', 'wp-woocommerce-products-list' ), reload: true };
+		return { message: __( 'Your session has expired. Reload the page to keep working.', 'antijante-products-list' ), reload: true };
 	}
 
 	if ( error instanceof ApiError && error.isForbidden ) {
-		return { message: error.message || __( 'You are not allowed to view these products.', 'wp-woocommerce-products-list' ), reload: false };
+		return { message: error.message || __( 'You are not allowed to view these products.', 'antijante-products-list' ), reload: false };
 	}
 
-	return { message: error.message || __( 'The products could not be loaded.', 'wp-woocommerce-products-list' ), reload: false };
+	return { message: error.message || __( 'The products could not be loaded.', 'antijante-products-list' ), reload: false };
 }
 
 /**
@@ -117,7 +117,7 @@ export function focusOriginForRow( row: ProductListItem, doc: Document = documen
 export function expandNextLabels( next: NextExpandPlan, maxRows: number = EXPAND_ALL_MAX_ROWS ): { label: string; description: string } {
 	const label = sprintf(
 		/* translators: %d: number of products */
-		_n( 'Expand next %d', 'Expand next %d', next.count, 'wp-woocommerce-products-list' ),
+		_n( 'Expand next %d', 'Expand next %d', next.count, 'antijante-products-list' ),
 		next.count
 	);
 	const description =
@@ -128,7 +128,7 @@ export function expandNextLabels( next: NextExpandPlan, maxRows: number = EXPAND
 						'Expands the next %1$d product and collapses the %2$d expanded now, so the page stays under %3$d rows. Selected variations stay selected.',
 						'Expands the next %1$d products and collapses the %2$d expanded now, so the page stays under %3$d rows. Selected variations stay selected.',
 						next.count,
-						'wp-woocommerce-products-list'
+						'antijante-products-list'
 					),
 					next.count,
 					next.replaces,
@@ -136,7 +136,7 @@ export function expandNextLabels( next: NextExpandPlan, maxRows: number = EXPAND
 			  )
 			: sprintf(
 					/* translators: %d: number of products */
-					_n( 'Expands the next %d product.', 'Expands the next %d products.', next.count, 'wp-woocommerce-products-list' ),
+					_n( 'Expands the next %d product.', 'Expands the next %d products.', next.count, 'antijante-products-list' ),
 					next.count
 			  );
 
@@ -157,13 +157,13 @@ export function ExpandAllButton( { onClick, summary, next, onExpandNext }: { onC
 	return (
 		<>
 			<Button size="compact" variant="tertiary" onClick={ onClick } disabled={ progress !== null } isBusy={ progress !== null }>
-				{ __( 'Expand all', 'wp-woocommerce-products-list' ) }
+				{ __( 'Expand all', 'antijante-products-list' ) }
 			</Button>
 			{ progress ? (
 				<span className="wc-products-list__expand-progress" role="status" aria-live="polite">
 					{ sprintf(
 						/* translators: 1: products loaded so far, 2: products being expanded */
-						__( 'Loading variations… %1$d of %2$d', 'wp-woocommerce-products-list' ),
+						__( 'Loading variations… %1$d of %2$d', 'antijante-products-list' ),
 						progress.done,
 						progress.total
 					) }
@@ -173,7 +173,7 @@ export function ExpandAllButton( { onClick, summary, next, onExpandNext }: { onC
 				<span className="wc-products-list__expand-progress wc-products-list__expand-summary">
 					{ sprintf(
 						/* translators: 1: expanded products, 2: expandable products on the page */
-						__( '%1$d of %2$d expanded', 'wp-woocommerce-products-list' ),
+						__( '%1$d of %2$d expanded', 'antijante-products-list' ),
 						partial.expanded,
 						partial.total
 					) }
@@ -196,7 +196,7 @@ function ExpandNextButton( { next, onClick }: { next: NextExpandPlan; onClick: (
 
 /** The screen's h1, like core admin screens: where a heading jump lands first. */
 export function CatalogTitle() {
-	return <h1 className="wp-heading-inline wc-products-list__title">{ __( 'All Products (New)', 'wp-woocommerce-products-list' ) }</h1>;
+	return <h1 className="wp-heading-inline wc-products-list__title">{ __( 'All Products (New)', 'antijante-products-list' ) }</h1>;
 }
 
 /** The keyboard shortcut to the bulk edit button: Alt+B (Option+B), from anywhere on the screen but the editor and text fields. */
@@ -319,7 +319,7 @@ export function EditorMount( { store, fields, rows, childrenState, parents, sele
 
 		if ( session.mode === 'quick' && ! found && ! reloading ) {
 			store.set( null );
-			notify.info( __( 'The product being edited is no longer in the list; the quick edit was closed.', 'wp-woocommerce-products-list' ) );
+			notify.info( __( 'The product being edited is no longer in the list; the quick edit was closed.', 'antijante-products-list' ) );
 		} else if ( session.mode === 'bulk' && selected.rows.length === 0 ) {
 			store.set( null );
 		}
@@ -446,8 +446,8 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 			if ( rows.length < all.length ) {
 				notify.info(
 					rows.length
-						? __( 'Some selected rows are still being updated; they were left out.', 'wp-woocommerce-products-list' )
-						: __( 'These rows are still being updated. Edit them once the update is done.', 'wp-woocommerce-products-list' )
+						? __( 'Some selected rows are still being updated; they were left out.', 'antijante-products-list' )
+						: __( 'These rows are still being updated. Edit them once the update is done.', 'antijante-products-list' )
 				);
 			}
 
@@ -609,7 +609,7 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 	const moreActionsMenu = usesMoreActionsMenu( panelOpen, selected.offPageCount );
 	const tableActions = useMemo( () => ( moreActionsMenu ? withoutFooterBulk( actions ) : actions ), [ moreActionsMenu, actions ] );
 
-	// `window.wcProductsList.getItems()` reads what is on screen.
+	// `window.antijanteProductsList.getItems()` reads what is on screen.
 	useEffect( () => {
 		setCurrentRows( hierarchy.rows );
 	}, [ hierarchy.rows ] );
@@ -665,7 +665,7 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 				notify.info(
 					sprintf(
 						/* translators: %d: number of variations added to the selection */
-						_n( '%d matching variation selected.', '%d matching variations selected.', count, 'wp-woocommerce-products-list' ),
+						_n( '%d matching variation selected.', '%d matching variations selected.', count, 'antijante-products-list' ),
 						count
 					)
 				);
@@ -674,7 +674,7 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 	}, [ parents, hierarchy, selected ] );
 	// No "0 products" before the first answer: the table shows its own loading state.
 	const countLabel = useMemo(
-		() => ( list.isLoading && ! hierarchy.rows.length ? __( 'Loading products…', 'wp-woocommerce-products-list' ) : footerCountLabel( { data: hierarchy.rows, selection: [], totalItems: list.total } ) ),
+		() => ( list.isLoading && ! hierarchy.rows.length ? __( 'Loading products…', 'antijante-products-list' ) : footerCountLabel( { data: hierarchy.rows, selection: [], totalItems: list.total } ) ),
 		[ hierarchy.rows, list.total, list.isLoading ]
 	);
 	const header = (
@@ -695,22 +695,22 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 					/>
 					{ hierarchy.variationFilterActive && (
 						<Button size="compact" variant="tertiary" onClick={ onSelectMatching } disabled={ selectingMatching } isBusy={ selectingMatching }>
-							{ __( 'Select matching variations', 'wp-woocommerce-products-list' ) }
+							{ __( 'Select matching variations', 'antijante-products-list' ) }
 						</Button>
 					) }
 					<Button size="compact" variant="tertiary" onClick={ () => guardedHierarchy.collapseAll() } disabled={ hierarchy.expandedItemIds.length === 0 }>
-						{ __( 'Collapse all', 'wp-woocommerce-products-list' ) }
+						{ __( 'Collapse all', 'antijante-products-list' ) }
 					</Button>
 				</>
 			) }
 			{ settings.links.history && (
 				<Button size="compact" variant="tertiary" href={ settings.links.history } className="wc-products-list__history-link">
-					{ __( 'History', 'wp-woocommerce-products-list' ) }
+					{ __( 'History', 'antijante-products-list' ) }
 				</Button>
 			) }
 			{ settings.caps.edit && (
 				<Button size="compact" variant="secondary" href={ settings.links.newProduct }>
-					{ __( 'Add new', 'wp-woocommerce-products-list' ) }
+					{ __( 'Add new', 'antijante-products-list' ) }
 				</Button>
 			) }
 		</div>
@@ -727,17 +727,17 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 				<div className={ `wc-products-list${ inlineOn ? ' is-inline-editing' : '' }${ list.isFetching ? ' is-fetching' : '' }${ staleError ? ' is-stale' : '' }${ hasPageSelection ? ' has-footer' : '' }` }>
 					<CatalogTitle />
 					<a className="wc-products-list__skip screen-reader-text" href={ `#${ TABLE_ID }` }>
-						{ __( 'Skip to products', 'wp-woocommerce-products-list' ) }
+						{ __( 'Skip to products', 'antijante-products-list' ) }
 					</a>
 					{ expandConfirm && (
 						<ConfirmDialog onConfirm={ () => answerExpandAll( true ) } onCancel={ () => answerExpandAll( false ) } confirmButtonText={
 							expandConfirm.plan.skipped > 0
 								? sprintf(
 									/* translators: %d: number of products */
-									_n( 'Expand %d product', 'Expand %d products', expandConfirm.plan.expanding, 'wp-woocommerce-products-list' ),
+									_n( 'Expand %d product', 'Expand %d products', expandConfirm.plan.expanding, 'antijante-products-list' ),
 									expandConfirm.plan.expanding
 								)
-								: __( 'Expand all', 'wp-woocommerce-products-list' )
+								: __( 'Expand all', 'antijante-products-list' )
 						}>
 							{ expandAllConfirmMessage( expandConfirm.plan ) }
 						</ConfirmDialog>
@@ -754,12 +754,12 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 							className="wc-products-list__stale-notice"
 							actions={
 								staleError.reload
-									? [ { label: __( 'Reload', 'wp-woocommerce-products-list' ), onClick: () => window.location.reload() } ]
-									: [ { label: __( 'Retry', 'wp-woocommerce-products-list' ), onClick: () => void list.refetch().catch( () => {} ) } ]
+									? [ { label: __( 'Reload', 'antijante-products-list' ), onClick: () => window.location.reload() } ]
+									: [ { label: __( 'Retry', 'antijante-products-list' ), onClick: () => void list.refetch().catch( () => {} ) } ]
 							}
 						>
 							{ staleError.message }{ ' ' }
-							{ __( 'The rows shown may be out of date.', 'wp-woocommerce-products-list' ) }
+							{ __( 'The rows shown may be out of date.', 'antijante-products-list' ) }
 						</Notice>
 					) }
 					<div id={ PANEL_ID } role="tabpanel" aria-labelledby={ `wc-products-list-tab-${ tab }` } className="wc-products-list__panel">
@@ -780,7 +780,7 @@ export function ProductsScreen( { fields, settings }: ProductsScreenProps ) {
 							getItemId={ getItemId }
 							getItemLevel={ getItemLevel }
 							config={ { perPageSizes: PER_PAGE_SIZES } }
-							searchLabel={ __( 'Search name or SKU', 'wp-woocommerce-products-list' ) }
+							searchLabel={ __( 'Search name or SKU', 'antijante-products-list' ) }
 							empty={ <EmptyState tab={ tab } hasQuery={ hasQuery } onClear={ clearQuery } settings={ settings } error={ list.error } /> }
 							onReset={ isModified ? resetView : false }
 							header={ header }

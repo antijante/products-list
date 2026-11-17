@@ -190,7 +190,7 @@ export interface LogQuery {
 
 /** The extra keys the middleware reads off an apiFetch call. */
 interface ListModeOptions {
-	wcProductsList?: { batchId?: string; source?: WriteSource; planned?: number };
+	antijanteProductsList?: { batchId?: string; source?: WriteSource; planned?: number };
 }
 
 type Options< Parse extends boolean = boolean > = APIFetchOptions< Parse > & ListModeOptions;
@@ -222,11 +222,11 @@ export function withListHeaders< T extends Options >( options: T ): T {
 	const headers: Record< string, string > = { ...( options.headers ?? {} ), [ LIST_HEADER ]: '1' };
 
 	if ( isWrite( options ) ) {
-		headers[ BATCH_HEADER ] = options.wcProductsList?.batchId ?? newBatchId();
-		headers[ SOURCE_HEADER ] = options.wcProductsList?.source ?? 'quick';
+		headers[ BATCH_HEADER ] = options.antijanteProductsList?.batchId ?? newBatchId();
+		headers[ SOURCE_HEADER ] = options.antijanteProductsList?.source ?? 'quick';
 
-		if ( options.wcProductsList?.planned ) {
-			headers[ PLANNED_HEADER ] = String( options.wcProductsList.planned );
+		if ( options.antijanteProductsList?.planned ) {
+			headers[ PLANNED_HEADER ] = String( options.antijanteProductsList.planned );
 		}
 	}
 
@@ -267,7 +267,7 @@ export async function request( options: Options ): Promise< unknown > {
 function listMode( options: RequestOptions | undefined ): ListModeOptions & { signal?: AbortSignal } {
 	return {
 		signal: options?.signal,
-		wcProductsList: { batchId: options?.batchId, source: options?.source, ...( options?.planned ? { planned: options.planned } : {} ) },
+		antijanteProductsList: { batchId: options?.batchId, source: options?.source, ...( options?.planned ? { planned: options.planned } : {} ) },
 	};
 }
 
@@ -391,7 +391,7 @@ async function list< Raw >( path: string, options?: RequestOptions, retried = fa
 	};
 }
 
-/** The `wcProductsList.item` filter, applied to every row before it reaches the cache. */
+/** The `antijanteProductsList.item` filter, applied to every row before it reaches the cache. */
 export function filterItem( item: ProductListItem ): ProductListItem {
 	return applyFilters( FILTERS.item, item ) as ProductListItem;
 }
@@ -1093,7 +1093,7 @@ export async function logSkipped( batchId: string, source: WriteSource | 'revert
 function notSavedMessage( message: string | undefined ): string {
 	return sprintf(
 		/* translators: %s: the error the write failed with */
-		__( 'Not saved: %s', 'wp-woocommerce-products-list' ),
-		message || __( 'the request failed.', 'wp-woocommerce-products-list' )
+		__( 'Not saved: %s', 'antijante-products-list' ),
+		message || __( 'the request failed.', 'antijante-products-list' )
 	).slice( 0, 500 );
 }

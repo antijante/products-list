@@ -16,7 +16,7 @@ import './style.scss';
 
 /**
  * Boot order (docs/contracts.md §7): the extension API exists and
- * `wcProductsList.ready` has fired before the app mounts, so extension
+ * `antijanteProductsList.ready` has fired before the app mounts, so extension
  * scripts enqueued with the `wc-products-list` dependency can register
  * fields and actions first.
  */
@@ -52,8 +52,8 @@ function batchUpdate( update: BatchUpdate, options: BatchUpdateOptions = {} ): P
 	return runBatchUpdate( update, options );
 }
 
-// createExtensionApi() assigns window.wcProductsList and fires
-// `wcProductsList.ready` itself, once.
+// createExtensionApi() assigns window.antijanteProductsList and fires
+// `antijanteProductsList.ready` itself, once.
 createExtensionApi( {
 	settings: getSettings(),
 	refresh,

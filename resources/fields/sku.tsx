@@ -6,7 +6,7 @@ export function createSkuField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'sku',
 		type: 'text',
-		label: __( 'SKU', 'wp-woocommerce-products-list' ),
+		label: __( 'SKU', 'antijante-products-list' ),
 		enableSorting: true,
 		enableGlobalSearch: true,
 		filterBy: false,

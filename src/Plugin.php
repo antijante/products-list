@@ -1,13 +1,13 @@
 <?php
 
-namespace GeneroWP\ProductsList;
+namespace Antijante\ProductsList;
 
+use Antijante\ProductsList\Modules\Actions;
+use Antijante\ProductsList\Modules\AdminPage;
+use Antijante\ProductsList\Modules\BlockEditorAssets;
+use Antijante\ProductsList\Modules\Log;
+use Antijante\ProductsList\Modules\Rest;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
-use GeneroWP\ProductsList\Modules\Actions;
-use GeneroWP\ProductsList\Modules\AdminPage;
-use GeneroWP\ProductsList\Modules\BlockEditorAssets;
-use GeneroWP\ProductsList\Modules\Log;
-use GeneroWP\ProductsList\Modules\Rest;
 
 class Plugin
 {
@@ -24,20 +24,20 @@ class Plugin
         Actions::class,
     ];
 
-    public const FILTER_MODULES = 'wc_products_list/modules';
+    public const FILTER_MODULES = 'antijante_products_list/modules';
 
     /** Fired once on activation, and from the test bootstrap, after the modules are registered. */
-    public const ACTION_ACTIVATE = 'wc_products_list/activate';
+    public const ACTION_ACTIVATE = 'antijante_products_list/activate';
 
     /** Fired once on deactivation; modules that scheduled cron events unschedule them. */
-    public const ACTION_DEACTIVATE = 'wc_products_list/deactivate';
+    public const ACTION_DEACTIVATE = 'antijante_products_list/deactivate';
 
-    public const TEXT_DOMAIN = 'wp-woocommerce-products-list';
+    public const TEXT_DOMAIN = 'antijante-products-list';
 
     /** The script and style handle of the admin app. Extensions depend on it. */
-    public const HANDLE = 'wc-products-list';
+    public const HANDLE = 'antijante-products-list';
 
-    /** The admin page slug under `edit.php?post_type=product`. */
+    /** The admin page slug under `edit.php?post_type=product`. Unchanged by the fork, so links keep working. */
     public const PAGE = 'wc-products-list';
 
     /** Own REST namespace for counts, actions, terms and the log. */
@@ -74,8 +74,8 @@ class Plugin
             return;
         }
 
-        FeaturesUtil::declare_compatibility('custom_order_tables', WC_PRODUCTS_LIST_FILE, true);
-        FeaturesUtil::declare_compatibility('cart_checkout_blocks', WC_PRODUCTS_LIST_FILE, true);
+        FeaturesUtil::declare_compatibility('custom_order_tables', ANTIJANTE_PRODUCTS_LIST_FILE, true);
+        FeaturesUtil::declare_compatibility('cart_checkout_blocks', ANTIJANTE_PRODUCTS_LIST_FILE, true);
     }
 
     public function boot(): void
@@ -89,7 +89,7 @@ class Plugin
         // The translations that ship with the plugin. Ones installed under
         // wp-content/languages/plugins take precedence, as for any plugin.
         add_action('init', static function (): void {
-            load_plugin_textdomain(self::TEXT_DOMAIN, false, dirname(plugin_basename(WC_PRODUCTS_LIST_FILE)).'/languages');
+            load_plugin_textdomain(self::TEXT_DOMAIN, false, dirname(plugin_basename(ANTIJANTE_PRODUCTS_LIST_FILE)).'/languages');
         }, 0);
 
         // List mode is not a module: every module may read it, and an
@@ -154,12 +154,12 @@ class Plugin
 
     public static function url(string $path = ''): string
     {
-        return plugins_url($path, WC_PRODUCTS_LIST_FILE);
+        return plugins_url($path, ANTIJANTE_PRODUCTS_LIST_FILE);
     }
 
     public static function path(string $path = ''): string
     {
-        return WC_PRODUCTS_LIST_PATH.'/'.ltrim($path, '/');
+        return ANTIJANTE_PRODUCTS_LIST_PATH.'/'.ltrim($path, '/');
     }
 
     /**
@@ -173,7 +173,7 @@ class Plugin
          *
          * @param  string  $capability
          */
-        return (string) apply_filters('wc_products_list/capability', 'edit_products');
+        return (string) apply_filters('antijante_products_list/capability', 'edit_products');
     }
 
     /**
@@ -190,6 +190,6 @@ class Plugin
          *
          * @param  string  $capability
          */
-        return (string) apply_filters('wc_products_list/log_capability', 'edit_others_products');
+        return (string) apply_filters('antijante_products_list/log_capability', 'edit_others_products');
     }
 }

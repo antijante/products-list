@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList;
+namespace Antijante\ProductsList;
 
 use WP_REST_Request;
 
@@ -166,7 +166,7 @@ final class ListMode
          *
          * @param  bool  $active
          */
-        return self::$active = (bool) apply_filters('wc_products_list/active', $value !== null && $value !== '' && $value !== '0');
+        return self::$active = (bool) apply_filters('antijante_products_list/active', $value !== null && $value !== '' && $value !== '0');
     }
 
     /**

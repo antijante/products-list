@@ -24,27 +24,27 @@ function choices( kind: NumericKind, settings: Settings, salePrice: boolean, cur
 	// A language's prices are in its market currency (kr), not the shop's (€).
 	const symbol = currency?.symbol ?? settings.currency.symbol;
 	const list: OpChoice[] = [
-		{ value: 'dont_change', label: __( '— No change —', 'wp-woocommerce-products-list' ), operation: 'dont_change', percent: false },
-		{ value: 'set', label: __( 'Change to:', 'wp-woocommerce-products-list' ), operation: 'set', percent: false },
+		{ value: 'dont_change', label: __( '— No change —', 'antijante-products-list' ), operation: 'dont_change', percent: false },
+		{ value: 'set', label: __( 'Change to:', 'antijante-products-list' ), operation: 'set', percent: false },
 	];
 
 	if ( kind === 'money' && salePrice ) {
 		list.push(
-			{ value: 'regular_minus', label: `${ __( 'Regular price minus', 'wp-woocommerce-products-list' ) } (${ symbol })`, operation: 'regular_minus', percent: false },
-			{ value: 'regular_minus_percent', label: `${ __( 'Regular price minus', 'wp-woocommerce-products-list' ) } (%)`, operation: 'regular_minus', percent: true }
+			{ value: 'regular_minus', label: `${ __( 'Regular price minus', 'antijante-products-list' ) } (${ symbol })`, operation: 'regular_minus', percent: false },
+			{ value: 'regular_minus_percent', label: `${ __( 'Regular price minus', 'antijante-products-list' ) } (%)`, operation: 'regular_minus', percent: true }
 		);
 	}
 
 	list.push(
 		{
 			value: 'increase',
-			label: kind === 'money' ? `${ __( 'Increase by', 'wp-woocommerce-products-list' ) } (${ symbol })` : __( 'Increase by', 'wp-woocommerce-products-list' ),
+			label: kind === 'money' ? `${ __( 'Increase by', 'antijante-products-list' ) } (${ symbol })` : __( 'Increase by', 'antijante-products-list' ),
 			operation: 'increase',
 			percent: false,
 		},
 		{
 			value: 'decrease',
-			label: kind === 'money' ? `${ __( 'Decrease by', 'wp-woocommerce-products-list' ) } (${ symbol })` : __( 'Decrease by', 'wp-woocommerce-products-list' ),
+			label: kind === 'money' ? `${ __( 'Decrease by', 'antijante-products-list' ) } (${ symbol })` : __( 'Decrease by', 'antijante-products-list' ),
 			operation: 'decrease',
 			percent: false,
 		}
@@ -52,8 +52,8 @@ function choices( kind: NumericKind, settings: Settings, salePrice: boolean, cur
 
 	if ( kind === 'money' ) {
 		list.push(
-			{ value: 'increase_percent', label: `${ __( 'Increase by', 'wp-woocommerce-products-list' ) } (%)`, operation: 'increase', percent: true },
-			{ value: 'decrease_percent', label: `${ __( 'Decrease by', 'wp-woocommerce-products-list' ) } (%)`, operation: 'decrease', percent: true }
+			{ value: 'increase_percent', label: `${ __( 'Increase by', 'antijante-products-list' ) } (%)`, operation: 'increase', percent: true },
+			{ value: 'decrease_percent', label: `${ __( 'Decrease by', 'antijante-products-list' ) } (%)`, operation: 'decrease', percent: true }
 		);
 	}
 
@@ -75,23 +75,23 @@ function hint( op: NumericOp, salePrice: boolean ): string | null {
 
 	if ( op.operation === 'regular_minus' ) {
 		return op.percent
-			? __( 'Rounded to the store’s price decimals. Rows without a regular price are skipped.', 'wp-woocommerce-products-list' )
-			: __( 'Rows without a regular price are skipped.', 'wp-woocommerce-products-list' );
+			? __( 'Rounded to the store’s price decimals. Rows without a regular price are skipped.', 'antijante-products-list' )
+			: __( 'Rows without a regular price are skipped.', 'antijante-products-list' );
 	}
 
 	if ( salePrice && op.operation === 'decrease' ) {
 		return op.percent
-			? __( 'Percent off each row’s current sale price; rows that are not on sale start from their regular price.', 'wp-woocommerce-products-list' )
-			: __( 'Taken off each row’s current sale price; rows that are not on sale start from their regular price.', 'wp-woocommerce-products-list' );
+			? __( 'Percent off each row’s current sale price; rows that are not on sale start from their regular price.', 'antijante-products-list' )
+			: __( 'Taken off each row’s current sale price; rows that are not on sale start from their regular price.', 'antijante-products-list' );
 	}
 
 	if ( op.percent ) {
 		return salePrice
-			? __( 'Percent of each row’s current sale price. Rows without a sale price are skipped; use “Regular price minus” to start a sale.', 'wp-woocommerce-products-list' )
-			: __( 'Percent of each row’s current value, rounded to the store’s price decimals.', 'wp-woocommerce-products-list' );
+			? __( 'Percent of each row’s current sale price. Rows without a sale price are skipped; use “Regular price minus” to start a sale.', 'antijante-products-list' )
+			: __( 'Percent of each row’s current value, rounded to the store’s price decimals.', 'antijante-products-list' );
 	}
 
-	return salePrice ? __( 'Relative to each row’s current sale price. Rows without a sale price are skipped; use “Regular price minus” to start a sale.', 'wp-woocommerce-products-list' ) : null;
+	return salePrice ? __( 'Relative to each row’s current sale price. Rows without a sale price are skipped; use “Regular price minus” to start a sale.', 'antijante-products-list' ) : null;
 }
 
 /**
@@ -111,15 +111,15 @@ export function resolvedShorthand( text: string, op: NumericOp, kind: NumericKin
 function readsAs( op: NumericOp, kind: NumericKind, symbol: string ): string {
 	const names: Record< NumericOp[ 'operation' ], string > = {
 		dont_change: '',
-		set: __( 'Change to', 'wp-woocommerce-products-list' ),
-		increase: __( 'Increase by', 'wp-woocommerce-products-list' ),
-		decrease: __( 'Decrease by', 'wp-woocommerce-products-list' ),
-		regular_minus: __( 'Regular price minus', 'wp-woocommerce-products-list' ),
+		set: __( 'Change to', 'antijante-products-list' ),
+		increase: __( 'Increase by', 'antijante-products-list' ),
+		decrease: __( 'Decrease by', 'antijante-products-list' ),
+		regular_minus: __( 'Regular price minus', 'antijante-products-list' ),
 	};
 	const value = op.value === '' ? '…' : op.value;
 	const unit = op.percent ? '%' : kind === 'money' ? ` ${ symbol }` : '';
 
-	return `${ __( 'Reads as:', 'wp-woocommerce-products-list' ) } ${ names[ op.operation ] } ${ value }${ unit }`;
+	return `${ __( 'Reads as:', 'antijante-products-list' ) } ${ names[ op.operation ] } ${ value }${ unit }`;
 }
 
 /**
@@ -143,12 +143,12 @@ export function noteSizers( kind: NumericKind, salePrice: boolean, symbol: strin
 /** What the idle note says: the value box takes shorthand. */
 export function shorthandHint( kind: NumericKind, salePrice: boolean ): string {
 	if ( kind !== 'money' ) {
-		return __( 'Type a number to change to it, or +5 / -5 to change each item by that much.', 'wp-woocommerce-products-list' );
+		return __( 'Type a number to change to it, or +5 / -5 to change each item by that much.', 'antijante-products-list' );
 	}
 
 	return salePrice
-		? __( 'Type a price, +5% / -10% / +2 to change each sale price, or r-20% for the regular price minus 20%.', 'wp-woocommerce-products-list' )
-		: __( 'Type a price to change to it, or +5%, -10%, +2 to change each item by that much.', 'wp-woocommerce-products-list' );
+		? __( 'Type a price, +5% / -10% / +2 to change each sale price, or r-20% for the regular price minus 20%.', 'antijante-products-list' )
+		: __( 'Type a price to change to it, or +5%, -10%, +2 to change each item by that much.', 'antijante-products-list' );
 }
 
 /**
@@ -200,13 +200,13 @@ export const WHOLE_UNIT_CURRENCIES: ReadonlySet< string > = new Set( [ 'SEK', 'N
 function wholeLabel( ending: string ): string {
 	switch ( ending ) {
 		case 'w9':
-			return __( 'Round to …9 (2 149, 499)', 'wp-woocommerce-products-list' );
+			return __( 'Round to …9 (2 149, 499)', 'antijante-products-list' );
 		case 'w49':
-			return __( 'Round to …49 or …99', 'wp-woocommerce-products-list' );
+			return __( 'Round to …49 or …99', 'antijante-products-list' );
 		case 'w99':
-			return __( 'Round to …99', 'wp-woocommerce-products-list' );
+			return __( 'Round to …99', 'antijante-products-list' );
 		default:
-			return __( 'Round to the nearest 10', 'wp-woocommerce-products-list' );
+			return __( 'Round to the nearest 10', 'antijante-products-list' );
 	}
 }
 
@@ -226,9 +226,9 @@ export function roundingChoices( settings: Pick< Settings, 'currency' >, decimal
 	const cents = whole ? [] : ROUNDING_ENDINGS.filter( ( ending ) => ending !== '00' );
 
 	return [
-		{ value: '', label: __( 'No rounding', 'wp-woocommerce-products-list' ) },
-		...( decimals === 2 ? [ { value: '00', label: __( 'Round to whole units', 'wp-woocommerce-products-list' ) } ] : [] ),
-		...cents.map( ( ending ) => ( { value: ending, label: `${ __( 'Round to', 'wp-woocommerce-products-list' ) } …${ mark }${ ending }` } ) ),
+		{ value: '', label: __( 'No rounding', 'antijante-products-list' ) },
+		...( decimals === 2 ? [ { value: '00', label: __( 'Round to whole units', 'antijante-products-list' ) } ] : [] ),
+		...cents.map( ( ending ) => ( { value: ending, label: `${ __( 'Round to', 'antijante-products-list' ) } …${ mark }${ ending }` } ) ),
 		...WHOLE_UNIT_ENDINGS.map( ( ending ) => ( { value: ending, label: wholeLabel( ending ) } ) ),
 	];
 }
@@ -236,9 +236,9 @@ export function roundingChoices( settings: Pick< Settings, 'currency' >, decimal
 /** Which way the rounding goes. */
 export function roundModeChoices(): Array< { value: RoundMode; label: string } > {
 	return [
-		{ value: 'nearest', label: __( 'Nearest (half up)', 'wp-woocommerce-products-list' ) },
-		{ value: 'up', label: __( 'Always up', 'wp-woocommerce-products-list' ) },
-		{ value: 'down', label: __( 'Always down', 'wp-woocommerce-products-list' ) },
+		{ value: 'nearest', label: __( 'Nearest (half up)', 'antijante-products-list' ) },
+		{ value: 'up', label: __( 'Always up', 'antijante-products-list' ) },
+		{ value: 'down', label: __( 'Always down', 'antijante-products-list' ) },
 	];
 }
 
@@ -257,7 +257,7 @@ export function createBulkNumericControl( options: BulkNumericControlOptions ): 
 		const sizers = useMemo( () => noteSizers( kind, salePrice, currency?.symbol ?? settings.currency.symbol, list ), [ list ] );
 		const idle = op.operation === 'dont_change';
 		const error = validateNumericOp( op, kind, settings, allowsNegative( field.id ) );
-		const help = options.reference ? `${ __( 'Default:', 'wp-woocommerce-products-list' ) } ${ options.reference }` : undefined;
+		const help = options.reference ? `${ __( 'Default:', 'antijante-products-list' ) } ${ options.reference }` : undefined;
 		// React's own ids: the two @wordpress/components runtimes (dataviews' inlined one
 		// and core's) each count `inspector-*-control-N` from zero and collide.
 		const baseId = `wc-pl-bulk-${ field.id.replace( /[^a-z0-9_-]+/gi, '-' ) }-${ useId().replace( /:/g, '' ) }`;
@@ -284,7 +284,7 @@ export function createBulkNumericControl( options: BulkNumericControlOptions ): 
 					__nextHasNoMarginBottom
 					__next40pxDefaultSize
 					id={ `${ baseId }-op` }
-					aria-label={ `${ field.label }: ${ __( 'operation', 'wp-woocommerce-products-list' ) }` }
+					aria-label={ `${ field.label }: ${ __( 'operation', 'antijante-products-list' ) }` }
 					value={ choiceValue( op ) }
 					options={ list.map( ( choice ) => ( { value: choice.value, label: choice.label } ) ) }
 					onChange={ ( value: string ) => {
@@ -306,7 +306,7 @@ export function createBulkNumericControl( options: BulkNumericControlOptions ): 
 						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 						id={ `${ baseId }-value` }
-						aria-label={ `${ field.label }: ${ __( 'value', 'wp-woocommerce-products-list' ) }` }
+						aria-label={ `${ field.label }: ${ __( 'value', 'antijante-products-list' ) }` }
 						className="wc-pl-bulk-numeric__value"
 						aria-invalid={ error ? true : undefined }
 						aria-describedby={ error ? `${ baseId }-note` : undefined }
@@ -329,7 +329,7 @@ export function createBulkNumericControl( options: BulkNumericControlOptions ): 
 								__nextHasNoMarginBottom
 								__next40pxDefaultSize
 								id={ `${ baseId }-round` }
-								aria-label={ `${ field.label }: ${ __( 'rounding', 'wp-woocommerce-products-list' ) }` }
+								aria-label={ `${ field.label }: ${ __( 'rounding', 'antijante-products-list' ) }` }
 								value={ op.round ?? '' }
 								options={ rounding }
 								disabled={ ! roundable }
@@ -346,7 +346,7 @@ export function createBulkNumericControl( options: BulkNumericControlOptions ): 
 						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 						id={ `${ baseId }-round-mode` }
-						aria-label={ `${ field.label }: ${ __( 'rounding direction', 'wp-woocommerce-products-list' ) }` }
+						aria-label={ `${ field.label }: ${ __( 'rounding direction', 'antijante-products-list' ) }` }
 						value={ op.roundMode ?? 'nearest' }
 						options={ modes }
 						disabled={ ! ( roundable && op.round ) }

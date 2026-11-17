@@ -49,7 +49,7 @@ export interface SaveDeps {
 	batchSize: number;
 	/** Rows per cross-parent variations request (the server's batch limit, 100); `batchSize` when missing. */
 	variationsBatchSize?: number;
-	/** Normalise a wc/v3 object a write returned the way list reads are (toRow: hierarchy keys, `wcProductsList.item` filter). */
+	/** Normalise a wc/v3 object a write returned the way list reads are (toRow: hierarchy keys, `antijanteProductsList.item` filter). */
 	normalizeRow?( raw: RawProduct | RawVariation, parentId?: number ): ProductListItem;
 	/** Cross-parent variation requests in flight at once (they are independent per chunk); `DEFAULT_CONCURRENCY` when missing. */
 	concurrency?: number;
@@ -442,7 +442,7 @@ export function planTargets( targets: SaveTarget[], fields: ProductField[], sett
 			// Dropped by the "only where it gets cheaper" guard, or for having a sale already.
 			if ( options.keepSale && hasSaleEdit( resolveRowEdits( target.item, target.edits, { ...options, keepSale: undefined } ) ) ) {
 				plan.notLowerSkipped.push( target.item );
-				plan.skippedItems.push( { id: target.item.id, reason: 'other', fields: dropped, message: __( 'Skipped: the new sale price would not be lower than the price it sells at now.', 'wp-woocommerce-products-list' ) } );
+				plan.skippedItems.push( { id: target.item.id, reason: 'other', fields: dropped, message: __( 'Skipped: the new sale price would not be lower than the price it sells at now.', 'antijante-products-list' ) } );
 			} else {
 				plan.saleSkipped.push( target.item );
 				plan.skippedItems.push( { id: target.item.id, reason: 'has_sale', fields: dropped } );
@@ -900,5 +900,5 @@ async function settleUncertain(
 }
 
 export function uncertainMessage( message: string ): string {
-	return `${ message } ${ __( 'It may have been saved anyway: check its current values before you update it again.', 'wp-woocommerce-products-list' ) }`;
+	return `${ message } ${ __( 'It may have been saved anyway: check its current values before you update it again.', 'antijante-products-list' ) }`;
 }

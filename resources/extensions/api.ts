@@ -1,5 +1,5 @@
 /**
- * `window.wcProductsList`: the JavaScript extension API, plus the registries
+ * `window.antijanteProductsList`: the JavaScript extension API, plus the registries
  * it writes to. The registries are module state so `registerField()` and
  * friends work before the app mounts (extension scripts run between this
  * script's module code and `domReady`) and after it (a registry version is
@@ -7,6 +7,7 @@
  */
 import { useSyncExternalStore } from '@wordpress/element';
 import { addAction, addFilter, applyFilters, doAction, hasFilter, removeAction, removeFilter } from '@wordpress/hooks';
+import './compat';
 import type { Field } from '../dataviews';
 import type {
 	BatchResult,
@@ -96,7 +97,7 @@ function bump(): void {
 
 function assertId( id: unknown, what: string ): asserts id is string {
 	if ( typeof id !== 'string' || id === '' ) {
-		throw new TypeError( `wcProductsList: a ${ what } needs a non-empty string id.` );
+		throw new TypeError( `antijanteProductsList: a ${ what } needs a non-empty string id.` );
 	}
 }
 
@@ -172,7 +173,7 @@ export function registerAction( action: ProductAction ): void {
 	const kind = action as { callback?: unknown; RenderModal?: unknown };
 
 	if ( typeof kind.callback !== 'function' && typeof kind.RenderModal !== 'function' ) {
-		throw new TypeError( `wcProductsList: action "${ action.id }" needs a callback or a RenderModal.` );
+		throw new TypeError( `antijanteProductsList: action "${ action.id }" needs a callback or a RenderModal.` );
 	}
 
 	registry.actions.set( action.id, { source: 'js', ...action } );
@@ -181,7 +182,7 @@ export function registerAction( action: ProductAction ): void {
 
 export function addQueryParams( callback: QueryParamsCallback ): void {
 	if ( typeof callback !== 'function' ) {
-		throw new TypeError( 'wcProductsList: addQueryParams expects a function.' );
+		throw new TypeError( 'antijanteProductsList: addQueryParams expects a function.' );
 	}
 
 	registry.queryCallbacks.push( callback );
@@ -233,6 +234,7 @@ export function resetRegistry(): void {
 	api = undefined;
 
 	if ( typeof window !== 'undefined' ) {
+		delete window.antijanteProductsList;
 		delete window.wcProductsList;
 	}
 }
@@ -242,8 +244,8 @@ export function getExtensionApi(): ProductsListApi | undefined {
 }
 
 /**
- * Creates the api, assigns it to `window.wcProductsList` and fires
- * `wcProductsList.ready` with it. Call once, before mounting the app. Calling
+ * Creates the api, assigns it to `window.antijanteProductsList` and fires
+ * `antijanteProductsList.ready` with it. Call once, before mounting the app. Calling
  * it again (hot reload, tests) replaces the window object and fires again;
  * registries are kept.
  */
@@ -287,6 +289,8 @@ export function createExtensionApi( deps: ExtensionApiDeps ): ProductsListApi {
 	api = created;
 
 	if ( typeof window !== 'undefined' ) {
+		window.antijanteProductsList = created;
+		// The global from before the fork (deprecated, extensions/compat.ts).
 		window.wcProductsList = created;
 	}
 

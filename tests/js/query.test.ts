@@ -126,13 +126,13 @@ describe( 'buildProductListQuery', () => {
 		expect( query[ 'gds_i18n[status]' ] ).toBe( 'missing' );
 	} );
 
-	it( 'runs the wcProductsList.query filter last', () => {
-		addFilter( 'wcProductsList.query', 'test', ( params: Record< string, unknown >, context: { tab: string } ) => ( { ...params, gds_i18n_langs: 'se', seenTab: context.tab } ) );
+	it( 'runs the antijanteProductsList.query filter last', () => {
+		addFilter( 'antijanteProductsList.query', 'test', ( params: Record< string, unknown >, context: { tab: string } ) => ( { ...params, gds_i18n_langs: 'se', seenTab: context.tab } ) );
 
 		try {
 			expect( buildProductListQuery( view(), 'publish', fields, settings ) ).toMatchObject( { gds_i18n_langs: 'se', seenTab: 'publish' } );
 		} finally {
-			removeFilter( 'wcProductsList.query', 'test' );
+			removeFilter( 'antijanteProductsList.query', 'test' );
 		}
 	} );
 
@@ -164,13 +164,13 @@ describe( 'buildVariationsQuery', () => {
 		expect( query._fields ).not.toContain( 'images' );
 	} );
 
-	it( 'runs the wcProductsList.variationsQuery filter', () => {
-		addFilter( 'wcProductsList.variationsQuery', 'test', ( params: Record< string, unknown >, context: { parentId: number } ) => ( { ...params, parent: context.parentId } ) );
+	it( 'runs the antijanteProductsList.variationsQuery filter', () => {
+		addFilter( 'antijanteProductsList.variationsQuery', 'test', ( params: Record< string, unknown >, context: { parentId: number } ) => ( { ...params, parent: context.parentId } ) );
 
 		try {
 			expect( buildVariationsQuery( 7, 1, [], settings ).parent ).toBe( 7 );
 		} finally {
-			removeFilter( 'wcProductsList.variationsQuery', 'test' );
+			removeFilter( 'antijanteProductsList.variationsQuery', 'test' );
 		}
 	} );
 } );

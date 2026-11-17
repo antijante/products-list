@@ -1,9 +1,9 @@
 <?php
 
-namespace GeneroWP\ProductsList\Log;
+namespace Antijante\ProductsList\Log;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Rest\Concurrency;
 use WP_REST_Request;
 
 /**
@@ -49,7 +49,7 @@ final class BatchState
 
     public const RUNNING_ERROR = 'wc_products_list_batch_running';
 
-    public const FILTER_TTL = 'wc_products_list/batch_running_ttl';
+    public const FILTER_TTL = 'antijante_products_list/batch_running_ttl';
 
     public const TTL = 120;
 

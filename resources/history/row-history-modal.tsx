@@ -29,15 +29,15 @@ export function RowHistoryModal( { items, closeModal, productFields = [] }: Rend
 					{ log.total
 						? sprintf(
 								/* translators: %d: number of logged changes */
-								__( '%d logged changes. Newest first.', 'wp-woocommerce-products-list' ),
+								__( '%d logged changes. Newest first.', 'antijante-products-list' ),
 								log.total
 						  )
 						: log.isLoading
-						? __( 'Loading…', 'wp-woocommerce-products-list' )
-						: __( 'No changes have been logged for this item.', 'wp-woocommerce-products-list' ) }
+						? __( 'Loading…', 'antijante-products-list' )
+						: __( 'No changes have been logged for this item.', 'antijante-products-list' ) }
 				</span>
 				<Button variant="link" href={ `${ settings.links.history }${ settings.links.history.includes( '?' ) ? '&' : '?' }object_id=${ item?.id ?? '' }` }>
-					{ __( 'Open in History', 'wp-woocommerce-products-list' ) }
+					{ __( 'Open in History', 'antijante-products-list' ) }
 				</Button>
 			</div>
 			<DataViews< LogRow >
@@ -51,11 +51,11 @@ export function RowHistoryModal( { items, closeModal, productFields = [] }: Rend
 				actions={ [] }
 				isLoading={ log.isLoading }
 				search={ false }
-				empty={ <p>{ __( 'Nothing logged yet.', 'wp-woocommerce-products-list' ) }</p> }
+				empty={ <p>{ __( 'Nothing logged yet.', 'antijante-products-list' ) }</p> }
 			/>
 			<div className="wc-pl-edit__footer">
 				<Button variant="tertiary" onClick={ () => closeModal?.() } __next40pxDefaultSize>
-					{ __( 'Close', 'wp-woocommerce-products-list' ) }
+					{ __( 'Close', 'antijante-products-list' ) }
 				</Button>
 			</div>
 		</div>

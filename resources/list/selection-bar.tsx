@@ -35,7 +35,7 @@ export const BULK_EDIT_BUTTON_ID = 'wc-products-list-bulk-edit';
 /** "12 selected (4 not in this view)": on other pages, or filtered out since they were selected. */
 export function selectionLabel( count: number, offPage: number ): string {
 	/* translators: %d: number of selected rows */
-	const selected = sprintf( _n( '%d selected', '%d selected', count, 'wp-woocommerce-products-list' ), count );
+	const selected = sprintf( _n( '%d selected', '%d selected', count, 'antijante-products-list' ), count );
 
 	if ( ! offPage ) {
 		return selected;
@@ -43,7 +43,7 @@ export function selectionLabel( count: number, offPage: number ): string {
 
 	return `${ selected } (${ sprintf(
 		/* translators: %d: number of selected rows not shown in the list right now (other pages, or filtered out) */
-		_n( '%d not in this view', '%d not in this view', offPage, 'wp-woocommerce-products-list' ),
+		_n( '%d not in this view', '%d not in this view', offPage, 'antijante-products-list' ),
 		offPage
 	) })`;
 }
@@ -60,7 +60,7 @@ export function SelectionBar( { selection, total, pageProducts, query, actions, 
 	}
 
 	return (
-		<div className="wc-products-list__selection" role="group" aria-label={ __( 'Selection', 'wp-woocommerce-products-list' ) }>
+		<div className="wc-products-list__selection" role="group" aria-label={ __( 'Selection', 'antijante-products-list' ) }>
 			{ count > 0 && (
 				<span className="wc-products-list__selection-count" aria-live="polite">
 					{ selectionLabel( count, selection.offPageCount ) }
@@ -69,7 +69,7 @@ export function SelectionBar( { selection, total, pageProducts, query, actions, 
 							{ ' ' }
 							{ sprintf(
 								/* translators: %s: a keyboard shortcut ("Alt+B") */
-								__( 'Press %s to edit the selection.', 'wp-woocommerce-products-list' ),
+								__( 'Press %s to edit the selection.', 'antijante-products-list' ),
 								shortcut
 							) }
 						</span>
@@ -80,12 +80,12 @@ export function SelectionBar( { selection, total, pageProducts, query, actions, 
 				<span className="wc-products-list__selection-progress" role="status">
 					{ sprintf(
 						/* translators: 1: products loaded so far, 2: products in total */
-						__( 'Selecting %1$s of %2$s…', 'wp-woocommerce-products-list' ),
+						__( 'Selecting %1$s of %2$s…', 'antijante-products-list' ),
 						progress.loaded.toLocaleString(),
 						progress.total.toLocaleString()
 					) }
 					<Button size="compact" variant="link" onClick={ selection.cancelSelectAll }>
-						{ __( 'Cancel', 'wp-woocommerce-products-list' ) }
+						{ __( 'Cancel', 'antijante-products-list' ) }
 					</Button>
 				</span>
 			) }
@@ -93,7 +93,7 @@ export function SelectionBar( { selection, total, pageProducts, query, actions, 
 				<Button size="compact" variant="link" className="wc-products-list__select-all" onClick={ () => void selection.selectAllMatching( query, total ) }>
 					{ sprintf(
 						/* translators: %s: number of products matching the list */
-						_n( 'Select all %s product', 'Select all %s products', total, 'wp-woocommerce-products-list' ),
+						_n( 'Select all %s product', 'Select all %s products', total, 'antijante-products-list' ),
 						total.toLocaleString()
 					) }
 				</Button>
@@ -110,15 +110,15 @@ export function SelectionBar( { selection, total, pageProducts, query, actions, 
 					variant="primary"
 					onClick={ () => onEdit( selection.rows ) }
 					aria-keyshortcuts={ shortcut }
-					title={ shortcut ? `${ count > 1 ? __( 'Bulk edit', 'wp-woocommerce-products-list' ) : __( 'Quick edit', 'wp-woocommerce-products-list' ) } (${ shortcut })` : undefined }
+					title={ shortcut ? `${ count > 1 ? __( 'Bulk edit', 'antijante-products-list' ) : __( 'Quick edit', 'antijante-products-list' ) } (${ shortcut })` : undefined }
 				>
-					{ count > 1 ? __( 'Bulk edit', 'wp-woocommerce-products-list' ) : __( 'Quick edit', 'wp-woocommerce-products-list' ) }
+					{ count > 1 ? __( 'Bulk edit', 'antijante-products-list' ) : __( 'Quick edit', 'antijante-products-list' ) }
 				</Button>
 			) }
 			{ count > 0 && moreActions && <MoreActionsMenu actions={ actions } rows={ selection.rows } /> }
 			{ count > 0 && (
 				<Button size="compact" variant="tertiary" onClick={ selection.clear }>
-					{ __( 'Clear selection', 'wp-woocommerce-products-list' ) }
+					{ __( 'Clear selection', 'antijante-products-list' ) }
 				</Button>
 			) }
 		</div>

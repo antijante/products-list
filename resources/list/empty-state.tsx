@@ -15,7 +15,7 @@ export function EmptyState( { tab, hasQuery, onClear, settings, error }: EmptySt
 	if ( error ) {
 		return (
 			<div className="wc-products-list__empty wc-products-list__empty--error" role="alert">
-				<p>{ __( 'The products could not be loaded.', 'wp-woocommerce-products-list' ) }</p>
+				<p>{ __( 'The products could not be loaded.', 'antijante-products-list' ) }</p>
 				<p className="wc-products-list__empty-detail">{ error.message }</p>
 			</div>
 		);
@@ -24,9 +24,9 @@ export function EmptyState( { tab, hasQuery, onClear, settings, error }: EmptySt
 	if ( hasQuery ) {
 		return (
 			<div className="wc-products-list__empty">
-				<p>{ __( 'No products match the search and filters.', 'wp-woocommerce-products-list' ) }</p>
+				<p>{ __( 'No products match the search and filters.', 'antijante-products-list' ) }</p>
 				<Button variant="secondary" onClick={ onClear }>
-					{ __( 'Clear search and filters', 'wp-woocommerce-products-list' ) }
+					{ __( 'Clear search and filters', 'antijante-products-list' ) }
 				</Button>
 			</div>
 		);
@@ -35,17 +35,17 @@ export function EmptyState( { tab, hasQuery, onClear, settings, error }: EmptySt
 	if ( tab === 'trash' ) {
 		return (
 			<div className="wc-products-list__empty">
-				<p>{ __( 'The trash is empty.', 'wp-woocommerce-products-list' ) }</p>
+				<p>{ __( 'The trash is empty.', 'antijante-products-list' ) }</p>
 			</div>
 		);
 	}
 
 	return (
 		<div className="wc-products-list__empty">
-			<p>{ tab === 'all' ? __( 'No products yet.', 'wp-woocommerce-products-list' ) : __( 'No products with this status.', 'wp-woocommerce-products-list' ) }</p>
+			<p>{ tab === 'all' ? __( 'No products yet.', 'antijante-products-list' ) : __( 'No products with this status.', 'antijante-products-list' ) }</p>
 			{ tab === 'all' && settings.caps.edit && (
 				<Button variant="primary" href={ settings.links.newProduct }>
-					{ __( 'Add new product', 'wp-woocommerce-products-list' ) }
+					{ __( 'Add new product', 'antijante-products-list' ) }
 				</Button>
 			) }
 		</div>

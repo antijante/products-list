@@ -1,9 +1,9 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
-use GeneroWP\ProductsList\Log\Revert;
-use GeneroWP\ProductsList\Log\Table;
+use Antijante\ProductsList\Log\Revert;
+use Antijante\ProductsList\Log\Table;
 
 /**
  * POC: one batch as the field log saw it and as revisions captured it.

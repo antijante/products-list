@@ -10,7 +10,7 @@ export type ClientErrorKind = 'render' | 'uncaught' | 'rejection' | 'api';
 
 const MAX_REPORTS_PER_PAGE = 25;
 const PATH = '/wc-products-list/v1/client-errors';
-const BUNDLE_MARKER = 'wp-woocommerce-products-list';
+const BUNDLE_MARKER = 'antijante-products-list';
 
 const seen = new Set< string >();
 let sent = 0;

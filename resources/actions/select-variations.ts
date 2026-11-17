@@ -31,15 +31,15 @@ function selectVariationsAction( context: ProductActionsContext, id: string, lab
 					// All parents at once: one expand, the loads in parallel.
 					onChangeSelection( await hierarchy.selectVariations( idsOf( items ), current, where ) );
 				} catch ( error ) {
-					notify.error( error instanceof Error ? error.message : __( 'The variations could not be loaded.', 'wp-woocommerce-products-list' ) );
+					notify.error( error instanceof Error ? error.message : __( 'The variations could not be loaded.', 'antijante-products-list' ) );
 				}
 			} )();
 		},
 	};
 }
 
-export const createSelectVariationsAction: ActionFactory = ( context ) => selectVariationsAction( context, 'select-variations', __( 'Select all variations', 'wp-woocommerce-products-list' ) );
+export const createSelectVariationsAction: ActionFactory = ( context ) => selectVariationsAction( context, 'select-variations', __( 'Select all variations', 'antijante-products-list' ) );
 
 /** The restock case: only the sizes that are out of stock, so a bulk quantity applies to them alone. */
 export const createSelectOutOfStockVariationsAction: ActionFactory = ( context ) =>
-	selectVariationsAction( context, 'select-variations-outofstock', __( 'Select out-of-stock variations', 'wp-woocommerce-products-list' ), ( variation ) => variation.stock_status === 'outofstock' );
+	selectVariationsAction( context, 'select-variations-outofstock', __( 'Select out-of-stock variations', 'antijante-products-list' ), ( variation ) => variation.stock_status === 'outofstock' );

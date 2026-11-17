@@ -95,8 +95,8 @@ export function MoreActionsMenu( { actions, rows }: { actions: ProductAction[]; 
 			{ ( regular.length > 0 || destructive.length > 0 ) && (
 				<DropdownMenu
 					icon={ moreVertical }
-					text={ __( 'More actions', 'wp-woocommerce-products-list' ) }
-					label={ __( 'More actions', 'wp-woocommerce-products-list' ) }
+					text={ __( 'More actions', 'antijante-products-list' ) }
+					label={ __( 'More actions', 'antijante-products-list' ) }
 					toggleProps={ { size: 'compact', variant: 'secondary', className: 'wc-products-list__more-actions' } }
 				>
 					{ ( { onClose } ) => (

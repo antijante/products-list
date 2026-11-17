@@ -91,7 +91,7 @@ export function saleScheduleProblems( data: Record< string, unknown >, fieldIds:
 		for ( const id of [ fromId, toId ] ) {
 			if ( ids.has( id ) && isInvalidDate( data[ id ] ) ) {
 				broken = true;
-				problems.push( { field: id, message: __( 'Enter a complete date (a four-digit year) and, if you want, a time, or clear the field.', 'wp-woocommerce-products-list' ) } );
+				problems.push( { field: id, message: __( 'Enter a complete date (a four-digit year) and, if you want, a time, or clear the field.', 'antijante-products-list' ) } );
 			}
 		}
 
@@ -103,7 +103,7 @@ export function saleScheduleProblems( data: Record< string, unknown >, fieldIds:
 		const to = siteDateValue( data[ toId ] );
 
 		if ( from !== null && to !== null && to <= from ) {
-			problems.push( { field: toId, message: __( 'The sale must end after it starts.', 'wp-woocommerce-products-list' ) } );
+			problems.push( { field: toId, message: __( 'The sale must end after it starts.', 'antijante-products-list' ) } );
 		}
 	}
 

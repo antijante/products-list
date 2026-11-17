@@ -57,7 +57,7 @@ async function undoAll( batches: string[] ): Promise< void > {
 	invalidateLog();
 
 	if ( ok && ! failed ) {
-		notify.success( sprintf( /* translators: %d: number of items put back */ _n( '%d item put back.', '%d items put back.', ok, 'wp-woocommerce-products-list' ), ok ) );
+		notify.success( sprintf( /* translators: %d: number of items put back */ _n( '%d item put back.', '%d items put back.', ok, 'antijante-products-list' ), ok ) );
 	}
 
 	window.setTimeout( () => restoreFocus( focus ), 0 );
@@ -82,7 +82,7 @@ export function fieldList( labels: string[] ): string {
 	}
 
 	/* translators: 1: comma-separated field names, 2: the last field name */
-	return sprintf( __( '%1$s and %2$s', 'wp-woocommerce-products-list' ), labels.slice( 0, -1 ).join( ', ' ), labels[ labels.length - 1 ] ?? '' );
+	return sprintf( __( '%1$s and %2$s', 'antijante-products-list' ), labels.slice( 0, -1 ).join( ', ' ), labels[ labels.length - 1 ] ?? '' );
 }
 
 /** The refusal of an item open in the product editor (docs/contracts.md §3.6 item 5); "Take over" saves past it. */
@@ -109,7 +109,7 @@ export async function saveRow( item: ProductListItem, edits: Record< string, unk
 
 		// A variation has one image.
 		if ( id === 'images' && isVariation( item ) ) {
-			return __( 'Image', 'wp-woocommerce-products-list' );
+			return __( 'Image', 'antijante-products-list' );
 		}
 
 		return ( field?.edit && field.edit.label ) || field?.label || id;
@@ -127,7 +127,7 @@ export async function saveRow( item: ProductListItem, edits: Record< string, unk
 	} catch ( caught ) {
 		const message = caught instanceof Error ? caught.message : String( ( caught as { message?: unknown } | null )?.message ?? caught );
 
-		notify.error( sprintf( /* translators: 1: product name, 2: error */ __( '%1$s was not saved: %2$s', 'wp-woocommerce-products-list' ), name, message ), { id: INLINE_SAVED_NOTICE_ID } );
+		notify.error( sprintf( /* translators: 1: product name, 2: error */ __( '%1$s was not saved: %2$s', 'antijante-products-list' ), name, message ), { id: INLINE_SAVED_NOTICE_ID } );
 
 		return { ok: false, message };
 	} finally {
@@ -144,7 +144,7 @@ export async function saveRow( item: ProductListItem, edits: Record< string, unk
 						explicitDismiss: true,
 						actions: [
 							{
-								label: __( 'Take over', 'wp-woocommerce-products-list' ),
+								label: __( 'Take over', 'antijante-products-list' ),
 								onClick: () => {
 									notify.remove( INLINE_SAVED_NOTICE_ID );
 									onTakeOver();
@@ -154,7 +154,7 @@ export async function saveRow( item: ProductListItem, edits: Record< string, unk
 				  }
 				: {};
 
-		notify.error( sprintf( /* translators: 1: product name, 2: error */ __( '%1$s was not saved: %2$s', 'wp-woocommerce-products-list' ), name, error.message ), { id: INLINE_SAVED_NOTICE_ID, ...takeOverAction } );
+		notify.error( sprintf( /* translators: 1: product name, 2: error */ __( '%1$s was not saved: %2$s', 'antijante-products-list' ), name, error.message ), { id: INLINE_SAVED_NOTICE_ID, ...takeOverAction } );
 
 		return { ok: false, message: error.message, code: error.code };
 	}
@@ -179,18 +179,18 @@ export async function saveRow( item: ProductListItem, edits: Record< string, unk
 		batches.length > 1
 			? sprintf(
 					/* translators: 1: "3 changes saved in the table", 2: "2 items" */
-					__( '%1$s (%2$s).', 'wp-woocommerce-products-list' ),
-					sprintf( /* translators: %d: number of saves */ _n( '%d change saved in the table', '%d changes saved in the table', batches.length, 'wp-woocommerce-products-list' ), batches.length ),
-					sprintf( /* translators: %d: number of products and variations */ _n( '%d item', '%d items', rowCount, 'wp-woocommerce-products-list' ), rowCount )
+					__( '%1$s (%2$s).', 'antijante-products-list' ),
+					sprintf( /* translators: %d: number of saves */ _n( '%d change saved in the table', '%d changes saved in the table', batches.length, 'antijante-products-list' ), batches.length ),
+					sprintf( /* translators: %d: number of products and variations */ _n( '%d item', '%d items', rowCount, 'antijante-products-list' ), rowCount )
 			  )
-			: sprintf( /* translators: 1: field names ("Price and Sale price"), 2: product name */ __( '%1$s of %2$s saved.', 'wp-woocommerce-products-list' ), fieldList( labels ), name );
+			: sprintf( /* translators: 1: field names ("Price and Sale price"), 2: product name */ __( '%1$s of %2$s saved.', 'antijante-products-list' ), fieldList( labels ), name );
 
 	notify.success( message, {
 		id: INLINE_SAVED_NOTICE_ID,
 		actions: canUndo()
 			? [
 					{
-						label: batches.length > 1 ? __( 'Undo all', 'wp-woocommerce-products-list' ) : __( 'Undo', 'wp-woocommerce-products-list' ),
+						label: batches.length > 1 ? __( 'Undo all', 'antijante-products-list' ) : __( 'Undo', 'antijante-products-list' ),
 						onClick: () => {
 							recent = null;
 

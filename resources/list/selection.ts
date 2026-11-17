@@ -209,7 +209,7 @@ export function useSelection( pageRows: ProductListItem[], resetKey: string, opt
 	// processed stay: the next bulk step works on the same set, and rows that
 	// failed are still there for a retry.
 	useEffect( () => {
-		const namespace = 'wcProductsList/selection';
+		const namespace = 'antijanteProductsList/selection';
 		const drop = ( ids: Iterable< number > ) => {
 			const gone = new Set( Array.from( ids, String ) );
 
@@ -354,7 +354,7 @@ export function useSelection( pageRows: ProductListItem[], resetKey: string, opt
 				setSelectAllError(
 					sprintf(
 						/* translators: 1: the limit, 2: products matching */
-						__( 'Select all works for up to %1$s products; this list has %2$s. Narrow it with a filter first.', 'wp-woocommerce-products-list' ),
+						__( 'Select all works for up to %1$s products; this list has %2$s. Narrow it with a filter first.', 'antijante-products-list' ),
 						maxSelectAll.toLocaleString(),
 						total.toLocaleString()
 					)
@@ -388,7 +388,7 @@ export function useSelection( pageRows: ProductListItem[], resetKey: string, opt
 					return 0;
 				}
 
-				setSelectAllError( error instanceof Error && error.message ? error.message : __( 'The products could not be loaded.', 'wp-woocommerce-products-list' ) );
+				setSelectAllError( error instanceof Error && error.message ? error.message : __( 'The products could not be loaded.', 'antijante-products-list' ) );
 				setSelectAllProgress( null );
 				selectAllRef.current = null;
 

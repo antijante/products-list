@@ -123,12 +123,12 @@ export function createTermTokensControl(): ComponentType< DataFormControlProps< 
 				help={ field.description || undefined }
 				__experimentalValidateInput={ ( token: string ) => maps.idOf.has( token.trim().toLowerCase() ) }
 				messages={ {
-					added: __( 'Term added.', 'wp-woocommerce-products-list' ),
-					removed: __( 'Term removed.', 'wp-woocommerce-products-list' ),
-					remove: __( 'Remove term', 'wp-woocommerce-products-list' ),
+					added: __( 'Term added.', 'antijante-products-list' ),
+					removed: __( 'Term removed.', 'antijante-products-list' ),
+					remove: __( 'Remove term', 'antijante-products-list' ),
 					__experimentalInvalid: sprintf(
 						/* translators: %s: field label such as "Categories" */
-						__( 'Not an existing term. Pick one from the %s list.', 'wp-woocommerce-products-list' ),
+						__( 'Not an existing term. Pick one from the %s list.', 'antijante-products-list' ),
 						field.label
 					),
 				} }

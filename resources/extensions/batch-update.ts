@@ -1,5 +1,5 @@
 /**
- * `window.wcProductsList.batchUpdate()`: an extension's write, run as the
+ * `window.antijanteProductsList.batchUpdate()`: an extension's write, run as the
  * list's own bulk saves run (docs/contracts.md §3.6, docs/extension-api.md):
  *
  * - a save-activity job: the list's bar, its rows locked, the leave-page
@@ -168,7 +168,7 @@ export async function runBatchUpdate( update: BatchUpdate, options: BatchUpdateO
 
 	for ( const row of [ ...variations, ...products ] ) {
 		if ( ! answered.has( row.id ) ) {
-			result.errors.push( { id: row.id, message: __( 'No result returned for this item.', 'wp-woocommerce-products-list' ), code: 'missing_result' } );
+			result.errors.push( { id: row.id, message: __( 'No result returned for this item.', 'antijante-products-list' ), code: 'missing_result' } );
 		}
 	}
 

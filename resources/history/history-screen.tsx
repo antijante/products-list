@@ -76,7 +76,7 @@ function initialSearch(): string {
 function revertLabel( done: number, total: number ): string {
 	return sprintf(
 		/* translators: 1: items put back so far, 2: items in total */
-		__( 'Reverting %1$d of %2$d…', 'wp-woocommerce-products-list' ),
+		__( 'Reverting %1$d of %2$d…', 'antijante-products-list' ),
 		done,
 		total
 	);
@@ -145,7 +145,7 @@ function RevertPreview( { batchId, options, exclude }: { batchId: string; option
 
 	return (
 		<div className="wc-pl-confirm__preview">
-			<p>{ __( 'For example (value this batch set → value it goes back to):', 'wp-woocommerce-products-list' ) }</p>
+			<p>{ __( 'For example (value this batch set → value it goes back to):', 'antijante-products-list' ) }</p>
 			<ul>
 				{ preview.rows.map( ( row ) => (
 					<li key={ row.id }>
@@ -158,7 +158,7 @@ function RevertPreview( { batchId, options, exclude }: { batchId: string; option
 				<p>
 					{ sprintf(
 						/* translators: %d: number of further changes */
-						_n( '…and %d more change.', '…and %d more changes.', more, 'wp-woocommerce-products-list' ),
+						_n( '…and %d more change.', '…and %d more changes.', more, 'antijante-products-list' ),
 						more
 					) }
 				</p>
@@ -315,7 +315,7 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 			setBusy( false );
 		} catch ( caught ) {
 			setBusy( false );
-			setError( caught instanceof Error ? caught.message : __( 'The revert failed.', 'wp-woocommerce-products-list' ) );
+			setError( caught instanceof Error ? caught.message : __( 'The revert failed.', 'antijante-products-list' ) );
 		}
 	};
 
@@ -338,7 +338,7 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 	return (
 		<div className="wc-pl-confirm">
 			<p>
-				{ __( 'Put back the previous values of every field this batch changed? Trash, restore, delete and duplicate entries are not reverted. The revert is logged as a new batch.', 'wp-woocommerce-products-list' ) }
+				{ __( 'Put back the previous values of every field this batch changed? Trash, restore, delete and duplicate entries are not reverted. The revert is logged as a new batch.', 'antijante-products-list' ) }
 			</p>
 			{ row ? (
 				<p>
@@ -350,28 +350,28 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 					<strong>
 						{ sprintf(
 							/* translators: 1: user name, 2: date and time */
-							__( 'This batch was already reverted by %1$s at %2$s.', 'wp-woocommerce-products-list' ),
+							__( 'This batch was already reverted by %1$s at %2$s.', 'antijante-products-list' ),
 							revertedBy.user?.name || `#${ revertedBy.user?.id ?? 0 }`,
 							formatLogTime( revertedBy, settings )
 						) }
 					</strong>{ ' ' }
-					{ __( 'Reverting it again puts back the values from before this batch a second time; to undo the revert, revert the revert batch instead.', 'wp-woocommerce-products-list' ) }
+					{ __( 'Reverting it again puts back the values from before this batch a second time; to undo the revert, revert the revert batch instead.', 'antijante-products-list' ) }
 				</p>
 			) : null }
 			<p className="wc-pl-confirm__scope" aria-live="polite">
 				{ plan === 'loading' ? (
 					<>
-						<Spinner /> { __( 'Checking what the batch changed…', 'wp-woocommerce-products-list' ) }
+						<Spinner /> { __( 'Checking what the batch changed…', 'antijante-products-list' ) }
 					</>
 				) : plan ? (
 					<strong>{ describeBatchScope( scopeFromPlan( plan, ( action ) => actionLabel( action, settings ) ), scopeKept, check && check !== 'loading' ? check.alreadyReverted : 0 ) }</strong>
 				) : (
-					planError ?? __( 'The scope of this batch could not be loaded.', 'wp-woocommerce-products-list' )
+					planError ?? __( 'The scope of this batch could not be loaded.', 'antijante-products-list' )
 				) }
 			</p>
 			{ ! outcome && check === 'loading' ? (
 				<p className="wc-pl-confirm__scope" aria-live="polite">
-					<Spinner /> { __( 'Checking for changes made since this batch…', 'wp-woocommerce-products-list' ) }
+					<Spinner /> { __( 'Checking for changes made since this batch…', 'antijante-products-list' ) }
 				</p>
 			) : null }
 			{ ! outcome && check && check !== 'loading' && check.changed > 0 ? (
@@ -384,7 +384,7 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 										'%d item changed since this batch (by an order or another edit) and will be left as it is.',
 										'%d items changed since this batch (by an order or another edit) and will be left as they are.',
 										check.changed - check.alreadyReverted,
-										'wp-woocommerce-products-list'
+										'antijante-products-list'
 									),
 									check.changed - check.alreadyReverted
 							  )
@@ -392,7 +392,7 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 						{ check.alreadyReverted > 0
 							? sprintf(
 									/* translators: %d: number of items */
-									_n( '%d already put back by an earlier revert.', '%d already put back by an earlier revert.', check.alreadyReverted, 'wp-woocommerce-products-list' ),
+									_n( '%d already put back by an earlier revert.', '%d already put back by an earlier revert.', check.alreadyReverted, 'antijante-products-list' ),
 									check.alreadyReverted
 							  )
 							: null }
@@ -401,7 +401,7 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 						<p>
 							{ sprintf(
 								/* translators: %s: one item changed since the batch, e.g. "Pelsi 38: Stock quantity 10 → 9 kept" */
-								__( 'Changed since: %s', 'wp-woocommerce-products-list' ),
+								__( 'Changed since: %s', 'antijante-products-list' ),
 								describeConflict( check.example, ( key ) => logFieldLabel( key, fieldOptions ), conflictFormat )
 							) }
 						</p>
@@ -421,7 +421,7 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 								'%1$d put back. %2$d item was changed again after this batch (%3$s) and was left as it is:',
 								'%1$d put back. %2$d items were changed again after this batch (%3$s) and were left as they are:',
 								outcome.conflicts.length,
-								'wp-woocommerce-products-list'
+								'antijante-products-list'
 							),
 							outcome.ok,
 							outcome.conflicts.length,
@@ -437,7 +437,7 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 						<p>
 							{ sprintf(
 								/* translators: %d: number of further items */
-								_n( '…and %d more.', '…and %d more.', outcome.conflicts.length - 10, 'wp-woocommerce-products-list' ),
+								_n( '…and %d more.', '…and %d more.', outcome.conflicts.length - 10, 'antijante-products-list' ),
 								outcome.conflicts.length - 10
 							) }
 						</p>
@@ -451,24 +451,24 @@ function RevertModal< T extends RevertTarget >( { items, closeModal, onActionPer
 			) : null }
 			<div className="wc-pl-edit__footer">
 				<Button variant="tertiary" onClick={ closeAfterConflicts } disabled={ busy } __next40pxDefaultSize>
-					{ outcome ? __( 'Keep them', 'wp-woocommerce-products-list' ) : __( 'Cancel', 'wp-woocommerce-products-list' ) }
+					{ outcome ? __( 'Keep them', 'antijante-products-list' ) : __( 'Cancel', 'antijante-products-list' ) }
 				</Button>
 				{ outcome && relativeConflicts( outcome.conflicts ).length ? (
 					<Button variant="secondary" isBusy={ busy } disabled={ busy } onClick={ () => void confirm( 'relative' ) } __next40pxDefaultSize>
-						{ __( 'Subtract the change instead', 'wp-woocommerce-products-list' ) }
+						{ __( 'Subtract the change instead', 'antijante-products-list' ) }
 					</Button>
 				) : null }
 				{ outcome ? (
 					<Button variant="primary" isDestructive isBusy={ busy } disabled={ busy } onClick={ () => void confirm( 'force' ) } __next40pxDefaultSize>
 						{ sprintf(
 							/* translators: %d: number of items */
-							_n( 'Revert %d anyway', 'Revert %d anyway', outcome.conflicts.length, 'wp-woocommerce-products-list' ),
+							_n( 'Revert %d anyway', 'Revert %d anyway', outcome.conflicts.length, 'antijante-products-list' ),
 							outcome.conflicts.length
 						) }
 					</Button>
 				) : (
 					<Button variant="primary" isBusy={ busy } disabled={ busy || ! row || plan === 'loading' || ! plan || ! plan.revertable || nothingToRun } onClick={ () => void confirm() } __next40pxDefaultSize>
-						{ revertedBy ? __( 'Revert again', 'wp-woocommerce-products-list' ) : __( 'Revert batch', 'wp-woocommerce-products-list' ) }
+						{ revertedBy ? __( 'Revert again', 'antijante-products-list' ) : __( 'Revert batch', 'antijante-products-list' ) }
 					</Button>
 				) }
 			</div>
@@ -494,15 +494,15 @@ function EmptyLog( { error, filtered, onReset }: { error?: Error; filtered: bool
 	if ( filtered ) {
 		return (
 			<div className="wc-products-list__empty">
-				<p>{ __( 'No changes match these filters.', 'wp-woocommerce-products-list' ) }</p>
+				<p>{ __( 'No changes match these filters.', 'antijante-products-list' ) }</p>
 				<Button variant="secondary" onClick={ onReset } __next40pxDefaultSize>
-					{ __( 'Reset filters', 'wp-woocommerce-products-list' ) }
+					{ __( 'Reset filters', 'antijante-products-list' ) }
 				</Button>
 			</div>
 		);
 	}
 
-	return <p className="wc-products-list__empty">{ __( 'No changes logged yet. Every edit made through the catalog shows up here.', 'wp-woocommerce-products-list' ) }</p>;
+	return <p className="wc-products-list__empty">{ __( 'No changes logged yet. Every edit made through the catalog shows up here.', 'antijante-products-list' ) }</p>;
 }
 
 export function HistoryScreen( { fields: productFields = [] }: { fields?: ProductField[] } ) {
@@ -549,7 +549,7 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 	}, [] );
 
 	useEffect( () => {
-		const title = __( 'History', 'wp-woocommerce-products-list' );
+		const title = __( 'History', 'antijante-products-list' );
 		const previous = document.title;
 
 		document.title = document.title.includes( title ) ? document.title : `${ title } ‹ ${ document.title }`;
@@ -583,7 +583,7 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 		() => [
 			{
 				id: 'show-batch',
-				label: __( 'Show this batch', 'wp-woocommerce-products-list' ),
+				label: __( 'Show this batch', 'antijante-products-list' ),
 				supportsBulk: false,
 				callback: ( items ) => {
 					if ( items[ 0 ] ) {
@@ -593,7 +593,7 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 			},
 			{
 				id: 'open-item',
-				label: __( 'Edit item', 'wp-woocommerce-products-list' ),
+				label: __( 'Edit item', 'antijante-products-list' ),
 				supportsBulk: false,
 				isEligible: ( item ) => Boolean( item.edit_link ),
 				callback: ( items ) => {
@@ -604,11 +604,11 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 			},
 			{
 				id: 'revert-batch',
-				label: __( 'Revert batch', 'wp-woocommerce-products-list' ),
+				label: __( 'Revert batch', 'antijante-products-list' ),
 				supportsBulk: false,
 				isEligible: ( item ) => isRevertableRow( item ) && settings.caps.edit,
 				RenderModal: RevertModal,
-				modalHeader: __( 'Revert batch', 'wp-woocommerce-products-list' ),
+				modalHeader: __( 'Revert batch', 'antijante-products-list' ),
 				modalSize: 'medium',
 			},
 		],
@@ -619,7 +619,7 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 		() => [
 			{
 				id: 'show-changes',
-				label: __( 'Show changes', 'wp-woocommerce-products-list' ),
+				label: __( 'Show changes', 'antijante-products-list' ),
 				isPrimary: true,
 				supportsBulk: false,
 				callback: ( items ) => {
@@ -630,11 +630,11 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 			},
 			{
 				id: 'revert-batch',
-				label: __( 'Revert batch', 'wp-woocommerce-products-list' ),
+				label: __( 'Revert batch', 'antijante-products-list' ),
 				supportsBulk: false,
 				isEligible: ( item ) => item.revertable && settings.caps.edit,
 				RenderModal: RevertModal,
-				modalHeader: __( 'Revert batch', 'wp-woocommerce-products-list' ),
+				modalHeader: __( 'Revert batch', 'antijante-products-list' ),
 				modalSize: 'medium',
 			},
 		],
@@ -644,7 +644,7 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 	const header = (
 		<div className="wc-products-list__header">
 			<Button variant="tertiary" size="compact" href={ settings.links.page }>
-				{ __( '← All Products (New)', 'wp-woocommerce-products-list' ) }
+				{ __( '← All Products (New)', 'antijante-products-list' ) }
 			</Button>
 		</div>
 	);
@@ -652,10 +652,10 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 	return (
 		<FieldOptionsContext.Provider value={ fieldOptions }>
 		<div className="wc-products-list wc-pl-history">
-			<h1 className="wc-pl-history__title">{ __( 'History', 'wp-woocommerce-products-list' ) }</h1>
+			<h1 className="wc-pl-history__title">{ __( 'History', 'antijante-products-list' ) }</h1>
 			<ToggleGroupControl
 				className="wc-pl-history__mode"
-				label={ __( 'Show', 'wp-woocommerce-products-list' ) }
+				label={ __( 'Show', 'antijante-products-list' ) }
 				hideLabelFromVision
 				isBlock={ false }
 				value={ mode }
@@ -663,8 +663,8 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 				__next40pxDefaultSize
 				__nextHasNoMarginBottom
 			>
-				<ToggleGroupControlOption value="batches" label={ __( 'Batches', 'wp-woocommerce-products-list' ) } />
-				<ToggleGroupControlOption value="changes" label={ __( 'All changes', 'wp-woocommerce-products-list' ) } />
+				<ToggleGroupControlOption value="batches" label={ __( 'Batches', 'antijante-products-list' ) } />
+				<ToggleGroupControlOption value="changes" label={ __( 'All changes', 'antijante-products-list' ) } />
 			</ToggleGroupControl>
 			{ mode === 'batches' ? (
 				<DataViews< LogBatch >
@@ -679,7 +679,7 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 					actions={ batchActions }
 					isLoading={ batches.isLoading }
 					search
-					searchLabel={ __( 'Search product names and values', 'wp-woocommerce-products-list' ) }
+					searchLabel={ __( 'Search product names and values', 'antijante-products-list' ) }
 					header={ header }
 					config={ { perPageSizes: [ 25, 50, 100 ] } }
 					empty={ <EmptyLog error={ batches.error } filtered={ Boolean( batchView.filters?.length || batchView.search ) } onReset={ resetBatchFilters } /> }
@@ -697,7 +697,7 @@ export function HistoryScreen( { fields: productFields = [] }: { fields?: Produc
 					actions={ actions }
 					isLoading={ log.isLoading }
 					search
-					searchLabel={ __( 'Search product names and values', 'wp-woocommerce-products-list' ) }
+					searchLabel={ __( 'Search product names and values', 'antijante-products-list' ) }
 					header={ header }
 					config={ { perPageSizes: [ 25, 50, 100 ] } }
 					empty={ <EmptyLog error={ log.error } filtered={ Boolean( view.filters?.length || view.search ) } onReset={ resetFilters } /> }

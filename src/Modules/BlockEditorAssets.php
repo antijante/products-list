@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Modules;
+namespace Antijante\ProductsList\Modules;
 
-use GeneroWP\ProductsList\Module;
+use Antijante\ProductsList\Module;
 
 /**
  * The media library (for the image editor) and the block editor (for the

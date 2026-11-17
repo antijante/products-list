@@ -63,17 +63,17 @@ export class ErrorBoundary extends Component< BoundaryProps, BoundaryState > {
 		}
 
 		return (
-			<Notice status="error" isDismissible={ false } className="wc-products-list__boundary" spokenMessage={ isChunkError ? __( 'Part of the product list could not be loaded. The plugin may have been updated, or the connection dropped.', 'wp-woocommerce-products-list' ) : __( 'Something went wrong while showing this part of the product list.', 'wp-woocommerce-products-list' ) }>
+			<Notice status="error" isDismissible={ false } className="wc-products-list__boundary" spokenMessage={ isChunkError ? __( 'Part of the product list could not be loaded. The plugin may have been updated, or the connection dropped.', 'antijante-products-list' ) : __( 'Something went wrong while showing this part of the product list.', 'antijante-products-list' ) }>
 				{ isChunkError
-					? __( 'Part of the product list could not be loaded. The plugin may have been updated, or the connection dropped.', 'wp-woocommerce-products-list' )
-					: __( 'Something went wrong while showing this part of the product list.', 'wp-woocommerce-products-list' ) }{ ' ' }
+					? __( 'Part of the product list could not be loaded. The plugin may have been updated, or the connection dropped.', 'antijante-products-list' )
+					: __( 'Something went wrong while showing this part of the product list.', 'antijante-products-list' ) }{ ' ' }
 				{ isChunkError ? (
 					<Button variant="link" onClick={ () => window.location.reload() }>
-						{ __( 'Reload the page', 'wp-woocommerce-products-list' ) }
+						{ __( 'Reload the page', 'antijante-products-list' ) }
 					</Button>
 				) : (
 					<Button variant="link" onClick={ this.retry }>
-						{ __( 'Try again', 'wp-woocommerce-products-list' ) }
+						{ __( 'Try again', 'antijante-products-list' ) }
 					</Button>
 				) }
 			</Notice>
@@ -84,7 +84,7 @@ export class ErrorBoundary extends Component< BoundaryProps, BoundaryState > {
 /** The fallback of one table cell: a muted dash with the reason as its title. */
 function CellFallback() {
 	return (
-		<span className="wc-products-list-field wc-products-list-field--error" title={ __( 'This value could not be shown.', 'wp-woocommerce-products-list' ) }>
+		<span className="wc-products-list-field wc-products-list-field--error" title={ __( 'This value could not be shown.', 'antijante-products-list' ) }>
 			{ '—' }
 		</span>
 	);

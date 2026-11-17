@@ -37,7 +37,7 @@ describe( 'settings', () => {
 	afterEach( () => setSettings( undefined ) );
 
 	it( 'throws when the inline payload is missing', () => {
-		expect( () => getSettings() ).toThrow( /wcProductsListSettings/ );
+		expect( () => getSettings() ).toThrow( /antijanteProductsListSettings/ );
 	} );
 
 	it( 'reads the payload once and answers capability checks', () => {

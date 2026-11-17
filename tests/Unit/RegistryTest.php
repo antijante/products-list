@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Unit;
+namespace Antijante\ProductsList\Tests\Unit;
 
-use GeneroWP\ProductsList\Registry;
+use Antijante\ProductsList\Registry;
 use PHPUnit\Framework\TestCase;
 
 class RegistryTest extends TestCase

@@ -22,7 +22,7 @@ export function buildStatusTabs( counts: Record< string, number >, settings: Set
 	const loaded = Object.keys( counts ).length > 0;
 	const tabs: StatusTab[] = STATUS_TAB_IDS.map( ( id ) => ( {
 		id,
-		label: id === 'all' ? __( 'All', 'wp-woocommerce-products-list' ) : labels.get( id ) ?? id,
+		label: id === 'all' ? __( 'All', 'antijante-products-list' ) : labels.get( id ) ?? id,
 		count: loaded ? counts[ id ] ?? 0 : undefined,
 	} ) ).filter( ( tab ) => tab.id === 'all' || tab.id === 'publish' || ! loaded || ( tab.count ?? 0 ) > 0 );
 
@@ -72,7 +72,7 @@ export function StatusTabs( { tab, onChange, counts, settings, panelId = 'wc-pro
 	};
 
 	return (
-		<div className="wc-products-list__tabs" role="tablist" aria-label={ __( 'Product status', 'wp-woocommerce-products-list' ) } onKeyDown={ onKeyDown }>
+		<div className="wc-products-list__tabs" role="tablist" aria-label={ __( 'Product status', 'antijante-products-list' ) } onKeyDown={ onKeyDown }>
 			{ tabs.map( ( t ) => {
 				const selected = t.id === current;
 

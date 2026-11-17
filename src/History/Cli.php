@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
 /**
  * POC: `wp wc-products-list history <command>`. Loaded in `both` and

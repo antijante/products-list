@@ -142,7 +142,7 @@ describe( 'cachedProductIds / patchItems', () => {
 describe( 'useProductList', () => {
 	setup();
 
-	it( 'fires wcProductsList.loaded once per completed request, not on optimistic patches', async () => {
+	it( 'fires antijanteProductsList.loaded once per completed request, not on optimistic patches', async () => {
 		listProducts.mockResolvedValue( { items: [ parent( 10 ) ], total: 1, totalPages: 1 } );
 		const loaded = vi.fn();
 		addAction( ACTIONS.loaded, 'test/loaded', loaded );

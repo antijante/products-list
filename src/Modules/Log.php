@@ -1,18 +1,18 @@
 <?php
 
-namespace GeneroWP\ProductsList\Modules;
+namespace Antijante\ProductsList\Modules;
 
-use GeneroWP\ProductsList\History\History;
-use GeneroWP\ProductsList\History\PurgeCommand;
-use GeneroWP\ProductsList\Log\BatchState;
-use GeneroWP\ProductsList\Log\Prune;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Module;
-use GeneroWP\ProductsList\Plugin;
-use GeneroWP\ProductsList\Rest\LogController;
+use Antijante\ProductsList\History\History;
+use Antijante\ProductsList\History\PurgeCommand;
+use Antijante\ProductsList\Log\BatchState;
+use Antijante\ProductsList\Log\Prune;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Module;
+use Antijante\ProductsList\Plugin;
+use Antijante\ProductsList\Rest\LogController;
 
 /**
- * The change log: table install on `wc_products_list/activate` and on
+ * The change log: table install on `antijante_products_list/activate` and on
  * version change, the daily prune and the log REST routes. The recorder
  * that fills the table hangs off the save hooks in the Actions module.
  */

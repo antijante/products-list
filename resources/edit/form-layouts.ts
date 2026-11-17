@@ -6,7 +6,7 @@
  * modelled on WooCommerce's Edit product screen: a main column and a side
  * column when the form is wide, a single column in task order when it is
  * narrow. Derived from the fields themselves so extension fields land in
- * the right place without code. `wcProductsList.quickEdit.tabs` and
+ * the right place without code. `antijanteProductsList.quickEdit.tabs` and
  * `.layout` can reshape both.
  */
 import { applyFilters } from '@wordpress/hooks';
@@ -23,22 +23,22 @@ import { isSellableField, leafOf } from './visibility';
 export const GENERAL_TAB_ID = 'general';
 
 export const GROUP_LABELS: Record< string, string > = {
-	general: __( 'Product', 'wp-woocommerce-products-list' ),
-	pricing: __( 'Pricing', 'wp-woocommerce-products-list' ),
-	price: __( 'Pricing', 'wp-woocommerce-products-list' ),
-	inventory: __( 'Inventory', 'wp-woocommerce-products-list' ),
-	organization: __( 'Organization', 'wp-woocommerce-products-list' ),
-	visibility: __( 'Status and visibility', 'wp-woocommerce-products-list' ),
-	shipping: __( 'Shipping', 'wp-woocommerce-products-list' ),
-	tax: __( 'Tax', 'wp-woocommerce-products-list' ),
-	external: __( 'Buy button', 'wp-woocommerce-products-list' ),
-	linked: __( 'Linked products', 'wp-woocommerce-products-list' ),
-	content: __( 'Description', 'wp-woocommerce-products-list' ),
-	downloads: __( 'Downloads', 'wp-woocommerce-products-list' ),
-	advanced: __( 'Advanced', 'wp-woocommerce-products-list' ),
-	translation: __( 'Translation', 'wp-woocommerce-products-list' ),
-	seo: __( 'SEO', 'wp-woocommerce-products-list' ),
-	prices: __( 'Prices', 'wp-woocommerce-products-list' ),
+	general: __( 'Product', 'antijante-products-list' ),
+	pricing: __( 'Pricing', 'antijante-products-list' ),
+	price: __( 'Pricing', 'antijante-products-list' ),
+	inventory: __( 'Inventory', 'antijante-products-list' ),
+	organization: __( 'Organization', 'antijante-products-list' ),
+	visibility: __( 'Status and visibility', 'antijante-products-list' ),
+	shipping: __( 'Shipping', 'antijante-products-list' ),
+	tax: __( 'Tax', 'antijante-products-list' ),
+	external: __( 'Buy button', 'antijante-products-list' ),
+	linked: __( 'Linked products', 'antijante-products-list' ),
+	content: __( 'Description', 'antijante-products-list' ),
+	downloads: __( 'Downloads', 'antijante-products-list' ),
+	advanced: __( 'Advanced', 'antijante-products-list' ),
+	translation: __( 'Translation', 'antijante-products-list' ),
+	seo: __( 'SEO', 'antijante-products-list' ),
+	prices: __( 'Prices', 'antijante-products-list' ),
 };
 
 /**
@@ -115,7 +115,7 @@ export function withScheduleSale( fields: ProductField[] ): ProductField[] {
 
 	const toggle: ProductField = {
 		id: SCHEDULE_SALE_FIELD_ID,
-		label: __( 'Schedule sale', 'wp-woocommerce-products-list' ),
+		label: __( 'Schedule sale', 'antijante-products-list' ),
 		type: 'boolean',
 		productTypes: anchor.productTypes,
 		edit: { group: groupOf( anchor ), tab: anchor.edit.tab, bulk: 'default', order: orderOf( anchor ) - 0.5 },
@@ -188,12 +188,12 @@ export function toolTabIds( settings: Pick< Settings, 'actions' >, items: Produc
 /**
  * The tabs for a selection: General first, then one per extension group
  * found on the fields (languages), then registered tabs; empty tabs are
- * dropped; `wcProductsList.quickEdit.tabs` runs last.
+ * dropped; `antijanteProductsList.quickEdit.tabs` runs last.
  */
 export function buildTabs( fields: ProductField[], items: ProductListItem[], settings: Settings ): QuickEditTab[] {
 	const tabs = new Map< string, QuickEditTab >();
 
-	tabs.set( GENERAL_TAB_ID, { id: GENERAL_TAB_ID, label: __( 'General', 'wp-woocommerce-products-list' ), order: 0 } );
+	tabs.set( GENERAL_TAB_ID, { id: GENERAL_TAB_ID, label: __( 'General', 'antijante-products-list' ), order: 0 } );
 
 	for ( const field of fields ) {
 		const id = tabOf( field );
@@ -426,14 +426,14 @@ function sectionLabel( group: string, tab: QuickEditTab, settings: Settings ): s
 		const currency = languages?.currencies?.[ tab.id.slice( 'i18n:'.length ) ];
 
 		/* translators: %s: currency code, e.g. SEK */
-		return currency ? sprintf( __( 'Prices (%s)', 'wp-woocommerce-products-list' ), currency ) : groupLabel( group, settings );
+		return currency ? sprintf( __( 'Prices (%s)', 'antijante-products-list' ), currency ) : groupLabel( group, settings );
 	}
 
 	if ( tab.id === GENERAL_TAB_ID && languages && languages.others.length > 0 && ( group === 'general' || group === 'content' ) ) {
 		const source = languages.labels[ languages.default ] ?? languages.default.toUpperCase();
 
 		/* translators: 1: section title (Product, Description), 2: the shop's default language */
-		return sprintf( __( '%1$s · %2$s', 'wp-woocommerce-products-list' ), groupLabel( group, settings ), source );
+		return sprintf( __( '%1$s · %2$s', 'antijante-products-list' ), groupLabel( group, settings ), source );
 	}
 
 	return groupLabel( group, settings );
@@ -446,7 +446,7 @@ function sectionLabel( group: string, tab: QuickEditTab, settings: Settings ): s
  * texts) and a side column (status, organization and settings), as
  * WooCommerce's Edit product screen; else one column in task order. Both
  * are real containers, so reading and keyboard order are the visual order.
- * `wcProductsList.quickEdit.layout` runs last.
+ * `antijanteProductsList.quickEdit.layout` runs last.
  */
 export function buildInlineForm( fields: ProductField[], tab: QuickEditTab, items: ProductListItem[], settings: Settings, options: LayoutOptions = {} ): Form {
 	const { columns = 1, open, leads, trails, pending, bulk = false } = options;

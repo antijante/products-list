@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
-use GeneroWP\ProductsList\ListMode;
+use Antijante\ProductsList\ListMode;
 use WC_Product;
 use WP_Post;
 

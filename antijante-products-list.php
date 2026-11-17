@@ -1,30 +1,31 @@
 <?php
 
 /*
-Plugin Name:  WooCommerce Products List
-Plugin URI:   https://github.com/generoi/wp-woocommerce-products-list
-Description:  A fast DataViews product catalog for WooCommerce with variations inline, bulk editing, scheduled sales and a change log.
+Plugin Name:  Antijante Products List
+Plugin URI:   https://github.com/antijante/products-list
+Description:  A fast DataViews product catalog for WooCommerce with variations inline, bulk editing, scheduled sales and a change log. Antijante's fork of Genero's WooCommerce Products List.
 Version:      0.5.2
 Requires at least: 6.8
 Requires PHP: 8.2
 Requires Plugins: woocommerce
 WC requires at least: 11.0
-Author:       Genero
-Author URI:   https://genero.fi/
+Author:       Antijante, after Genero's original
+Author URI:   https://github.com/antijante/products-list
 License:      MIT
-Text Domain:  wp-woocommerce-products-list
+Text Domain:  antijante-products-list
 Domain Path:  /languages
 */
 
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Compat;
+use Antijante\ProductsList\Plugin;
 
 if (! defined('ABSPATH')) {
     exit;
 }
 
-define('WC_PRODUCTS_LIST_VERSION', '0.5.2');
-define('WC_PRODUCTS_LIST_FILE', __FILE__);
-define('WC_PRODUCTS_LIST_PATH', __DIR__);
+define('ANTIJANTE_PRODUCTS_LIST_VERSION', '0.5.2');
+define('ANTIJANTE_PRODUCTS_LIST_FILE', __FILE__);
+define('ANTIJANTE_PRODUCTS_LIST_PATH', __DIR__);
 
 if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
@@ -35,7 +36,7 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
 // src/ directly rather than fatal.
 if (! class_exists(Plugin::class)) {
     spl_autoload_register(static function (string $class): void {
-        $prefix = 'GeneroWP\\ProductsList\\';
+        $prefix = 'Antijante\\ProductsList\\';
 
         if (strncmp($class, $prefix, strlen($prefix)) !== 0) {
             return;
@@ -48,6 +49,9 @@ if (! class_exists(Plugin::class)) {
         }
     });
 }
+
+// The plugin's names from before the fork keep answering (src/Compat.php).
+Compat::boot();
 
 register_activation_hook(__FILE__, [Plugin::class, 'activate']);
 register_deactivation_hook(__FILE__, [Plugin::class, 'deactivate']);

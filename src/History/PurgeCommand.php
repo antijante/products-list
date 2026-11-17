@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
 /**
  * `wp wc-products-list history purge`, in every mode (in `both` and

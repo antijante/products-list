@@ -48,13 +48,13 @@ function parse( html: string ): Document {
 /** Why the visual editor cannot show this HTML, or null when it can. */
 export function visualProblem( html: string ): string | null {
 	if ( /<!--/.test( html ) ) {
-		return __( 'This text has HTML comments (block markup), which the visual editor would not keep.', 'wp-woocommerce-products-list' );
+		return __( 'This text has HTML comments (block markup), which the visual editor would not keep.', 'antijante-products-list' );
 	}
 
 	const body = parse( html ).body;
 
 	if ( body.querySelector( UNSAFE_ELEMENTS ) ) {
-		return __( 'This text has embedded content or scripts, which the visual editor does not show.', 'wp-woocommerce-products-list' );
+		return __( 'This text has embedded content or scripts, which the visual editor does not show.', 'antijante-products-list' );
 	}
 
 	for ( const element of Array.from( body.querySelectorAll( '*' ) ) ) {
@@ -62,7 +62,7 @@ export function visualProblem( html: string ): string | null {
 			const name = attribute.name.toLowerCase();
 
 			if ( name.startsWith( 'on' ) || ( [ 'href', 'src', 'action', 'formaction', 'xlink:href' ].includes( name ) && /^\s*(?:javascript|vbscript|data:text\/html)/i.test( attribute.value ) ) ) {
-				return __( 'This text has scripted attributes, which the visual editor does not show.', 'wp-woocommerce-products-list' );
+				return __( 'This text has scripted attributes, which the visual editor does not show.', 'antijante-products-list' );
 			}
 		}
 	}
@@ -356,15 +356,15 @@ function VisualEditor( { id, labelId, describedBy, value, rows, onChange }: Visu
 	};
 
 	const tools = [
-		{ command: 'bold', icon: formatBold, label: __( 'Bold', 'wp-woocommerce-products-list' ), shortcut: 'Ctrl+B' },
-		{ command: 'italic', icon: formatItalic, label: __( 'Italic', 'wp-woocommerce-products-list' ), shortcut: 'Ctrl+I' },
-		{ command: 'insertUnorderedList', icon: formatListBullets, label: __( 'Bulleted list', 'wp-woocommerce-products-list' ) },
-		{ command: 'insertOrderedList', icon: formatListNumbered, label: __( 'Numbered list', 'wp-woocommerce-products-list' ) },
+		{ command: 'bold', icon: formatBold, label: __( 'Bold', 'antijante-products-list' ), shortcut: 'Ctrl+B' },
+		{ command: 'italic', icon: formatItalic, label: __( 'Italic', 'antijante-products-list' ), shortcut: 'Ctrl+I' },
+		{ command: 'insertUnorderedList', icon: formatListBullets, label: __( 'Bulleted list', 'antijante-products-list' ) },
+		{ command: 'insertOrderedList', icon: formatListNumbered, label: __( 'Numbered list', 'antijante-products-list' ) },
 	];
 
 	return (
 		<>
-			<div className="wc-pl-html-editor__toolbar" role="toolbar" aria-label={ __( 'Formatting', 'wp-woocommerce-products-list' ) } aria-controls={ id }>
+			<div className="wc-pl-html-editor__toolbar" role="toolbar" aria-label={ __( 'Formatting', 'antijante-products-list' ) } aria-controls={ id }>
 				{ tools.map( ( tool ) => (
 					<Button
 						key={ tool.command }
@@ -376,8 +376,8 @@ function VisualEditor( { id, labelId, describedBy, value, rows, onChange }: Visu
 						onClick={ () => run( tool.command ) }
 					/>
 				) ) }
-				<Button size="small" icon={ linkIcon } label={ __( 'Link', 'wp-woocommerce-products-list' ) } shortcut="Ctrl+K" onMouseDown={ keepSelection } onClick={ openLink } />
-				<Button size="small" icon={ linkOff } label={ __( 'Remove link', 'wp-woocommerce-products-list' ) } onMouseDown={ keepSelection } onClick={ () => run( 'unlink' ) } />
+				<Button size="small" icon={ linkIcon } label={ __( 'Link', 'antijante-products-list' ) } shortcut="Ctrl+K" onMouseDown={ keepSelection } onClick={ openLink } />
+				<Button size="small" icon={ linkOff } label={ __( 'Remove link', 'antijante-products-list' ) } onMouseDown={ keepSelection } onClick={ () => run( 'unlink' ) } />
 			</div>
 			{ linkOpen ? (
 				<div className="wc-pl-html-editor__link">
@@ -385,14 +385,14 @@ function VisualEditor( { id, labelId, describedBy, value, rows, onChange }: Visu
 						ref={ linkInputRef }
 						type="url"
 						className="components-text-control__input"
-						aria-label={ __( 'Link address', 'wp-woocommerce-products-list' ) }
+						aria-label={ __( 'Link address', 'antijante-products-list' ) }
 						placeholder="https://"
 						value={ linkUrl }
 						onChange={ ( event ) => setLinkUrl( event.target.value ) }
 						onKeyDown={ onLinkKeyDown }
 					/>
 					<Button variant="secondary" size="compact" onClick={ applyLink }>
-						{ __( 'Apply', 'wp-woocommerce-products-list' ) }
+						{ __( 'Apply', 'antijante-products-list' ) }
 					</Button>
 					<Button
 						variant="tertiary"
@@ -402,7 +402,7 @@ function VisualEditor( { id, labelId, describedBy, value, rows, onChange }: Visu
 							restoreRange();
 						} }
 					>
-						{ __( 'Cancel', 'wp-woocommerce-products-list' ) }
+						{ __( 'Cancel', 'antijante-products-list' ) }
 					</Button>
 				</div>
 			) : null }
@@ -461,16 +461,16 @@ export function createHtmlTextControl( { rows = 4 }: { rows?: number } = {} ): C
 					<span id={ labelId } className={ `wc-pl-html-editor__label${ hideLabelFromVision ? ' screen-reader-text' : '' }` }>
 						{ field.label }
 					</span>
-					<div className="wc-pl-html-editor__modes" role="group" aria-label={ __( 'Editor mode', 'wp-woocommerce-products-list' ) }>
+					<div className="wc-pl-html-editor__modes" role="group" aria-label={ __( 'Editor mode', 'antijante-products-list' ) }>
 						<Button size="small" isPressed={ mode === 'visual' } disabled={ !! problem } accessibleWhenDisabled onClick={ () => choose( 'visual' ) }>
-							{ __( 'Visual', 'wp-woocommerce-products-list' ) }
+							{ __( 'Visual', 'antijante-products-list' ) }
 						</Button>
 						<Button size="small" isPressed={ mode === 'code' } onClick={ () => choose( 'code' ) }>
-							{ __( 'Code', 'wp-woocommerce-products-list' ) }
+							{ __( 'Code', 'antijante-products-list' ) }
 						</Button>
 						{ openDescription && isDescription ? (
 							<Button size="small" variant="secondary" data-description-opener={ field.id } onClick={ ( event: ReactMouseEvent< HTMLButtonElement > ) => openDescription( field.id, event.currentTarget ) }>
-								{ __( 'Open in block editor', 'wp-woocommerce-products-list' ) }
+								{ __( 'Open in block editor', 'antijante-products-list' ) }
 							</Button>
 						) : null }
 					</div>

@@ -375,8 +375,8 @@ const GridRow = memo( function GridRow( { item, tabId, lang, gridFields, store, 
 					<span className="wc-pl-translate__reference wc-pl-translate__changed" role="status">
 						{ sprintf(
 							/* translators: %s: the translation saved meanwhile */
-							__( 'Changed by someone else since you started typing, now: %s. Update will not write over it.', 'wp-woocommerce-products-list' ),
-							cellText( name, stored ).slice( 0, 120 ) || __( '(empty)', 'wp-woocommerce-products-list' )
+							__( 'Changed by someone else since you started typing, now: %s. Update will not write over it.', 'antijante-products-list' ),
+							cellText( name, stored ).slice( 0, 120 ) || __( '(empty)', 'antijante-products-list' )
 						) }
 					</span>
 				) : null }
@@ -385,7 +385,7 @@ const GridRow = memo( function GridRow( { item, tabId, lang, gridFields, store, 
 						{ defaultLabel }: { referenceText.length > 120 ? `${ referenceText.slice( 0, 120 ) }…` : referenceText }
 					</span>
 				) : null }
-				{ isHtml && stored !== '' && ! isPlainParagraphs( stored ) ? <span className="wc-pl-translate__reference">{ __( 'HTML', 'wp-woocommerce-products-list' ) }</span> : null }
+				{ isHtml && stored !== '' && ! isPlainParagraphs( stored ) ? <span className="wc-pl-translate__reference">{ __( 'HTML', 'antijante-products-list' ) }</span> : null }
 			</td>
 		);
 	};
@@ -478,7 +478,7 @@ export function TranslationGrid( { tabId, tabLabel, items, fields, settings, sto
 		return null;
 	}
 
-	const defaultLabel = settings.languages?.labels?.[ settings.languages.default ] ?? __( 'Default', 'wp-woocommerce-products-list' );
+	const defaultLabel = settings.languages?.labels?.[ settings.languages.default ] ?? __( 'Default', 'antijante-products-list' );
 	const loadedRows = rows ? products.map( ( item ) => rows.get( item.id ) ).filter( ( row ): row is ProductListItem => Boolean( row ) ) : [];
 	const missing = ( row: ProductListItem ) => GRID_FIELDS.some( ( name ) => gridFields[ name ] && stringOf( readFieldValue( gridFields[ name ]!, row ) ) === '' );
 	const listed = onlyMissing ? loadedRows.filter( ( row ) => missing( row ) || store.get( row.id, gridFields.name?.id ?? '' ) !== undefined ) : loadedRows;
@@ -488,38 +488,38 @@ export function TranslationGrid( { tabId, tabLabel, items, fields, settings, sto
 			<summary>
 				{ sprintf(
 					/* translators: %s: language */
-					__( 'Translate product by product (%s)', 'wp-woocommerce-products-list' ),
+					__( 'Translate product by product (%s)', 'antijante-products-list' ),
 					tabLabel
 				) }
 				{ count > 0
 					? ` · ${ sprintf(
 							/* translators: %d: number of products with typed translations */
-							_n( '%d product changed', '%d products changed', count, 'wp-woocommerce-products-list' ),
+							_n( '%d product changed', '%d products changed', count, 'antijante-products-list' ),
 							count
 					  ) }`
 					: '' }
 			</summary>
 			<p className="wc-pl-translate__help">
-				{ __( 'Type each product\'s own text. Enter moves down the column, Shift+Enter up (in a description Shift+Enter is a new line). Saved with Update.', 'wp-woocommerce-products-list' ) }
+				{ __( 'Type each product\'s own text. Enter moves down the column, Shift+Enter up (in a description Shift+Enter is a new line). Saved with Update.', 'antijante-products-list' ) }
 				{ skippedVariations > 0
 					? ` ${ sprintf(
 							/* translators: %d: number of variations */
-							_n( '%d variation is not listed: variations take their name from the product.', '%d variations are not listed: variations take their name from the product.', skippedVariations, 'wp-woocommerce-products-list' ),
+							_n( '%d variation is not listed: variations take their name from the product.', '%d variations are not listed: variations take their name from the product.', skippedVariations, 'antijante-products-list' ),
 							skippedVariations
 					  ) }`
 					: '' }
 			</p>
-			{ open && ! products.length ? <p>{ __( 'No products selected: only variations, which have no name of their own.', 'wp-woocommerce-products-list' ) }</p> : null }
-			{ open && products.length && ! rows && ! failed ? <p aria-live="polite">{ __( 'Loading the translations…', 'wp-woocommerce-products-list' ) }</p> : null }
-			{ failed ? <p role="alert">{ __( 'The translations could not be loaded.', 'wp-woocommerce-products-list' ) }</p> : null }
+			{ open && ! products.length ? <p>{ __( 'No products selected: only variations, which have no name of their own.', 'antijante-products-list' ) }</p> : null }
+			{ open && products.length && ! rows && ! failed ? <p aria-live="polite">{ __( 'Loading the translations…', 'antijante-products-list' ) }</p> : null }
+			{ failed ? <p role="alert">{ __( 'The translations could not be loaded.', 'antijante-products-list' ) }</p> : null }
 			{ rows ? (
 				<>
-					<CheckboxControl __nextHasNoMarginBottom label={ __( 'Only products missing a translation', 'wp-woocommerce-products-list' ) } checked={ onlyMissing } onChange={ setOnlyMissing } />
+					<CheckboxControl __nextHasNoMarginBottom label={ __( 'Only products missing a translation', 'antijante-products-list' ) } checked={ onlyMissing } onChange={ setOnlyMissing } />
 					<div className="wc-pl-translate__scroll">
 						<table className="wc-pl-translate__table" onKeyDown={ onGridKeyDown }>
 							<thead>
 								<tr>
-									<th scope="col">{ __( 'Product', 'wp-woocommerce-products-list' ) }</th>
+									<th scope="col">{ __( 'Product', 'antijante-products-list' ) }</th>
 									{ GRID_FIELDS.map( ( name ) => (
 										<th scope="col" key={ name }>
 											{ gridFields[ name ]?.label ?? name }
@@ -534,12 +534,12 @@ export function TranslationGrid( { tabId, tabLabel, items, fields, settings, sto
 							</tbody>
 						</table>
 					</div>
-					{ listed.length === 0 ? <p>{ __( 'Every listed product has its translation.', 'wp-woocommerce-products-list' ) }</p> : null }
+					{ listed.length === 0 ? <p>{ __( 'Every listed product has its translation.', 'antijante-products-list' ) }</p> : null }
 					{ listed.length > shown ? (
 						<Button variant="secondary" onClick={ () => setShown( ( current ) => current + GRID_PAGE ) }>
 							{ sprintf(
 								/* translators: %d: number of products not shown yet */
-								__( 'Show more (%d left)', 'wp-woocommerce-products-list' ),
+								__( 'Show more (%d left)', 'antijante-products-list' ),
 								listed.length - shown
 							) }
 						</Button>

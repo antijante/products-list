@@ -6,7 +6,7 @@ export function createLowStockAmountField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'low_stock_amount',
 		type: 'integer',
-		label: __( 'Low stock threshold', 'wp-woocommerce-products-list' ),
+		label: __( 'Low stock threshold', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: false,
 		render: ( { item } ) => <span>{ item.low_stock_amount ?? '—' }</span>,

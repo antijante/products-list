@@ -1,11 +1,11 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Bootstrap;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Modules\AdminPage;
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Bootstrap;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Modules\AdminPage;
+use Antijante\ProductsList\Plugin;
 
 class ScaffoldTest extends RestTestCase
 {
@@ -94,12 +94,12 @@ class ScaffoldTest extends RestTestCase
         Plugin::getInstance()->module(AdminPage::class)->enqueue(AdminPage::SCREEN);
 
         $inline = wp_scripts()->get_inline_script_data(Plugin::HANDLE, 'before');
-        $this->assertStringStartsWith('window.wcProductsListSettings = {', $inline);
+        $this->assertStringStartsWith('window.antijanteProductsListSettings = {', $inline);
         $this->assertStringNotContainsString('</script', $inline);
         $this->assertStringNotContainsString('<script', $inline);
         $this->assertStringContainsString('\\u003C\\/script\\u003E', $inline);
 
-        $json = substr($inline, strlen('window.wcProductsListSettings = '));
+        $json = substr($inline, strlen('window.antijanteProductsListSettings = '));
         $decoded = json_decode(substr($json, 0, strrpos($json, '};') + 1), true);
         $this->assertIsArray($decoded);
         $this->assertSame('</script><script>alert(1)</script>&amp;\'"', end($decoded['fields'])['label']);

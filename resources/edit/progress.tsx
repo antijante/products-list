@@ -27,13 +27,13 @@ export function timeLeft( done: number, total: number, elapsedMs: number ): stri
 
 	if ( seconds < 60 ) {
 		/* translators: %d: seconds */
-		return sprintf( _n( 'about %d second left', 'about %d seconds left', seconds, 'wp-woocommerce-products-list' ), seconds );
+		return sprintf( _n( 'about %d second left', 'about %d seconds left', seconds, 'antijante-products-list' ), seconds );
 	}
 
 	const minutes = Math.ceil( seconds / 60 );
 
 	/* translators: %d: minutes */
-	return sprintf( _n( 'about %d minute left', 'about %d minutes left', minutes, 'wp-woocommerce-products-list' ), minutes );
+	return sprintf( _n( 'about %d minute left', 'about %d minutes left', minutes, 'antijante-products-list' ), minutes );
 }
 
 export function SaveProgress( { done, total, saving, label }: SaveProgressProps ) {
@@ -62,7 +62,7 @@ export function SaveProgress( { done, total, saving, label }: SaveProgressProps 
 	if ( total === 0 ) {
 		return (
 			<div className="wc-pl-edit__progress is-prominent" role="status" aria-live="polite">
-				<span className="wc-pl-edit__progress-label">{ label ? label( 0, 0 ) : __( 'Preparing the update…', 'wp-woocommerce-products-list' ) }</span>
+				<span className="wc-pl-edit__progress-label">{ label ? label( 0, 0 ) : __( 'Preparing the update…', 'antijante-products-list' ) }</span>
 				<ProgressBar />
 			</div>
 		);
@@ -80,7 +80,7 @@ export function SaveProgress( { done, total, saving, label }: SaveProgressProps 
 						? label( done, total )
 						: sprintf(
 								/* translators: 1: rows saved, 2: rows in total */
-								__( 'Updating %1$s of %2$s…', 'wp-woocommerce-products-list' ),
+								__( 'Updating %1$s of %2$s…', 'antijante-products-list' ),
 								done.toLocaleString(),
 								total.toLocaleString()
 						  ) }
@@ -89,7 +89,7 @@ export function SaveProgress( { done, total, saving, label }: SaveProgressProps 
 				{ left ? ` · ${ left }` : '' }
 			</span>
 			<ProgressBar value={ value } />
-			{ large ? <span className="wc-pl-edit__progress-hint">{ __( 'You can close this panel and keep working in the list; the update continues. Leaving the page stops it.', 'wp-woocommerce-products-list' ) }</span> : null }
+			{ large ? <span className="wc-pl-edit__progress-hint">{ __( 'You can close this panel and keep working in the list; the update continues. Leaving the page stops it.', 'antijante-products-list' ) }</span> : null }
 		</div>
 	);
 }
@@ -134,7 +134,7 @@ export function EditErrors( { errors, items, names: knownNames, fieldLabels, tit
 				{ title ??
 					sprintf(
 						/* translators: %d: number of problems */
-						_n( '%d problem', '%d problems', errors.length, 'wp-woocommerce-products-list' ),
+						_n( '%d problem', '%d problems', errors.length, 'antijante-products-list' ),
 						errors.length
 					) }
 			</strong>
@@ -161,7 +161,7 @@ export function EditErrors( { errors, items, names: knownNames, fieldLabels, tit
 					<li>
 						{ sprintf(
 							/* translators: %d: number of further problems */
-							__( '…and %d more', 'wp-woocommerce-products-list' ),
+							__( '…and %d more', 'antijante-products-list' ),
 							errors.length - shown.length
 						) }
 					</li>

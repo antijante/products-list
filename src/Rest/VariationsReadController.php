@@ -1,9 +1,9 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Plugin;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -60,7 +60,7 @@ final class VariationsReadController
     public function permission(): bool|WP_Error
     {
         if (! current_user_can(Plugin::capability()) || ! wc_rest_check_post_permissions('product_variation', 'read')) {
-            return new WP_Error('rest_forbidden', __('Sorry, you are not allowed to do that.', 'wp-woocommerce-products-list'), ['status' => rest_authorization_required_code()]);
+            return new WP_Error('rest_forbidden', __('Sorry, you are not allowed to do that.', 'antijante-products-list'), ['status' => rest_authorization_required_code()]);
         }
 
         return true;
@@ -72,7 +72,7 @@ final class VariationsReadController
         $parents = self::ids($request->get_param('parent'));
 
         if (($include === []) === ($parents === [])) {
-            return new WP_Error('rest_invalid_param', __('Pass either include or parent.', 'wp-woocommerce-products-list'), ['status' => 400]);
+            return new WP_Error('rest_invalid_param', __('Pass either include or parent.', 'antijante-products-list'), ['status' => 400]);
         }
 
         $query = [

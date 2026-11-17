@@ -169,16 +169,16 @@ export function serverPreviewLines( response: ServerPreviewResponse, fieldLabel:
 					entry.reason === 'no_own_name'
 						? sprintf(
 								/* translators: %s: language code or name */
-								__( 'skipped: no %s name of its own', 'wp-woocommerce-products-list' ),
+								__( 'skipped: no %s name of its own', 'antijante-products-list' ),
 								lang
 						  )
-						: __( 'skipped', 'wp-woocommerce-products-list' );
+						: __( 'skipped', 'antijante-products-list' );
 			} else if ( entry.status === 'error' ) {
-				note = entry.message || __( 'error', 'wp-woocommerce-products-list' );
+				note = entry.message || __( 'error', 'antijante-products-list' );
 			} else if ( source ) {
 				note = sprintf(
 					/* translators: %s: language name */
-					__( '{name} from %s', 'wp-woocommerce-products-list' ),
+					__( '{name} from %s', 'antijante-products-list' ),
 					source.label
 				);
 			}
@@ -188,7 +188,7 @@ export function serverPreviewLines( response: ServerPreviewResponse, fieldLabel:
 				name,
 				field: fieldLabel( field ),
 				status: entry.status,
-				before: plain( entry.old ) || __( '(not translated)', 'wp-woocommerce-products-list' ),
+				before: plain( entry.old ) || __( '(not translated)', 'antijante-products-list' ),
 				after: plain( entry.new ),
 				...( note ? { note } : {} ),
 			} );
@@ -208,30 +208,30 @@ export function ServerPreview( { state, fieldLabel, langLabel }: { state: Server
 			{ result.message ? <p className="wc-pl-language-tools__warning">{ result.message }</p> : null }
 			<p className="wc-pl-language-tools__description">
 				{ change === 0
-					? __( 'Preview: this changes no values.', 'wp-woocommerce-products-list' )
+					? __( 'Preview: this changes no values.', 'antijante-products-list' )
 					: sprintf(
 							/* translators: %d: number of values that change */
-							_n( 'Preview: %d value changes.', 'Preview: %d values change.', change, 'wp-woocommerce-products-list' ),
+							_n( 'Preview: %d value changes.', 'Preview: %d values change.', change, 'antijante-products-list' ),
 							change
 					  ) }
 				{ skipped > 0
 					? ` ${ sprintf(
 							/* translators: %d: number of values left as they are */
-							_n( '%d skipped.', '%d skipped.', skipped, 'wp-woocommerce-products-list' ),
+							_n( '%d skipped.', '%d skipped.', skipped, 'antijante-products-list' ),
 							skipped
 					  ) }`
 					: '' }
 				{ error > 0
 					? ` ${ sprintf(
 							/* translators: %d: number of values that would fail */
-							_n( '%d would fail.', '%d would fail.', error, 'wp-woocommerce-products-list' ),
+							_n( '%d would fail.', '%d would fail.', error, 'antijante-products-list' ),
 							error
 					  ) }`
 					: '' }
 				{ result.notPreviewed > 0
 					? ` ${ sprintf(
 							/* translators: 1: number previewed, 2: number not previewed */
-							__( '(First %1$d items previewed; %2$d more are not.)', 'wp-woocommerce-products-list' ),
+							__( '(First %1$d items previewed; %2$d more are not.)', 'antijante-products-list' ),
 							SERVER_PREVIEW_MAX_IDS,
 							result.notPreviewed
 					  ) }`

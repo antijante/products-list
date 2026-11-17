@@ -24,7 +24,7 @@ export const createEditAction: ActionFactory = ( { settings } ) => {
 
 	const action: ProductAction = {
 		id: 'edit',
-		label: __( 'Edit', 'wp-woocommerce-products-list' ),
+		label: __( 'Edit', 'antijante-products-list' ),
 		supportsBulk: false,
 		isEligible: ( item ) => isRealRow( item ) && canEdit( item ) && editLinkOf( item, settings.links.editProduct ) !== null,
 		callback: ( items ) => {

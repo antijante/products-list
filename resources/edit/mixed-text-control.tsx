@@ -39,7 +39,7 @@ export function createMixedTextControl(): ComponentType< DataFormControlProps< F
 					className="wc-pl-edit__clear-all"
 					label={ sprintf(
 						/* translators: %s: the field's label */
-						__( 'Clear %s on all rows', 'wp-woocommerce-products-list' ),
+						__( 'Clear %s on all rows', 'antijante-products-list' ),
 						field.label
 					) }
 					checked={ clearing }

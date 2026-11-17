@@ -23,11 +23,11 @@ function ruleMessage( key: string, rule: Rule ): string {
 
 	switch ( key ) {
 		case 'required':
-			return __( 'This field is required.', 'wp-woocommerce-products-list' );
+			return __( 'This field is required.', 'antijante-products-list' );
 		case 'elements':
-			return __( 'Pick one of the options.', 'wp-woocommerce-products-list' );
+			return __( 'Pick one of the options.', 'antijante-products-list' );
 		default:
-			return __( 'This value is not valid.', 'wp-woocommerce-products-list' );
+			return __( 'This value is not valid.', 'antijante-products-list' );
 	}
 }
 

@@ -1,21 +1,21 @@
 <?php
 
-namespace GeneroWP\ProductsList\Modules;
+namespace Antijante\ProductsList\Modules;
 
-use GeneroWP\ProductsList\Actions\Action;
-use GeneroWP\ProductsList\Actions\Delete;
-use GeneroWP\ProductsList\Actions\Duplicate;
-use GeneroWP\ProductsList\Actions\Feature;
-use GeneroWP\ProductsList\Actions\Restore;
-use GeneroWP\ProductsList\Actions\SetStatus;
-use GeneroWP\ProductsList\Actions\Trash;
-use GeneroWP\ProductsList\Module;
-use GeneroWP\ProductsList\Rest\ActionsController;
-use GeneroWP\ProductsList\Rest\Saves;
-use GeneroWP\ProductsList\Rest\VariationsBatchController;
+use Antijante\ProductsList\Actions\Action;
+use Antijante\ProductsList\Actions\Delete;
+use Antijante\ProductsList\Actions\Duplicate;
+use Antijante\ProductsList\Actions\Feature;
+use Antijante\ProductsList\Actions\Restore;
+use Antijante\ProductsList\Actions\SetStatus;
+use Antijante\ProductsList\Actions\Trash;
+use Antijante\ProductsList\Module;
+use Antijante\ProductsList\Rest\ActionsController;
+use Antijante\ProductsList\Rest\Saves;
+use Antijante\ProductsList\Rest\VariationsBatchController;
 
 /**
- * Writes: the save hooks (recorder + `wc_products_list/save`), the
+ * Writes: the save hooks (recorder + `antijante_products_list/save`), the
  * built-in row actions, the actions REST route and the cross-parent
  * variations batch route. See docs/contracts.md.
  */

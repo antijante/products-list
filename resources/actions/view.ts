@@ -8,7 +8,7 @@ import { isRealRow } from './context';
 export const createViewAction: ActionFactory = () => {
 	const action: ProductAction = {
 		id: 'view',
-		label: ( items ) => ( items[ 0 ]?.status === 'publish' ? __( 'View', 'wp-woocommerce-products-list' ) : __( 'Preview', 'wp-woocommerce-products-list' ) ),
+		label: ( items ) => ( items[ 0 ]?.status === 'publish' ? __( 'View', 'antijante-products-list' ) : __( 'Preview', 'antijante-products-list' ) ),
 		icon: seen,
 		supportsBulk: false,
 		isEligible: ( item ) => isRealRow( item ) && typeof item.permalink === 'string' && item.permalink !== '' && item.status !== 'trash',

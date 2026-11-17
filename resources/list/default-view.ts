@@ -1,7 +1,7 @@
 /**
  * What a first-time user sees: a table with the name as title, the first
  * image as media, and the columns a shop manager scans a catalog by.
- * Extensions change it through `wcProductsList.defaultView` (gds-woo-i18n
+ * Extensions change it through `antijanteProductsList.defaultView` (gds-woo-i18n
  * adds a "Name (Svenska)" column, for instance).
  */
 import { applyFilters } from '@wordpress/hooks';

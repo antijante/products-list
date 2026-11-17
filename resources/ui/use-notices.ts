@@ -16,7 +16,7 @@ function toOptions( options: NoticeOptions | undefined ) {
 	};
 }
 
-/** success/error/info on the core/notices store, the shape `window.wcProductsList.notices` exposes. */
+/** success/error/info on the core/notices store, the shape `window.antijanteProductsList.notices` exposes. */
 export function useNotices(): NoticesApi {
 	const { createSuccessNotice, createErrorNotice, createInfoNotice } = useDispatch( noticesStore );
 

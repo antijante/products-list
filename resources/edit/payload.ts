@@ -3,7 +3,7 @@
  *
  * Numeric ops are resolved against the row, integer fields are sent as
  * numbers, `schedule_sale` off clears both sale dates, extension fields write
- * through their `rest.write`, and the result passes `wcProductsList.savePayload`.
+ * through their `rest.write`, and the result passes `antijanteProductsList.savePayload`.
  */
 import { dateI18n } from '@wordpress/date';
 import { applyFilters } from '@wordpress/hooks';

@@ -1,22 +1,22 @@
 <?php
 
-namespace GeneroWP\ProductsList;
+namespace Antijante\ProductsList;
 
 use Automattic\WooCommerce\Internal\CostOfGoodsSold\CostOfGoodsSoldController;
 use WC_Tax;
 
 /**
  * The settings payload the admin app boots from, printed inline as
- * `window.wcProductsListSettings` on the Catalog screen only.
+ * `window.antijanteProductsListSettings` on the Catalog screen only.
  *
  * Everything the app needs to render a first page without a round trip, and
  * nothing per product: the lists here are the small, stable option sets.
  */
 final class Bootstrap
 {
-    public const FILTER = 'wc_products_list/bootstrap';
+    public const FILTER = 'antijante_products_list/bootstrap';
 
-    public const FILTER_ALLOW_HARD_DELETE = 'wc_products_list/allow_hard_delete';
+    public const FILTER_ALLOW_HARD_DELETE = 'antijante_products_list/allow_hard_delete';
 
     public const PER_PAGE_MAX = 100;
 
@@ -26,7 +26,7 @@ final class Bootstrap
 
     public const ACTION_BATCH_SIZE = 100;
 
-    public const FILTER_ACTION_BATCH_SIZE = 'wc_products_list/action_batch_size';
+    public const FILTER_ACTION_BATCH_SIZE = 'antijante_products_list/action_batch_size';
 
     /**
      * Ids per request of the heavy built-in actions: a duplicate copies a
@@ -76,7 +76,7 @@ final class Bootstrap
         $user = wp_get_current_user();
 
         $settings = [
-            'version' => WC_PRODUCTS_LIST_VERSION,
+            'version' => ANTIJANTE_PRODUCTS_LIST_VERSION,
             'locale' => get_user_locale(),
             'currency' => self::currency(),
             'units' => [

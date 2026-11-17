@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\ListMode;
+use Antijante\ProductsList\ListMode;
 use WC_Product_Simple;
 use WC_Product_Variable;
 use WC_Product_Variation;

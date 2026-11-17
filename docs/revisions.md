@@ -7,7 +7,7 @@ This is a proof of concept. The custom change log (`src/Log/*`, `LogController`,
 Set the constant in `wp-config.php` (or `config/application.php` on Bedrock):
 
 ```php
-define('WC_PRODUCTS_LIST_HISTORY', 'both');
+define('ANTIJANTE_PRODUCTS_LIST_HISTORY', 'both');
 ```
 
 | Value | What happens |
@@ -16,7 +16,7 @@ define('WC_PRODUCTS_LIST_HISTORY', 'both');
 | `both` | The log records as today. Revisions are also recorded for every product and variation save, from any path (the list, wc/v3, the classic editor, CSV import, WP-CLI, plain CRUD). Saves made by the app use the same batch id in both. |
 | `revisions` | Only revisions are recorded. The log recorder is quiet (`src/Rest/Saves.php`, the three `History::logs()` checks). The History screen still reads the log, so it shows nothing new; undo of a revisions batch is `wp wc-products-list history undo`. Porting the History screen is not part of the POC. |
 
-Retention is 50 revisions per product and 20 per variation. Change it with the `wc_products_list/history_options` filter (`keep_product`, `keep_variation`). Retention is counted per object against every save of it that takes a revision, not per batch: a variation edited 20 more times after a campaign has lost the campaign's revision. Stock changes from orders take no revision (extension 9), so checkout no longer pushes campaigns out; edits still do. `history undo` says how many of a batch's revisions were pruned (extension 13).
+Retention is 50 revisions per product and 20 per variation. Change it with the `antijante_products_list/history_options` filter (`keep_product`, `keep_variation`). Retention is counted per object against every save of it that takes a revision, not per batch: a variation edited 20 more times after a campaign has lost the campaign's revision. Stock changes from orders take no revision (extension 9), so checkout no longer pushes campaigns out; edits still do. `history undo` says how many of a batch's revisions were pruned (extension 13).
 
 `history_options` also takes `variation_text` (default `false`): whether a variation's description and its translations are revisioned (extension 11).
 
@@ -135,7 +135,7 @@ All of these are used as they are. Each extension below says what core does, why
 - `restored()` also deletes the revision core took during its own `wp_update_post`. That revision has the restored post fields but the old meta.
 - **Lighter alternative:** keep that extra revision. It's harmless but confusing in the compare screen.
 - **Batch undo** (`Restore::undo()`): for each object, it restores the predecessor of the batch's first revision. That predecessor is the state right before the batch's save, because a save whose object drifted from its latest revision takes a catch-up revision first (§4). Only the keys that differ from the batch's last revision are written, through the same CRUD path. A key changed since the batch is a conflict: the object is left alone unless `--force` is given. The writes form a new batch with `reverts`, so undoing the undo redoes.
-- **Concurrency of the undo:** each object is checked and written under the object lock every list-mode save takes (`Rest\Concurrency::lockObject()`, contracts §3.6), after `Concurrency::forget()` drops the caches primed for the chunk, so the conflict check reads the stored state. A save of the object running meanwhile finishes first (and is then a conflict) or waits for the undo's write; an object still locked after `wc_products_list/lock_timeout` is reported in `skipped` with reason `locked`. An object another user has open in the product editor (core's post lock, on it or on a variation's parent) is reported in `skipped` with reason `editing`: their Update would otherwise put the form back over the undo. A `--dry-run` takes no lock.
+- **Concurrency of the undo:** each object is checked and written under the object lock every list-mode save takes (`Rest\Concurrency::lockObject()`, contracts §3.6), after `Concurrency::forget()` drops the caches primed for the chunk, so the conflict check reads the stored state. A save of the object running meanwhile finishes first (and is then a conflict) or waits for the undo's write; an object still locked after `antijante_products_list/lock_timeout` is reported in `skipped` with reason `locked`. An object another user has open in the product editor (core's post lock, on it or on a variation's parent) is reported in `skipped` with reason `editing`: their Update would otherwise put the form back over the undo. A `--dry-run` takes no lock.
 
 ### 8. Not built: compare-screen fields
 

@@ -67,14 +67,14 @@ export function trashRows( rows: ProductListItem[] ): Promise< void > {
 				notify.success(
 					sprintf(
 						/* translators: %d: number of products */
-						_n( '%d product moved to the Trash.', '%d products moved to the Trash.', ok.length, 'wp-woocommerce-products-list' ),
+						_n( '%d product moved to the Trash.', '%d products moved to the Trash.', ok.length, 'antijante-products-list' ),
 						ok.length
 					),
 					{
 						id: `wc-pl-trash-${ response.batch_id }`,
 						actions: [
 							{
-								label: __( 'Undo', 'wp-woocommerce-products-list' ),
+								label: __( 'Undo', 'antijante-products-list' ),
 								onClick: () => {
 									// The snackbar (and the Undo button with it) goes away: focus must not fall to <body>.
 									const origin = captureFocusOrigin();
@@ -99,12 +99,12 @@ export function trashRows( rows: ProductListItem[] ): Promise< void > {
 												notify.info(
 													sprintf(
 														/* translators: %d: number of products */
-														_n( '%d product was already restored: there was nothing to undo.', '%d products were already restored: there was nothing to undo.', alreadyRestored, 'wp-woocommerce-products-list' ),
+														_n( '%d product was already restored: there was nothing to undo.', '%d products were already restored: there was nothing to undo.', alreadyRestored, 'antijante-products-list' ),
 														alreadyRestored
 													)
 												);
 											} else {
-												notify.success( __( 'Restored.', 'wp-woocommerce-products-list' ) );
+												notify.success( __( 'Restored.', 'antijante-products-list' ) );
 											}
 										} )
 										.catch( ( error: unknown ) => {
@@ -181,18 +181,18 @@ function TrashModal( { items, closeModal, onActionPerformed }: RenderModalProps<
 				{ rows.length === 1
 					? sprintf(
 							/* translators: %s: product name */
-							__( 'Move the published product “%s” to the Trash? It leaves the shop until it is restored.', 'wp-woocommerce-products-list' ),
+							__( 'Move the published product “%s” to the Trash? It leaves the shop until it is restored.', 'antijante-products-list' ),
 							nameOf( rows[ 0 ]! )
 					  )
 					: published === 0
 					? sprintf(
 							/* translators: %d: number of products, none of them published */
-							_n( 'Move %d product to the Trash?', 'Move %d products to the Trash?', rows.length, 'wp-woocommerce-products-list' ),
+							_n( 'Move %d product to the Trash?', 'Move %d products to the Trash?', rows.length, 'antijante-products-list' ),
 							rows.length
 					  )
 					: sprintf(
 							/* translators: 1: number of products, 2: how many of them are published */
-							_n( 'Move %1$d product to the Trash? %2$d of them is published and leaves the shop until it is restored.', 'Move %1$d products to the Trash? %2$d of them are published and leave the shop until they are restored.', rows.length, 'wp-woocommerce-products-list' ),
+							_n( 'Move %1$d product to the Trash? %2$d of them is published and leaves the shop until it is restored.', 'Move %1$d products to the Trash? %2$d of them are published and leave the shop until they are restored.', rows.length, 'antijante-products-list' ),
 							rows.length,
 							published
 					  ) }
@@ -206,20 +206,20 @@ function TrashModal( { items, closeModal, onActionPerformed }: RenderModalProps<
 						<li>
 							{ sprintf(
 								/* translators: %d: number of further products */
-								__( '…and %d more', 'wp-woocommerce-products-list' ),
+								__( '…and %d more', 'antijante-products-list' ),
 								rows.length - shown.length
 							) }
 						</li>
 					) : null }
 				</ul>
 			) : null }
-			<p>{ __( 'You can undo this from the notice, or restore them from the Trash tab.', 'wp-woocommerce-products-list' ) }</p>
+			<p>{ __( 'You can undo this from the notice, or restore them from the Trash tab.', 'antijante-products-list' ) }</p>
 			<div className="wc-pl-edit__footer">
 				<Button variant="tertiary" onClick={ () => closeModal?.() } __next40pxDefaultSize>
-					{ __( 'Cancel', 'wp-woocommerce-products-list' ) }
+					{ __( 'Cancel', 'antijante-products-list' ) }
 				</Button>
 				<Button variant="primary" isDestructive disabled={ rows.length === 0 } onClick={ run } __next40pxDefaultSize>
-					{ __( 'Move to Trash', 'wp-woocommerce-products-list' ) }
+					{ __( 'Move to Trash', 'antijante-products-list' ) }
 				</Button>
 			</div>
 		</div>
@@ -233,13 +233,13 @@ export const createTrashAction: ActionFactory = ( { settings } ) => {
 
 	const action: ProductAction = {
 		id: 'trash',
-		label: __( 'Move to Trash', 'wp-woocommerce-products-list' ),
+		label: __( 'Move to Trash', 'antijante-products-list' ),
 		icon: trash,
 		supportsBulk: true,
 		scope: 'product',
 		isEligible: ( item ) => isRealRow( item ) && canDelete( item ) && item.status !== 'trash',
 		RenderModal: TrashModal,
-		modalHeader: __( 'Move to Trash', 'wp-woocommerce-products-list' ),
+		modalHeader: __( 'Move to Trash', 'antijante-products-list' ),
 		modalSize: 'medium',
 	};
 

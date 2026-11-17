@@ -76,12 +76,12 @@ function imageLabel( image: RawImage, index: number ): string {
 	const name = decodeEntities( image.alt || image.name || '' ).trim();
 
 	if ( index === 0 ) {
-		return name ? sprintf( /* translators: %s: image name */ __( 'Main image: %s', 'wp-woocommerce-products-list' ), name ) : __( 'Main image', 'wp-woocommerce-products-list' );
+		return name ? sprintf( /* translators: %s: image name */ __( 'Main image: %s', 'antijante-products-list' ), name ) : __( 'Main image', 'antijante-products-list' );
 	}
 
 	return name
-		? sprintf( /* translators: 1: position in the gallery, 2: image name */ __( 'Gallery image %1$d: %2$s', 'wp-woocommerce-products-list' ), index, name )
-		: sprintf( /* translators: %d: position in the gallery */ __( 'Gallery image %d', 'wp-woocommerce-products-list' ), index );
+		? sprintf( /* translators: 1: position in the gallery, 2: image name */ __( 'Gallery image %1$d: %2$s', 'antijante-products-list' ), index, name )
+		: sprintf( /* translators: %d: position in the gallery */ __( 'Gallery image %d', 'antijante-products-list' ), index );
 }
 
 let uploadKeys = 0;
@@ -146,8 +146,8 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 		try {
 			const replacing = index !== null ? images[ index ] : undefined;
 			const picked = await pickImages( {
-				title: title( replacing || single ? __( 'Choose image', 'wp-woocommerce-products-list' ) : __( 'Add images', 'wp-woocommerce-products-list' ) ),
-				button: replacing || single ? __( 'Use this image', 'wp-woocommerce-products-list' ) : __( 'Add to product', 'wp-woocommerce-products-list' ),
+				title: title( replacing || single ? __( 'Choose image', 'antijante-products-list' ) : __( 'Add images', 'antijante-products-list' ) ),
+				button: replacing || single ? __( 'Use this image', 'antijante-products-list' ) : __( 'Add to product', 'antijante-products-list' ),
 				multiple: ! single && index === null,
 				selected: replacing ? [ replacing.id ] : [],
 				postId,
@@ -160,14 +160,14 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 			const current = valueRef.current;
 
 			if ( single ) {
-				set( picked.slice( 0, 1 ), __( 'Image set.', 'wp-woocommerce-products-list' ) );
+				set( picked.slice( 0, 1 ), __( 'Image set.', 'antijante-products-list' ) );
 			} else if ( index !== null && picked[ 0 ] ) {
-				set( replaceImage( current, index, picked[ 0 ] ), __( 'Image replaced.', 'wp-woocommerce-products-list' ) );
+				set( replaceImage( current, index, picked[ 0 ] ), __( 'Image replaced.', 'antijante-products-list' ) );
 			} else {
 				const next = addImages( current, picked );
 				const added = next.length - current.length;
 
-				set( next, sprintf( /* translators: %d: number of images */ _n( '%d image added.', '%d images added.', added, 'wp-woocommerce-products-list' ), added ) );
+				set( next, sprintf( /* translators: %d: number of images */ _n( '%d image added.', '%d images added.', added, 'antijante-products-list' ), added ) );
 			}
 		} catch ( caught ) {
 			setError( caught instanceof Error ? caught.message : String( caught ) );
@@ -180,7 +180,7 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 		const accepted = files.filter( isImageFile );
 		const rejected = files.length - accepted.length;
 
-		setError( rejected ? __( 'Only image files can be added here.', 'wp-woocommerce-products-list' ) : null );
+		setError( rejected ? __( 'Only image files can be added here.', 'antijante-products-list' ) : null );
 
 		const batch = ( single ? accepted.slice( 0, 1 ) : accepted ).map( ( file ) => ( { file, key: `upload-${ ++uploadKeys }` } ) );
 
@@ -189,7 +189,7 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 		}
 
 		setUploads( ( current ) => [ ...current, ...batch.map( ( { file, key } ) => ( { key, name: file.name } ) ) ] );
-		speak( sprintf( /* translators: %d: number of files */ _n( 'Uploading %d image…', 'Uploading %d images…', batch.length, 'wp-woocommerce-products-list' ), batch.length ) );
+		speak( sprintf( /* translators: %d: number of files */ _n( 'Uploading %d image…', 'Uploading %d images…', batch.length, 'antijante-products-list' ), batch.length ) );
 		busy( 1 );
 
 		const failures: string[] = [];
@@ -215,7 +215,7 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 			setError( failures.join( ' ' ) );
 			speak( failures.join( ' ' ), 'assertive' );
 		} else {
-			speak( sprintf( /* translators: %d: number of images */ _n( '%d image uploaded.', '%d images uploaded.', batch.length, 'wp-woocommerce-products-list' ), batch.length ) );
+			speak( sprintf( /* translators: %d: number of images */ _n( '%d image uploaded.', '%d images uploaded.', batch.length, 'antijante-products-list' ), batch.length ) );
 		}
 	};
 
@@ -270,7 +270,7 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 		setDropAt( null );
 
 		if ( from !== index ) {
-			set( moveImage( valueRef.current, from, index ), index === 0 ? __( 'Set as the main image.', 'wp-woocommerce-products-list' ) : sprintf( /* translators: %d: new position */ __( 'Moved to position %d.', 'wp-woocommerce-products-list' ), index + 1 ) );
+			set( moveImage( valueRef.current, from, index ), index === 0 ? __( 'Set as the main image.', 'antijante-products-list' ) : sprintf( /* translators: %d: new position */ __( 'Moved to position %d.', 'antijante-products-list' ), index + 1 ) );
 		}
 	};
 
@@ -293,7 +293,7 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 	const remove = ( index: number ) => {
 		set(
 			images.filter( ( _image, i ) => i !== index ),
-			__( 'Image removed.', 'wp-woocommerce-products-list' )
+			__( 'Image removed.', 'antijante-products-list' )
 		);
 
 		// The focus was on the removed tile's button: it goes to the tile now in its place (or the one before), else "Add images".
@@ -308,9 +308,9 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 	const canAdd = ! disabled && canUpload && ( ! single || images.length === 0 );
 	const hint = single
 		? images.length === 0
-			? __( 'Until one is set, the variation shows the product’s main image. Drop an image file here, or choose one from the media library.', 'wp-woocommerce-products-list' )
-			: __( 'Drop an image file here to replace it, or choose another from the media library.', 'wp-woocommerce-products-list' )
-		: __( 'The first image is the main image, the others the gallery. Drag to reorder, or drop image files here to upload them.', 'wp-woocommerce-products-list' );
+			? __( 'Until one is set, the variation shows the product’s main image. Drop an image file here, or choose one from the media library.', 'antijante-products-list' )
+			: __( 'Drop an image file here to replace it, or choose another from the media library.', 'antijante-products-list' )
+		: __( 'The first image is the main image, the others the gallery. Drag to reorder, or drop image files here to upload them.', 'antijante-products-list' );
 
 	return (
 		<div
@@ -340,7 +340,7 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 						} }
 					>
 						<img src={ image.src } alt={ imageLabel( image, single ? 0 : index ) } draggable={ false } />
-						{ index === 0 && ! single && images.length > 1 && <span className="wc-pl-images__badge">{ __( 'Main', 'wp-woocommerce-products-list' ) }</span> }
+						{ index === 0 && ! single && images.length > 1 && <span className="wc-pl-images__badge">{ __( 'Main', 'antijante-products-list' ) }</span> }
 						{ ! disabled && ( single || index === 0 ) && (
 							// The main image (a variation's one): Replace and Remove over it, as the product screen's featured image has.
 							<div className="wc-pl-images__actions">
@@ -348,19 +348,19 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 									<Button
 										size="compact"
 										className="wc-pl-images__tool"
-										label={ sprintf( /* translators: %s: e.g. "Main image: Boot" */ __( 'Replace %s', 'wp-woocommerce-products-list' ), imageLabel( image, 0 ) ) }
+										label={ sprintf( /* translators: %s: e.g. "Main image: Boot" */ __( 'Replace %s', 'antijante-products-list' ), imageLabel( image, 0 ) ) }
 										onClick={ () => void pick( 0 ) }
 									>
-										{ __( 'Replace', 'wp-woocommerce-products-list' ) }
+										{ __( 'Replace', 'antijante-products-list' ) }
 									</Button>
 								) }
 								<Button
 									size="compact"
 									className="wc-pl-images__tool"
-									label={ sprintf( /* translators: %s: e.g. "Gallery image 2" */ __( 'Remove %s', 'wp-woocommerce-products-list' ), imageLabel( image, 0 ) ) }
+									label={ sprintf( /* translators: %s: e.g. "Gallery image 2" */ __( 'Remove %s', 'antijante-products-list' ), imageLabel( image, 0 ) ) }
 									onClick={ () => remove( 0 ) }
 								>
-									{ __( 'Remove', 'wp-woocommerce-products-list' ) }
+									{ __( 'Remove', 'antijante-products-list' ) }
 								</Button>
 							</div>
 						) }
@@ -368,38 +368,38 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 							<div className="wc-pl-images__tools">
 								<DropdownMenu
 									icon={ moreVertical }
-									label={ sprintf( /* translators: %s: e.g. "Gallery image 2" */ __( 'Options for %s', 'wp-woocommerce-products-list' ), imageLabel( image, index ) ) }
+									label={ sprintf( /* translators: %s: e.g. "Gallery image 2" */ __( 'Options for %s', 'antijante-products-list' ), imageLabel( image, index ) ) }
 									toggleProps={ { size: 'small', className: 'wc-pl-images__tool' } }
 									popoverProps={ { placement: 'bottom-end' } }
 									controls={ [
 										{
-											title: __( 'Set as main image', 'wp-woocommerce-products-list' ),
-											onClick: () => move( index, 0, __( 'Set as the main image.', 'wp-woocommerce-products-list' ) ),
+											title: __( 'Set as main image', 'antijante-products-list' ),
+											onClick: () => move( index, 0, __( 'Set as the main image.', 'antijante-products-list' ) ),
 										},
 										...( index > 1
 											? [
 													{
-														title: __( 'Move earlier', 'wp-woocommerce-products-list' ),
-														onClick: () => move( index, index - 1, sprintf( /* translators: %d: new position */ __( 'Moved to position %d.', 'wp-woocommerce-products-list' ), index ) ),
+														title: __( 'Move earlier', 'antijante-products-list' ),
+														onClick: () => move( index, index - 1, sprintf( /* translators: %d: new position */ __( 'Moved to position %d.', 'antijante-products-list' ), index ) ),
 													},
 											  ]
 											: [] ),
 										...( index < images.length - 1
 											? [
 													{
-														title: __( 'Move later', 'wp-woocommerce-products-list' ),
-														onClick: () => move( index, index + 1, sprintf( /* translators: %d: new position */ __( 'Moved to position %d.', 'wp-woocommerce-products-list' ), index + 2 ) ),
+														title: __( 'Move later', 'antijante-products-list' ),
+														onClick: () => move( index, index + 1, sprintf( /* translators: %d: new position */ __( 'Moved to position %d.', 'antijante-products-list' ), index + 2 ) ),
 													},
 											  ]
 											: [] ),
-										...( canUpload ? [ { title: __( 'Replace…', 'wp-woocommerce-products-list' ), onClick: () => void pick( index ) } ] : [] ),
+										...( canUpload ? [ { title: __( 'Replace…', 'antijante-products-list' ), onClick: () => void pick( index ) } ] : [] ),
 									] }
 								/>
 								<Button
 									size="small"
 									icon={ closeSmall }
 									className="wc-pl-images__tool"
-									label={ sprintf( /* translators: %s: e.g. "Gallery image 2" */ __( 'Remove %s', 'wp-woocommerce-products-list' ), imageLabel( image, index ) ) }
+									label={ sprintf( /* translators: %s: e.g. "Gallery image 2" */ __( 'Remove %s', 'antijante-products-list' ), imageLabel( image, index ) ) }
 									onClick={ () => remove( index ) }
 								/>
 							</div>
@@ -407,14 +407,14 @@ export function ImagesEditor( { value, onChange, single = false, postId, itemNam
 					</li>
 				) ) }
 				{ uploads.map( ( entry ) => (
-					<li key={ entry.key } className="wc-pl-images__tile is-uploading" aria-label={ sprintf( /* translators: %s: file name */ __( 'Uploading %s', 'wp-woocommerce-products-list' ), entry.name ) }>
+					<li key={ entry.key } className="wc-pl-images__tile is-uploading" aria-label={ sprintf( /* translators: %s: file name */ __( 'Uploading %s', 'antijante-products-list' ), entry.name ) }>
 						<Spinner />
 					</li>
 				) ) }
 				{ canAdd && uploads.length === 0 && (
 					<li className="wc-pl-images__tile is-add">
 						<Button className="wc-pl-images__add" icon={ plus } onClick={ () => void pick( null ) }>
-							{ single || images.length === 0 ? __( 'Set image', 'wp-woocommerce-products-list' ) : __( 'Add images', 'wp-woocommerce-products-list' ) }
+							{ single || images.length === 0 ? __( 'Set image', 'antijante-products-list' ) : __( 'Add images', 'antijante-products-list' ) }
 						</Button>
 					</li>
 				) }

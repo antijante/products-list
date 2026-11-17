@@ -1,9 +1,9 @@
 <?php
 
-namespace GeneroWP\ProductsList\Log;
+namespace Antijante\ProductsList\Log;
 
-use GeneroWP\ProductsList\Plugin;
-use GeneroWP\ProductsList\Rest\Rows;
+use Antijante\ProductsList\Plugin;
+use Antijante\ProductsList\Rest\Rows;
 use WC_Product;
 use WC_Product_Variation;
 use WP_REST_Request;
@@ -31,9 +31,9 @@ use WP_REST_Request;
  */
 final class Recorder
 {
-    public const FILTER_CONTEXT = 'wc_products_list/log_context';
+    public const FILTER_CONTEXT = 'antijante_products_list/log_context';
 
-    public const FILTER_VALUE = 'wc_products_list/log_value';
+    public const FILTER_VALUE = 'antijante_products_list/log_value';
 
     /** wc/v3's relative stock key: the quantity is changed by this much. */
     public const INVENTORY_DELTA = 'inventory_delta';
@@ -519,7 +519,7 @@ final class Recorder
             'object_id' => $objectId,
             'parent_id' => $parentId,
             'status' => $reason !== null ? Logger::STATUS_SKIPPED : 'error',
-            'message' => $error['message'] ?? __('The save was rejected.', 'wp-woocommerce-products-list'),
+            'message' => $error['message'] ?? __('The save was rejected.', 'antijante-products-list'),
             'context' => $context,
         ];
 
@@ -776,7 +776,7 @@ final class Recorder
     /**
      * Values an extension wrote: by default the gds-woo-i18n convention
      * (`i18n.{lang}.{field}` lives in meta `_i18n_{field}_{lang}`), and
-     * whatever `wc_products_list/log_value` returns for anything else.
+     * whatever `antijante_products_list/log_value` returns for anything else.
      *
      * @param  array<int, string>  $segments
      */

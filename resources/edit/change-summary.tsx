@@ -75,7 +75,7 @@ export function describeOp( op: NumericOp, kind: 'money' | 'integer', settings: 
 			return `− ${ amount( op, kind, settings, currency ) }${ roundingNote( op, settings ) }`;
 		case 'regular_minus':
 			/* translators: %s: an amount or percent, e.g. "20 %" */
-			return sprintf( __( 'regular price − %s', 'wp-woocommerce-products-list' ), amount( op, kind, settings, currency ) ) + roundingNote( op, settings );
+			return sprintf( __( 'regular price − %s', 'antijante-products-list' ), amount( op, kind, settings, currency ) ) + roundingNote( op, settings );
 		default:
 			return '';
 	}
@@ -106,7 +106,7 @@ export function describeSchedule( toggleId: string, edits: Record< string, unkno
 	const to = edits[ `${ prefix }date_on_sale_to` ];
 	const describe = ( value: unknown, empty: string ) => {
 		if ( value === undefined ) {
-			return __( 'as each row has it', 'wp-woocommerce-products-list' );
+			return __( 'as each row has it', 'antijante-products-list' );
 		}
 
 		if ( value === '' || value === null ) {
@@ -114,7 +114,7 @@ export function describeSchedule( toggleId: string, edits: Record< string, unkno
 		}
 
 		if ( isInvalidDate( value ) ) {
-			return __( 'not a valid date', 'wp-woocommerce-products-list' );
+			return __( 'not a valid date', 'antijante-products-list' );
 		}
 
 		return describeSiteDateTime( String( value ), settings );
@@ -122,9 +122,9 @@ export function describeSchedule( toggleId: string, edits: Record< string, unkno
 
 	return sprintf(
 		/* translators: 1: when the sale starts ("now" or a date), 2: when it ends ("no end date" or a date) */
-		__( 'on: from %1$s, to %2$s', 'wp-woocommerce-products-list' ),
-		describe( from, __( 'now (starts immediately)', 'wp-woocommerce-products-list' ) ),
-		describe( to, __( 'no end date', 'wp-woocommerce-products-list' ) )
+		__( 'on: from %1$s, to %2$s', 'antijante-products-list' ),
+		describe( from, __( 'now (starts immediately)', 'antijante-products-list' ) ),
+		describe( to, __( 'no end date', 'antijante-products-list' ) )
 	);
 }
 
@@ -141,7 +141,7 @@ const LOCAL_DATE = /^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}(?::\d{2})?)/;
 export function describeSiteDateTime( value: string, settings: Pick< Settings, 'dateFormat' | 'timeFormat' | 'timezone' > ): string {
 	const format = `${ settings.dateFormat } ${ settings.timeFormat }`;
 	/* translators: %s: a formatted date and time, shown in the site's timezone */
-	const label = ( text: string ) => sprintf( __( '%s (site time)', 'wp-woocommerce-products-list' ), text );
+	const label = ( text: string ) => sprintf( __( '%s (site time)', 'antijante-products-list' ), text );
 
 	try {
 		if ( ZONED_DATE.test( value ) ) {
@@ -177,20 +177,20 @@ function optionLabel( field: ProductField, value: unknown ): string {
 /** A field's value as the editor's lines show it ("(empty)", Yes/No, option labels, money, site dates). */
 export function describeValue( field: ProductField, value: unknown, settings: Settings ): string {
 	if ( value === '' || value === null || value === undefined || ( Array.isArray( value ) && value.length === 0 ) ) {
-		return __( '(empty)', 'wp-woocommerce-products-list' );
+		return __( '(empty)', 'antijante-products-list' );
 	}
 
 	// Images (the main image and the gallery): how many, not their objects.
 	if ( field.type === 'media' && Array.isArray( value ) ) {
-		return sprintf( /* translators: %d: number of images */ _n( '%d image', '%d images', value.length, 'wp-woocommerce-products-list' ), value.length );
+		return sprintf( /* translators: %d: number of images */ _n( '%d image', '%d images', value.length, 'antijante-products-list' ), value.length );
 	}
 
 	if ( value === true ) {
-		return __( 'Yes', 'wp-woocommerce-products-list' );
+		return __( 'Yes', 'antijante-products-list' );
 	}
 
 	if ( value === false ) {
-		return __( 'No', 'wp-woocommerce-products-list' );
+		return __( 'No', 'antijante-products-list' );
 	}
 
 	if ( Array.isArray( value ) ) {
@@ -276,7 +276,7 @@ export function describeEdits(
 			lines.push( {
 				field: id,
 				label,
-				change: value === false ? __( 'sale dates cleared', 'wp-woocommerce-products-list' ) : describeSchedule( id, edits, settings ),
+				change: value === false ? __( 'sale dates cleared', 'antijante-products-list' ) : describeSchedule( id, edits, settings ),
 				count: reached.length,
 				rowIds: reached.map( ( item ) => item.id ),
 			} );
@@ -381,32 +381,32 @@ export function describeDirection( direction: NonNullable< ChangeLine[ 'directio
 
 	if ( direction.lower ) {
 		/* translators: %d: number of rows */
-		parts.push( sprintf( _n( 'lower on %d row', 'lower on %d rows', direction.lower, 'wp-woocommerce-products-list' ), direction.lower ) );
+		parts.push( sprintf( _n( 'lower on %d row', 'lower on %d rows', direction.lower, 'antijante-products-list' ), direction.lower ) );
 	}
 
 	if ( direction.higher ) {
 		parts.push(
 			direction.againstSelling
 				? /* translators: %d: number of rows */
-				  sprintf( _n( 'HIGHER than the current selling price on %d row', 'HIGHER than the current selling price on %d rows', direction.higher, 'wp-woocommerce-products-list' ), direction.higher )
+				  sprintf( _n( 'HIGHER than the current selling price on %d row', 'HIGHER than the current selling price on %d rows', direction.higher, 'antijante-products-list' ), direction.higher )
 				: /* translators: %d: number of rows */
-				  sprintf( _n( 'higher on %d row', 'higher on %d rows', direction.higher, 'wp-woocommerce-products-list' ), direction.higher )
+				  sprintf( _n( 'higher on %d row', 'higher on %d rows', direction.higher, 'antijante-products-list' ), direction.higher )
 		);
 	}
 
 	if ( direction.same ) {
 		/* translators: %d: number of rows */
-		parts.push( sprintf( _n( 'the same on %d row', 'the same on %d rows', direction.same, 'wp-woocommerce-products-list' ), direction.same ) );
+		parts.push( sprintf( _n( 'the same on %d row', 'the same on %d rows', direction.same, 'antijante-products-list' ), direction.same ) );
 	}
 
 	const range =
 		direction.min === direction.max
 			? /* translators: %s: a price or number */
-			  sprintf( __( 'all %s', 'wp-woocommerce-products-list' ), direction.min )
+			  sprintf( __( 'all %s', 'antijante-products-list' ), direction.min )
 			: /* translators: 1: lowest result, 2: highest result */
-			  sprintf( __( 'from %1$s to %2$s', 'wp-woocommerce-products-list' ), direction.min, direction.max );
+			  sprintf( __( 'from %1$s to %2$s', 'antijante-products-list' ), direction.min, direction.max );
 	const head = parts.length ? parts.join( ', ' ) : '';
-	const example = direction.higher && direction.higherExample ? ` (${ sprintf( /* translators: %s: an example "Name: old → new" */ __( 'e.g. %s', 'wp-woocommerce-products-list' ), direction.higherExample ) })` : '';
+	const example = direction.higher && direction.higherExample ? ` (${ sprintf( /* translators: %s: an example "Name: old → new" */ __( 'e.g. %s', 'antijante-products-list' ), direction.higherExample ) })` : '';
 
 	return `${ head ? `${ head.charAt( 0 ).toUpperCase() }${ head.slice( 1 ) }${ example }; ` : '' }${ range }.`;
 }
@@ -444,7 +444,7 @@ export function ChangeSummary( { edits, fields, targets, settings, applyToVariat
 			<li className="wc-pl-edit__summary-count">
 				{ sprintf(
 					/* translators: %d: number of rows */
-					_n( '%d row already has these values and is left as it is.', '%d rows already have these values and are left as they are.', unchanged, 'wp-woocommerce-products-list' ),
+					_n( '%d row already has these values and is left as it is.', '%d rows already have these values and are left as they are.', unchanged, 'antijante-products-list' ),
 					unchanged
 				) }
 			</li>
@@ -464,15 +464,15 @@ export function ChangeSummary( { edits, fields, targets, settings, applyToVariat
 			<strong>
 				{ sprintf(
 					/* translators: 1: "N fields", 2: "N rows" */
-					__( '%1$s will change on %2$s:', 'wp-woocommerce-products-list' ),
+					__( '%1$s will change on %2$s:', 'antijante-products-list' ),
 					sprintf(
 						/* translators: %d: number of fields */
-						_n( '%d field', '%d fields', changing, 'wp-woocommerce-products-list' ),
+						_n( '%d field', '%d fields', changing, 'antijante-products-list' ),
 						changing
 					),
 					sprintf(
 						/* translators: %d: number of rows */
-						_n( '%d row', '%d rows', rows, 'wp-woocommerce-products-list' ),
+						_n( '%d row', '%d rows', rows, 'antijante-products-list' ),
 						rows
 					)
 				) }
@@ -486,12 +486,12 @@ export function ChangeSummary( { edits, fields, targets, settings, applyToVariat
 								{ ' ' }
 								{ sprintf(
 									/* translators: %d: number of rows */
-									_n( '(%d row)', '(%d rows)', line.count, 'wp-woocommerce-products-list' ),
+									_n( '(%d row)', '(%d rows)', line.count, 'antijante-products-list' ),
 									line.count
 								) }
 							</span>
 						) : null }
-						{ line.example ? <span className="wc-pl-edit__summary-example"> — { sprintf( /* translators: %s: an example "Name: old → new" */ __( 'e.g. %s', 'wp-woocommerce-products-list' ), line.example ) }</span> : null }
+						{ line.example ? <span className="wc-pl-edit__summary-example"> — { sprintf( /* translators: %s: an example "Name: old → new" */ __( 'e.g. %s', 'antijante-products-list' ), line.example ) }</span> : null }
 						{ line.direction ? <DirectionNote direction={ line.direction } /> : null }
 					</li>
 				) ) }

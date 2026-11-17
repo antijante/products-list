@@ -47,13 +47,13 @@ function saleWindow( from: string, fromGmt: string | undefined, to: string | nul
 	return end
 		? sprintf(
 				/* translators: 1: start date, 2: end date */
-				__( '%1$s – %2$s', 'wp-woocommerce-products-list' ),
+				__( '%1$s – %2$s', 'antijante-products-list' ),
 				start,
 				end
 		  )
 		: sprintf(
 				/* translators: %s: start date */
-				__( 'from %s', 'wp-woocommerce-products-list' ),
+				__( 'from %s', 'antijante-products-list' ),
 				start
 		  );
 }
@@ -91,7 +91,7 @@ export function compactSaleWindow( from: string, to: string | null | undefined, 
 
 	if ( ! end ) {
 		/* translators: %s: start date */
-		return sprintf( __( 'from %s', 'wp-woocommerce-products-list' ), format.format( start ) );
+		return sprintf( __( 'from %s', 'antijante-products-list' ), format.format( start ) );
 	}
 
 	const range = ( format as Intl.DateTimeFormat & { formatRange?: ( a: Date, b: Date ) => string } ).formatRange;
@@ -116,19 +116,19 @@ export function VariationSaleSummary( { item }: { item: ProductListItem } ) {
 	const active = summary.on_sale > 0;
 	const count = active ? summary.on_sale : summary.scheduled;
 	/* translators: %d: number of variations */
-	const variations = sprintf( _n( '%d variation', '%d variations', count, 'wp-woocommerce-products-list' ), count );
+	const variations = sprintf( _n( '%d variation', '%d variations', count, 'antijante-products-list' ), count );
 	const window = summary.from ? saleWindow( summary.from, undefined, summary.to, undefined, settings ) : '';
 	const compact = summary.from ? compactSaleWindow( summary.from, summary.to, settings.locale ) : '';
 	const label = active
 		? sprintf(
 				/* translators: 1: "3 variations", 2: the sale window */
-				__( 'On sale: %1$s %2$s', 'wp-woocommerce-products-list' ),
+				__( 'On sale: %1$s %2$s', 'antijante-products-list' ),
 				variations,
 				window
 		  ).trim()
 		: sprintf(
 				/* translators: 1: "12 variations", 2: the sale window */
-				__( 'Scheduled sale: %1$s %2$s', 'wp-woocommerce-products-list' ),
+				__( 'Scheduled sale: %1$s %2$s', 'antijante-products-list' ),
 				variations,
 				window
 		  ).trim();
@@ -136,7 +136,7 @@ export function VariationSaleSummary( { item }: { item: ProductListItem } ) {
 	return (
 		<span className="wc-products-list__price-scheduled" title={ label }>
 			<span className={ `wc-products-list__price-scheduled-badge${ active ? ' is-sale' : '' }` }>
-				{ active ? __( 'On sale', 'wp-woocommerce-products-list' ) : __( 'Scheduled', 'wp-woocommerce-products-list' ) }
+				{ active ? __( 'On sale', 'antijante-products-list' ) : __( 'Scheduled', 'antijante-products-list' ) }
 			</span>
 			{ ' ' }
 			{ variations }
@@ -164,7 +164,7 @@ export function PriceCell( { item }: { item: ProductListItem } ) {
 	if ( item._kind === 'product' && ( item as { type?: string } ).type === 'variable' ) {
 		return (
 			<span className="wc-products-list__price">
-				{ sprintf( /* translators: %s: lowest price */ __( 'From %s', 'wp-woocommerce-products-list' ), price ) }
+				{ sprintf( /* translators: %s: lowest price */ __( 'From %s', 'antijante-products-list' ), price ) }
 				<VariationSaleSummary item={ item } />
 			</span>
 		);
@@ -186,7 +186,7 @@ export function PriceCell( { item }: { item: ProductListItem } ) {
 		const compact = compactSaleWindow( scheduled.from, scheduled.to, settings.locale ) || window;
 		const label = sprintf(
 			/* translators: 1: sale price, 2: the sale window ("20.11.2026 – 30.11.2026" or "from 20.11.2026") */
-			__( 'Scheduled sale: %1$s, %2$s', 'wp-woocommerce-products-list' ),
+			__( 'Scheduled sale: %1$s, %2$s', 'antijante-products-list' ),
 			sale,
 			window
 		);
@@ -195,11 +195,11 @@ export function PriceCell( { item }: { item: ProductListItem } ) {
 			<span className="wc-products-list__price wc-products-list__price--scheduled">
 				{ price }
 				<span className="wc-products-list__price-scheduled" title={ label }>
-					<span className="wc-products-list__price-scheduled-badge">{ __( 'Scheduled', 'wp-woocommerce-products-list' ) }</span>
+					<span className="wc-products-list__price-scheduled-badge">{ __( 'Scheduled', 'antijante-products-list' ) }</span>
 					{ ' ' }
 					{ sprintf(
 						/* translators: 1: sale price, 2: the sale window */
-						__( '%1$s %2$s', 'wp-woocommerce-products-list' ),
+						__( '%1$s %2$s', 'antijante-products-list' ),
 						sale,
 						compact
 					) }

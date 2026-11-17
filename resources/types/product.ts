@@ -61,7 +61,7 @@ export interface RawMetaData {
 
 /**
  * What `Rows` adds under `wc_products_list` when the list-mode header is set.
- * Extensions may add keys through the `wc_products_list/row` filter.
+ * Extensions may add keys through the `antijante_products_list/row` filter.
  */
 export interface ListRowMeta {
 	/** Number of variations of a variable product; 0 otherwise. */

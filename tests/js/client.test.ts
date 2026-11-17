@@ -42,7 +42,7 @@ describe( 'batch writes', () => {
 
 		expect( result.update?.map( ( row ) => row.id ) ).toEqual( [ 1, 2, 3 ] );
 		expect( calls().map( ( call ) => call.path ) ).toEqual( [ '/wc/v3/products/batch?fields=id%2Cprice%2Ci18n.se.name', '/wc/v3/products/batch?fields=id%2Cprice%2Ci18n.se.name' ] );
-		expect( calls()[ 0 ] ).toMatchObject( { method: 'POST', data: { update: [ { id: 1 }, { id: 2 } ] }, wcProductsList: { batchId: 'b-1', source: 'bulk' } } );
+		expect( calls()[ 0 ] ).toMatchObject( { method: 'POST', data: { update: [ { id: 1 }, { id: 2 } ] }, antijanteProductsList: { batchId: 'b-1', source: 'bulk' } } );
 
 		await batchVariations( 9, [ { id: 91 } ], { fields: [ 'id' ] } );
 		expect( calls()[ 2 ]?.path ).toBe( '/wc/v3/products/9/variations/batch?fields=id' );
@@ -56,7 +56,7 @@ describe( 'batch writes', () => {
 
 		const result = await batchProducts( [ { id: 5, regular_price: '10' } ], { batchId: 'b-2', source: 'quick', fields: [ 'id', 'price' ] } );
 
-		expect( calls()[ 0 ] ).toMatchObject( { path: '/wc/v3/products/5?_fields=id%2Cprice', method: 'POST', data: { regular_price: '10' }, wcProductsList: { batchId: 'b-2', source: 'quick' } } );
+		expect( calls()[ 0 ] ).toMatchObject( { path: '/wc/v3/products/5?_fields=id%2Cprice', method: 'POST', data: { regular_price: '10' }, antijanteProductsList: { batchId: 'b-2', source: 'quick' } } );
 		expect( result ).toEqual( { update: [ { id: 5, echoed: true } ] } );
 
 		const variations = await batchVariations( 7, [ { id: 71, stock_quantity: 3 } ] );
@@ -152,7 +152,7 @@ describe( 'runAction chunking', () => {
 
 		expect( calls().map( ( call ) => ( call.data as { ids: number[] } ).ids.length ) ).toEqual( [ 5, 5, 2 ] );
 		expect( result.results ).toHaveLength( 12 );
-		expect( new Set( calls().map( ( call ) => ( call as { wcProductsList?: { batchId?: string } } ).wcProductsList?.batchId ) ).size ).toBe( 1 );
+		expect( new Set( calls().map( ( call ) => ( call as { antijanteProductsList?: { batchId?: string } } ).antijanteProductsList?.batchId ) ).size ).toBe( 1 );
 
 		fetchMock.mockReset();
 		fetchMock.mockImplementation( async ( options: { data: { ids: number[] } } ) => {

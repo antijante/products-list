@@ -1,13 +1,17 @@
 {
-    "name": "generoi/wp-woocommerce-products-list",
+    "name": "antijante/products-list",
     "type": "wordpress-plugin",
     "license": "MIT",
     "description": "A fast DataViews product catalog for WooCommerce with variations inline, bulk editing, scheduled sales and a change log",
-    "homepage": "https://github.com/generoi/wp-woocommerce-products-list",
+    "homepage": "https://github.com/antijante/products-list",
     "authors": [
         {
+            "name": "Antijante"
+        },
+        {
             "name": "Genero",
-            "email": "info@genero.fi"
+            "email": "info@genero.fi",
+            "role": "Original author"
         }
     ],
     "require": {
@@ -24,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "GeneroWP\\ProductsList\\": "src/"
+            "Antijante\\ProductsList\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "GeneroWP\\ProductsList\\Tests\\": "tests/"
+            "Antijante\\ProductsList\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -37,13 +41,20 @@
         "lint:fix": "pint",
         "test": "phpunit --testsuite unit",
         "test:integration": "phpunit --bootstrap tests/bootstrap.php --testsuite integration",
-        "test:wp-env": "npx wp-env run tests-cli --env-cwd=wp-content/plugins/wp-woocommerce-products-list php -d memory_limit=1024M vendor/bin/phpunit --bootstrap tests/bootstrap.php --testsuite integration",
+        "test:wp-env": "npx wp-env run tests-cli --env-cwd=wp-content/plugins/antijante-products-list php -d memory_limit=1024M vendor/bin/phpunit --bootstrap tests/bootstrap.php --testsuite integration",
         "stan": "./vendor/bin/phpstan analyse --memory-limit=4G"
     },
     "config": {
         "sort-packages": true,
         "platform": {
             "php": "8.3"
+        }
+    },
+    "extra": {
+        "installer-name": "antijante-products-list",
+        "branch-alias": {
+            "dev-master": "0.5.x-dev",
+            "dev-feature/extensible-catalog": "0.5.x-dev"
         }
     }
 }

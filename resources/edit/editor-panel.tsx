@@ -83,11 +83,11 @@ const InlineEditor = lazy( () => import( /* webpackChunkName: "edit" */ './inlin
 export function editorRegionLabel( host: Pick< EditorHost, 'session' | 'items' > ): string {
 	if ( host.session.mode === 'bulk' ) {
 		/* translators: %d: number of rows */
-		return sprintf( _n( 'Bulk edit: %d item', 'Bulk edit: %d items', host.items.length, 'wp-woocommerce-products-list' ), host.items.length );
+		return sprintf( _n( 'Bulk edit: %d item', 'Bulk edit: %d items', host.items.length, 'antijante-products-list' ), host.items.length );
 	}
 
 	/* translators: %s: product name */
-	return sprintf( __( 'Quick edit: %s', 'wp-woocommerce-products-list' ), nameOfFirst( host.items ) );
+	return sprintf( __( 'Quick edit: %s', 'antijante-products-list' ), nameOfFirst( host.items ) );
 }
 
 function nameOfFirst( items: EditorHost[ 'items' ] ): string {
@@ -507,7 +507,7 @@ function ResizeHandle( { panelRef }: { panelRef: RefObject< HTMLElement | null >
 			className="wc-pl-editor-panel__resize"
 			role="separator"
 			aria-orientation="vertical"
-			aria-label={ __( 'Resize the editor panel', 'wp-woocommerce-products-list' ) }
+			aria-label={ __( 'Resize the editor panel', 'antijante-products-list' ) }
 			tabIndex={ 0 }
 			onPointerDown={ onPointerDown }
 			onPointerMove={ onPointerMove }
@@ -637,10 +637,10 @@ export function EditorPanel( { host }: { host: EditorHost } ) {
 		mode === 'bulk'
 			? sprintf(
 					/* translators: %d: number of rows */
-					_n( 'Bulk edit %d item', 'Bulk edit %d items', host.items.length, 'wp-woocommerce-products-list' ),
+					_n( 'Bulk edit %d item', 'Bulk edit %d items', host.items.length, 'antijante-products-list' ),
 					host.items.length
 			  )
-			: __( 'Quick edit', 'wp-woocommerce-products-list' );
+			: __( 'Quick edit', 'antijante-products-list' );
 
 	return (
 		<aside ref={ panelRef } className={ `wc-pl-editor-panel is-${ mode }${ slide ? ' is-sliding' : '' }` } role="region" aria-label={ label } tabIndex={ -1 } onKeyDown={ onKeyDown }>
@@ -654,7 +654,7 @@ export function EditorPanel( { host }: { host: EditorHost } ) {
 						focusList( hostRef.current );
 					} }
 				>
-					{ __( 'Back to the list', 'wp-woocommerce-products-list' ) }
+					{ __( 'Back to the list', 'antijante-products-list' ) }
 				</a>
 				<div ref={ setHeaderSlot } className="wc-pl-editor-panel__heading">
 					{ /* Shown until the editor's own heading arrives (the chunk's first load). */ }
@@ -663,27 +663,27 @@ export function EditorPanel( { host }: { host: EditorHost } ) {
 						{ mode === 'quick' ? <span className="wc-pl-inline-edit__name">{ nameOfFirst( host.items ) }</span> : null }
 					</h2>
 				</div>
-				<Button className="wc-pl-editor-panel__close" icon={ closeIcon } size="compact" label={ __( 'Close the editor', 'wp-woocommerce-products-list' ) } onClick={ requestClose } />
+				<Button className="wc-pl-editor-panel__close" icon={ closeIcon } size="compact" label={ __( 'Close the editor', 'antijante-products-list' ) } onClick={ requestClose } />
 			</div>
 			<div className={ `wc-pl-editor-panel__body is-${ mode }` }>
 				<ErrorBoundary
 					context="editor"
 					fallback={ ( { isChunkError, retry } ) => (
-						<Notice status="error" isDismissible={ false } className="wc-pl-inline-edit__failed" spokenMessage={ isChunkError ? __( 'The editor could not be loaded. The plugin may have been updated, or the connection dropped.', 'wp-woocommerce-products-list' ) : __( 'Something went wrong in the editor.', 'wp-woocommerce-products-list' ) }>
+						<Notice status="error" isDismissible={ false } className="wc-pl-inline-edit__failed" spokenMessage={ isChunkError ? __( 'The editor could not be loaded. The plugin may have been updated, or the connection dropped.', 'antijante-products-list' ) : __( 'Something went wrong in the editor.', 'antijante-products-list' ) }>
 							{ isChunkError
-								? __( 'The editor could not be loaded. The plugin may have been updated, or the connection dropped.', 'wp-woocommerce-products-list' )
-								: __( 'Something went wrong in the editor.', 'wp-woocommerce-products-list' ) }{ ' ' }
+								? __( 'The editor could not be loaded. The plugin may have been updated, or the connection dropped.', 'antijante-products-list' )
+								: __( 'Something went wrong in the editor.', 'antijante-products-list' ) }{ ' ' }
 							{ isChunkError ? (
 								<Button variant="link" onClick={ () => window.location.reload() }>
-									{ __( 'Reload the page', 'wp-woocommerce-products-list' ) }
+									{ __( 'Reload the page', 'antijante-products-list' ) }
 								</Button>
 							) : (
 								<Button variant="link" onClick={ retry }>
-									{ __( 'Try again', 'wp-woocommerce-products-list' ) }
+									{ __( 'Try again', 'antijante-products-list' ) }
 								</Button>
 							) }{ ' ' }
 							<Button variant="secondary" size="compact" onClick={ () => host.close() }>
-								{ __( 'Cancel', 'wp-woocommerce-products-list' ) }
+								{ __( 'Cancel', 'antijante-products-list' ) }
 							</Button>
 						</Notice>
 					) }
@@ -691,7 +691,7 @@ export function EditorPanel( { host }: { host: EditorHost } ) {
 					<Suspense
 						fallback={
 							<div className="wc-pl-inline-edit__loading" role="status">
-								<Spinner /> { __( 'Opening the editor…', 'wp-woocommerce-products-list' ) }
+								<Spinner /> { __( 'Opening the editor…', 'antijante-products-list' ) }
 							</div>
 						}
 					>

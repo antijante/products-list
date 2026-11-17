@@ -1,6 +1,6 @@
 /**
- * `window.wcProductsListSettings`, printed by src/Bootstrap.php and filtered
- * through `wc_products_list/bootstrap`. Keep in sync with that file.
+ * `window.antijanteProductsListSettings`, printed by src/Bootstrap.php and filtered
+ * through `antijante_products_list/bootstrap`. Keep in sync with that file.
  */
 import type { DeclarativeAction, DeclarativeField, DeclarativeFilter } from './extension';
 
@@ -28,7 +28,7 @@ export interface Caps {
 	manageTerms: boolean;
 	/** The media library and uploads (`upload_files`): without it images can be reordered and removed, not added. */
 	upload?: boolean;
-	/** History, Undo and Revert (`wc_products_list/log_capability`, default edit_others_products). */
+	/** History, Undo and Revert (`antijante_products_list/log_capability`, default edit_others_products). */
 	viewLog?: boolean;
 }
 
@@ -108,7 +108,7 @@ export interface Settings {
 		cogs: boolean;
 		brands: boolean;
 		reviews: boolean;
-		/** "Delete permanently" offered on rows outside the Trash (`wc_products_list/allow_hard_delete`). */
+		/** "Delete permanently" offered on rows outside the Trash (`antijante_products_list/allow_hard_delete`). */
 		hardDelete: boolean;
 	};
 	limits: Limits;

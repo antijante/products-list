@@ -21,7 +21,7 @@ function scheduleField( id: 'date_on_sale_from' | 'date_on_sale_to', label: stri
 /** The scheduled-sale window; empty means "now" / "forever". */
 export function createSaleScheduleFields( _settings: Settings ): ProductField[] {
 	return [
-		scheduleField( 'date_on_sale_from', __( 'Sale from', 'wp-woocommerce-products-list' ), 22 ),
-		scheduleField( 'date_on_sale_to', __( 'Sale to', 'wp-woocommerce-products-list' ), 23 ),
+		scheduleField( 'date_on_sale_from', __( 'Sale from', 'antijante-products-list' ), 22 ),
+		scheduleField( 'date_on_sale_to', __( 'Sale to', 'antijante-products-list' ), 23 ),
 	];
 }

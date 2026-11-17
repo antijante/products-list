@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\ListMode;
+use Antijante\ProductsList\ListMode;
 use WP_Query;
 use WP_REST_Request;
 
@@ -33,9 +33,9 @@ use WP_REST_Request;
  */
 final class ListQuery
 {
-    public const FILTER_PRODUCT_ARGS = 'wc_products_list/product_query_args';
+    public const FILTER_PRODUCT_ARGS = 'antijante_products_list/product_query_args';
 
-    public const FILTER_VARIATION_ARGS = 'wc_products_list/variation_query_args';
+    public const FILTER_VARIATION_ARGS = 'antijante_products_list/variation_query_args';
 
     /** The WP_Query var carrying the clauses `posts_clauses` has to add. */
     public const QUERY_VAR = 'wc_products_list';

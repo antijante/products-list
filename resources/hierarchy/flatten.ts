@@ -42,15 +42,15 @@ export function placeholderRow( parentId: number, kind: PlaceholderKind, message
 export function placeholderMessage( kind: PlaceholderKind, detail?: string | number ): string {
 	switch ( kind ) {
 		case 'loading':
-			return __( 'Loading variations…', 'wp-woocommerce-products-list' );
+			return __( 'Loading variations…', 'antijante-products-list' );
 		case 'error':
-			return detail ? String( detail ) : __( 'The variations could not be loaded.', 'wp-woocommerce-products-list' );
+			return detail ? String( detail ) : __( 'The variations could not be loaded.', 'antijante-products-list' );
 		case 'more': {
 			const count = Number( detail ) || 0;
 
 			return sprintf(
 				/* translators: %d: number of variations not shown */
-				_n( '%d more variation is not shown.', '%d more variations are not shown.', count, 'wp-woocommerce-products-list' ),
+				_n( '%d more variation is not shown.', '%d more variations are not shown.', count, 'antijante-products-list' ),
 				count
 			);
 		}

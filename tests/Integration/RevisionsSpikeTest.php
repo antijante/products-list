@@ -1,16 +1,16 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\History\Batches;
-use GeneroWP\ProductsList\History\Compare;
-use GeneroWP\ProductsList\History\History;
-use GeneroWP\ProductsList\History\Purge;
-use GeneroWP\ProductsList\History\Restore;
-use GeneroWP\ProductsList\History\Revisions;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Rest\Concurrency;
+use Antijante\ProductsList\History\Batches;
+use Antijante\ProductsList\History\Compare;
+use Antijante\ProductsList\History\History;
+use Antijante\ProductsList\History\Purge;
+use Antijante\ProductsList\History\Restore;
+use Antijante\ProductsList\History\Revisions;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Rest\Concurrency;
 use WC_Product;
 
 /**

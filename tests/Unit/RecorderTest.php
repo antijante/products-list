@@ -1,9 +1,9 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Unit;
+namespace Antijante\ProductsList\Tests\Unit;
 
-use GeneroWP\ProductsList\Log\Recorder;
-use GeneroWP\ProductsList\Log\Revert;
+use Antijante\ProductsList\Log\Recorder;
+use Antijante\ProductsList\Log\Revert;
 use PHPUnit\Framework\TestCase;
 
 /**

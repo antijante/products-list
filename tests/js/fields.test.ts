@@ -85,7 +85,7 @@ describe( 'createProductFields', () => {
 		const settings: Settings = sampleSettings( { fields: [ declarative ] } );
 		setSettings( settings );
 
-		addFilter( 'wcProductsList.fields', 'test', ( fields: Array< { id: string } >, passed: Settings ) => {
+		addFilter( 'antijanteProductsList.fields', 'test', ( fields: Array< { id: string } >, passed: Settings ) => {
 			expect( passed ).toBe( settings );
 
 			return fields.filter( ( f ) => f.id !== 'tags' );
@@ -101,7 +101,7 @@ describe( 'createProductFields', () => {
 			expect( getField( fields, 'tags' ) ).toBeUndefined();
 			expect( fields.filter( ( f ) => f.id === 'name' ) ).toHaveLength( 1 );
 		} finally {
-			removeFilter( 'wcProductsList.fields', 'test' );
+			removeFilter( 'antijanteProductsList.fields', 'test' );
 		}
 	} );
 } );

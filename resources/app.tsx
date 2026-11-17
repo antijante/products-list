@@ -11,7 +11,7 @@ const HistoryScreen = lazy( () => import( /* webpackChunkName: "history" */ './h
 
 /**
  * Builds the field list once per settings payload and registry version
- * (extensions have registered by now: `wcProductsList.ready` fired before
+ * (extensions have registered by now: `antijanteProductsList.ready` fired before
  * mount; a late `registerField` bumps the version) and picks the screen
  * from `?screen=`.
  */

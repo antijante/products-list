@@ -124,7 +124,7 @@ describe( 'buildPayload', () => {
 		expect( buildPayload( simple( 1 ), { nope: 'x', status: undefined }, fields, settings ) ).toEqual( {} );
 	} );
 
-	it( 'passes the result through wcProductsList.savePayload', () => {
+	it( 'passes the result through antijanteProductsList.savePayload', () => {
 		addFilter( FILTERS.savePayload, 'test/payload', ( payload: Record< string, unknown >, item: { id: number } ) => ( { ...payload, meta_data: [ { key: 'touched', value: item.id } ] } ) );
 
 		expect( buildPayload( variation( 11, 1 ), { status: 'private' }, fields, settings ) ).toEqual( { status: 'private', meta_data: [ { key: 'touched', value: 11 } ] } );

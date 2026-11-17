@@ -2,48 +2,48 @@
  * wp.hooks names. Filters receive and return the value named; actions get
  * the payload named. See docs/contracts.md §8 and docs/extension-api.md.
  */
-export const HOOK_NAMESPACE = 'wcProductsList';
+export const HOOK_NAMESPACE = 'antijanteProductsList';
 
 export const FILTERS = {
 	/** ( fields: ProductField[], settings: Settings ) => ProductField[] */
-	fields: 'wcProductsList.fields',
+	fields: 'antijanteProductsList.fields',
 	/** ( actions: ProductAction[], settings: Settings ) => ProductAction[] */
-	actions: 'wcProductsList.actions',
+	actions: 'antijanteProductsList.actions',
 	/** ( params: QueryParams, context: QueryContext ) => QueryParams — the wc/v3 products list request */
-	query: 'wcProductsList.query',
+	query: 'antijanteProductsList.query',
 	/** ( params: QueryParams, context: { parentId: number; page: number } ) => QueryParams */
-	variationsQuery: 'wcProductsList.variationsQuery',
+	variationsQuery: 'antijanteProductsList.variationsQuery',
 	/** ( item: ProductListItem ) => ProductListItem — every row after fetch, before cache */
-	item: 'wcProductsList.item',
+	item: 'antijanteProductsList.item',
 	/** ( payload: Record<string, unknown>, item: ProductListItem, edits: Record<string, unknown> ) => payload */
-	savePayload: 'wcProductsList.savePayload',
+	savePayload: 'antijanteProductsList.savePayload',
 	/** ( view: View, settings: Settings ) => View */
-	defaultView: 'wcProductsList.defaultView',
+	defaultView: 'antijanteProductsList.defaultView',
 	/** ( tabs: StatusTab[], counts: Counts ) => StatusTab[] */
-	statusTabs: 'wcProductsList.statusTabs',
+	statusTabs: 'antijanteProductsList.statusTabs',
 	/** ( tabs: QuickEditTab[], items: ProductListItem[] ) => QuickEditTab[] */
-	quickEditTabs: 'wcProductsList.quickEdit.tabs',
+	quickEditTabs: 'antijanteProductsList.quickEdit.tabs',
 	/** ( layout: Form, tab: QuickEditTab, items: ProductListItem[] ) => Form */
-	quickEditLayout: 'wcProductsList.quickEdit.layout',
+	quickEditLayout: 'antijanteProductsList.quickEdit.layout',
 	/** ( fieldIds: string[] ) => string[] — fields that get the set/increase/decrease control */
-	bulkNumericFields: 'wcProductsList.bulkNumericFields',
+	bulkNumericFields: 'antijanteProductsList.bulkNumericFields',
 } as const;
 
 export const ACTIONS = {
-	/** ( api: ExtensionApi ) — window.wcProductsList exists, before mount */
-	ready: 'wcProductsList.ready',
+	/** ( api: ExtensionApi ) — window.antijanteProductsList exists, before mount */
+	ready: 'antijanteProductsList.ready',
 	/** ( items: ProductListItem[], context: { tab: string; view: View; total: number } ) */
-	loaded: 'wcProductsList.loaded',
+	loaded: 'antijanteProductsList.loaded',
 	/** ( result: BatchResult, context: { source: string } ) */
-	saved: 'wcProductsList.saved',
+	saved: 'antijanteProductsList.saved',
 	/** ( ids: number[], context: { action: 'trash' | 'delete'; batchId: string } ) */
-	deleted: 'wcProductsList.deleted',
+	deleted: 'antijanteProductsList.deleted',
 	/**
 	 * ( result: { action: string; ids: number[]; batchId: string; items: ProductListItem[] } )
 	 * — a declarative (server) action finished; `ids` are the rows it
 	 * processed without error, `items` the refreshed rows it returned.
 	 */
-	actionPerformed: 'wcProductsList.actionPerformed',
+	actionPerformed: 'antijanteProductsList.actionPerformed',
 } as const;
 
 export type FilterName = ( typeof FILTERS )[ keyof typeof FILTERS ];

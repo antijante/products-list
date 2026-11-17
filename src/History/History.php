@@ -1,13 +1,13 @@
 <?php
 
-namespace GeneroWP\ProductsList\History;
+namespace Antijante\ProductsList\History;
 
-use GeneroWP\ProductsList\Log\Prune;
-use GeneroWP\ProductsList\Module;
+use Antijante\ProductsList\Log\Prune;
+use Antijante\ProductsList\Module;
 
 /**
  * POC: native WordPress revisions as product history, next to the
- * custom field log. `WC_PRODUCTS_LIST_HISTORY` picks the mode:
+ * custom field log. `ANTIJANTE_PRODUCTS_LIST_HISTORY` picks the mode:
  *
  * - unset or `log` (default): today's behaviour; this module is not loaded.
  * - `both`: the log records as today and revisions are recorded for the
@@ -22,7 +22,7 @@ final class History implements Module
 {
     public const MODES = ['log', 'both', 'revisions'];
 
-    public const FILTER_OPTIONS = 'wc_products_list/history_options';
+    public const FILTER_OPTIONS = 'antijante_products_list/history_options';
 
     /** @var array{keep_product: int, keep_variation: int, variation_text: bool}|null */
     private static ?array $options = null;
@@ -36,7 +36,7 @@ final class History implements Module
             return self::$override;
         }
 
-        $mode = defined('WC_PRODUCTS_LIST_HISTORY') ? (string) constant('WC_PRODUCTS_LIST_HISTORY') : 'log';
+        $mode = defined('ANTIJANTE_PRODUCTS_LIST_HISTORY') ? (string) constant('ANTIJANTE_PRODUCTS_LIST_HISTORY') : 'log';
 
         return in_array($mode, self::MODES, true) ? $mode : 'log';
     }

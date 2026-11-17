@@ -1,5 +1,5 @@
 /**
- * `window.wcProductsList.batchUpdate()` runs as the list's own bulk saves:
+ * `window.antijanteProductsList.batchUpdate()` runs as the list's own bulk saves:
  * a save-activity job (bar, row locks, leave guard), expected values from
  * the loaded rows (and the extension's own), the planned header and close,
  * rows a save of this tab holds kept back, failed rows recorded.

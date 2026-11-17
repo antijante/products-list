@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Rest\CountsController;
+use Antijante\ProductsList\Rest\CountsController;
 
 class CountsTest extends RestTestCase
 {

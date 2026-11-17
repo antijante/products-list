@@ -141,7 +141,7 @@ export function parseText( field: ProductField, kind: InlineKind, text: string, 
 		const parsed = parsePrice( trimmed, money );
 
 		if ( parsed === null ) {
-			return { value: text, error: __( 'Enter a valid price.', 'wp-woocommerce-products-list' ) };
+			return { value: text, error: __( 'Enter a valid price.', 'antijante-products-list' ) };
 		}
 
 		// More decimals than the currency has is a slip ("14,005": typed on after the old price), never rounded away.
@@ -153,8 +153,8 @@ export function parseText( field: ProductField, kind: InlineKind, text: string, 
 			return {
 				value: text,
 				error: ( decimals ?? 0 ) > 0
-					? sprintf( /* translators: %d: number of decimals the currency has */ _n( 'Enter a price with at most %d decimal.', 'Enter a price with at most %d decimals.', decimals ?? 0, 'wp-woocommerce-products-list' ), decimals ?? 0 )
-					: __( 'Enter a whole amount.', 'wp-woocommerce-products-list' ),
+					? sprintf( /* translators: %d: number of decimals the currency has */ _n( 'Enter a price with at most %d decimal.', 'Enter a price with at most %d decimals.', decimals ?? 0, 'antijante-products-list' ), decimals ?? 0 )
+					: __( 'Enter a whole amount.', 'antijante-products-list' ),
 			};
 		}
 
@@ -166,11 +166,11 @@ export function parseText( field: ProductField, kind: InlineKind, text: string, 
 			return { value: '' };
 		}
 
-		return INTEGER.test( trimmed ) ? { value: Number( trimmed ) } : { value: text, error: __( 'Enter a whole number.', 'wp-woocommerce-products-list' ) };
+		return INTEGER.test( trimmed ) ? { value: Number( trimmed ) } : { value: text, error: __( 'Enter a whole number.', 'antijante-products-list' ) };
 	}
 
 	if ( leafOf( field.id ) === 'name' && field.id === 'name' && trimmed === '' ) {
-		return { value: text, error: __( 'The name cannot be empty.', 'wp-woocommerce-products-list' ) };
+		return { value: text, error: __( 'The name cannot be empty.', 'antijante-products-list' ) };
 	}
 
 	// A name typed back to the shown text is the stored one ("&amp;" shown as "&").
@@ -211,8 +211,8 @@ export function priceJumps( item: ProductListItem, drafts: ReadonlyMap< string, 
 			message: sprintf(
 				/* translators: 1: the price now, e.g. "105,00 €" */
 				after > before
-					? __( 'This is ten times the price now (%1$s) or more. Press Enter again to save it.', 'wp-woocommerce-products-list' )
-					: __( 'This is a tenth of the price now (%1$s) or less. Press Enter again to save it.', 'wp-woocommerce-products-list' ),
+					? __( 'This is ten times the price now (%1$s) or more. Press Enter again to save it.', 'antijante-products-list' )
+					: __( 'This is a tenth of the price now (%1$s) or less. Press Enter again to save it.', 'antijante-products-list' ),
 				shown
 			),
 		} );
@@ -279,7 +279,7 @@ export async function commitRow( item: ProductListItem, context: InlineEditValue
 			flagDrafts( item.id, problem.message, [ problem.field ], problem.confirm === true );
 		}
 
-		const text = sprintf( /* translators: 1: product name, 2: what is wrong */ __( '%1$s was not saved: %2$s', 'wp-woocommerce-products-list' ), name, problems.map( ( problem ) => problem.message ).join( ' ' ) );
+		const text = sprintf( /* translators: 1: product name, 2: what is wrong */ __( '%1$s was not saved: %2$s', 'antijante-products-list' ), name, problems.map( ( problem ) => problem.message ).join( ' ' ) );
 
 		notify.error( text, { id: 'wc-pl-inline-saved' } );
 		speak( text, 'assertive' );
@@ -311,7 +311,7 @@ export async function commitRow( item: ProductListItem, context: InlineEditValue
 			clearDrafts( item.id, settled );
 			invalidateProducts();
 		} else {
-			flagDrafts( item.id, outcome.message ?? __( 'Not saved.', 'wp-woocommerce-products-list' ), settled );
+			flagDrafts( item.id, outcome.message ?? __( 'Not saved.', 'antijante-products-list' ), settled );
 		}
 	} finally {
 		setRowSaving( item.id, false );
@@ -389,7 +389,7 @@ function InlineTextControl( { item, field, kind, context, label, placeholder, cl
 		if ( event.key === 'Escape' && draft ) {
 			event.preventDefault();
 			setDraft( item.id, field.id, undefined );
-			speak( __( 'Change undone.', 'wp-woocommerce-products-list' ) );
+			speak( __( 'Change undone.', 'antijante-products-list' ) );
 
 			// The saved value selected, so what is typed next replaces it (not added to its end).
 			const input = event.currentTarget;
@@ -594,7 +594,7 @@ function InlineCheckboxControl( { item, field, context, label, className }: Cont
 
 function cellLabel( field: ProductField, item: ProductListItem ): string {
 	/* translators: 1: field name ("Sale price"), 2: product or variation name */
-	return sprintf( __( '%1$s, %2$s', 'wp-woocommerce-products-list' ), labelOf( field ), itemLabel( item ) );
+	return sprintf( __( '%1$s, %2$s', 'antijante-products-list' ), labelOf( field ), itemLabel( item ) );
 }
 
 export function InlineControl( props: Omit< ControlProps, 'label' > & { label?: string } ) {
@@ -704,7 +704,7 @@ function priceCell( field: ProductField ): Render {
 			<OverCell cell={ createElement( render, props ) }>
 				<span className="wc-pl-inline-price">
 					<InlineControl item={ props.item } field={ regular } kind="money" context={ context } />
-					{ ids.has( 'sale_price' ) && <InlineControl item={ props.item } field={ sale } kind="money" context={ context } placeholder={ __( 'Sale', 'wp-woocommerce-products-list' ) } className="wc-pl-inline--sale" /> }
+					{ ids.has( 'sale_price' ) && <InlineControl item={ props.item } field={ sale } kind="money" context={ context } placeholder={ __( 'Sale', 'antijante-products-list' ) } className="wc-pl-inline--sale" /> }
 				</span>
 			</OverCell>
 		);

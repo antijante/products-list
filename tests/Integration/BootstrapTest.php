@@ -1,12 +1,12 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Bootstrap;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Modules\Rest;
-use GeneroWP\ProductsList\Plugin;
-use GeneroWP\ProductsList\Registry;
+use Antijante\ProductsList\Bootstrap;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Modules\Rest;
+use Antijante\ProductsList\Plugin;
+use Antijante\ProductsList\Registry;
 
 class BootstrapTest extends RestTestCase
 {

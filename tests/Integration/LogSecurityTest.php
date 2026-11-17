@@ -1,10 +1,10 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Bootstrap;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\Table;
+use Antijante\ProductsList\Bootstrap;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\Table;
 
 /**
  * Who can put rows into the change log and who can read it: a refused

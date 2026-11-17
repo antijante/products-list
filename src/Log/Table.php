@@ -1,14 +1,14 @@
 <?php
 
-namespace GeneroWP\ProductsList\Log;
+namespace Antijante\ProductsList\Log;
 
-use GeneroWP\ProductsList\ListMode;
+use Antijante\ProductsList\ListMode;
 
 /**
  * The change log table. One row per changed field of one object within one
  * batch; see docs/contracts.md §3.5 for the columns.
  *
- * Installed on `wc_products_list/activate` and again on `init` whenever the
+ * Installed on `antijante_products_list/activate` and again on `init` whenever the
  * stored schema version differs from VERSION, so a plugin update that adds a
  * column lands without a re-activation. dbDelta is idempotent.
  */

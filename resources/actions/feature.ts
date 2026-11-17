@@ -26,9 +26,9 @@ function featureAction( context: ProductActionsContext, id: string, label: strin
 				success: ( count ) =>
 					featured
 						? /* translators: %d: number of products */
-						  sprintf( _n( '%d product marked as featured.', '%d products marked as featured.', count, 'wp-woocommerce-products-list' ), count )
+						  sprintf( _n( '%d product marked as featured.', '%d products marked as featured.', count, 'antijante-products-list' ), count )
 						: /* translators: %d: number of products */
-						  sprintf( _n( '%d product is no longer featured.', '%d products are no longer featured.', count, 'wp-woocommerce-products-list' ), count ),
+						  sprintf( _n( '%d product is no longer featured.', '%d products are no longer featured.', count, 'antijante-products-list' ), count ),
 			} ).then( () => {
 				onActionPerformed?.( items );
 			} );
@@ -37,7 +37,7 @@ function featureAction( context: ProductActionsContext, id: string, label: strin
 }
 
 export const createFeatureAction: ActionFactory = ( context ) =>
-	context.settings.caps.edit ? featureAction( context, 'feature', __( 'Mark as featured', 'wp-woocommerce-products-list' ), true, starFilled ) : null;
+	context.settings.caps.edit ? featureAction( context, 'feature', __( 'Mark as featured', 'antijante-products-list' ), true, starFilled ) : null;
 
 export const createUnfeatureAction: ActionFactory = ( context ) =>
-	context.settings.caps.edit ? featureAction( context, 'unfeature', __( 'Remove from featured', 'wp-woocommerce-products-list' ), false, starEmpty ) : null;
+	context.settings.caps.edit ? featureAction( context, 'unfeature', __( 'Remove from featured', 'antijante-products-list' ), false, starEmpty ) : null;

@@ -1,5 +1,5 @@
 {
-  "name": "wp-woocommerce-products-list",
+  "name": "antijante-products-list",
   "version": "0.5.2",
   "private": true,
   "description": "A fast DataViews product catalog for WooCommerce",
@@ -14,7 +14,7 @@
     "test:watch": "vitest",
     "env:start": "wp-env start",
     "env:stop": "wp-env stop",
-    "test:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/wp-woocommerce-products-list php -d memory_limit=1024M vendor/bin/phpunit --bootstrap tests/bootstrap.php --testsuite integration"
+    "test:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/antijante-products-list php -d memory_limit=1024M vendor/bin/phpunit --bootstrap tests/bootstrap.php --testsuite integration"
   },
   "dependencies": {
     "@wordpress/dataviews": "20.0.0"

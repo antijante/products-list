@@ -1,6 +1,6 @@
 /**
- * Declarative definitions (PHP `wc_products_list/fields|filters|actions`,
- * serialised by src/Registry.php into `window.wcProductsListSettings`) turned
+ * Declarative definitions (PHP `antijante_products_list/fields|filters|actions`,
+ * serialised by src/Registry.php into `window.antijanteProductsListSettings`) turned
  * into the field and action objects the list renders. gds-woo-i18n ships no
  * JavaScript: every language column, filter and action comes through here.
  */
@@ -274,7 +274,7 @@ function displayValue( value: unknown, def: DeclarativeFieldInput, currency: Fie
 		case 'price':
 			return formatMoney( value, currency, settings );
 		case 'boolean':
-			return value ? __( 'Yes', 'wp-woocommerce-products-list' ) : __( 'No', 'wp-woocommerce-products-list' );
+			return value ? __( 'Yes', 'antijante-products-list' ) : __( 'No', 'antijante-products-list' );
 		case 'select':
 			return def.options.find( ( option ) => option.value === String( value ) )?.label ?? String( value );
 		case 'html':
@@ -397,12 +397,12 @@ export function fieldFromDeclarative( input: DeclarativeField, settings: Setting
 		}
 
 		const first = terms[ 0 ]!;
-		const text = __( 'untranslated term', 'wp-woocommerce-products-list' );
+		const text = __( 'untranslated term', 'antijante-products-list' );
 		const title =
 			label ??
 			sprintf(
 				/* translators: %s: attribute value names */
-				__( 'No translation for: %s', 'wp-woocommerce-products-list' ),
+				__( 'No translation for: %s', 'antijante-products-list' ),
 				terms.map( ( term ) => term.name ).join( ', ' )
 			);
 
@@ -422,7 +422,7 @@ export function fieldFromDeclarative( input: DeclarativeField, settings: Setting
 				{ className: 'wc-products-list-field wc-products-list-field--same', title: notes.label },
 				displayValue( value, def, currency, settings ),
 				' ',
-				createElement( 'span', { className: 'wc-products-list-field__copied' }, __( 'copied', 'wp-woocommerce-products-list' ) ),
+				createElement( 'span', { className: 'wc-products-list-field__copied' }, __( 'copied', 'antijante-products-list' ) ),
 				marker ? ' ' : null,
 				marker
 			);
@@ -528,13 +528,13 @@ export function fieldFromDeclarative( input: DeclarativeField, settings: Setting
 				if ( parsed === null ) {
 					return sprintf(
 						/* translators: %s: an example price in the site's number format */
-						__( 'Enter a price like %s.', 'wp-woocommerce-products-list' ),
+						__( 'Enter a price like %s.', 'antijante-products-list' ),
 						`12${ settings.currency.decimalSeparator }50`
 					);
 				}
 
 				if ( parsed !== '' && Number.parseFloat( parsed ) < 0 ) {
-					return __( 'A price cannot be negative.', 'wp-woocommerce-products-list' );
+					return __( 'A price cannot be negative.', 'antijante-products-list' );
 				}
 
 				return null;
@@ -721,7 +721,7 @@ function isEligibleFor( scope: DeclarativeAction[ 'scope' ] ) {
  * the actions module does with the response: patch rows, notices).
  */
 /**
- * `wcProductsList.actionPerformed` once the server answered: the rows it
+ * `antijanteProductsList.actionPerformed` once the server answered: the rows it
  * processed leave the selection (list/selection.ts), so a filter the action
  * just took them out of ("Missing in Svenska") cannot keep offering a bulk
  * edit on rows that are no longer on any page.
@@ -787,7 +787,7 @@ export function actionFromDeclarative( def: DeclarativeAction, run: ActionRunner
 				} )
 				.catch( ( reason: unknown ) => {
 					setIsRunning( false );
-					setError( reason instanceof Error ? reason.message : __( 'The action failed.', 'wp-woocommerce-products-list' ) );
+					setError( reason instanceof Error ? reason.message : __( 'The action failed.', 'antijante-products-list' ) );
 				} );
 		};
 
@@ -821,7 +821,7 @@ export function actionFromDeclarative( def: DeclarativeAction, run: ActionRunner
 				createElement(
 					'button',
 					{ type: 'button', className: 'components-button is-tertiary', onClick: () => closeModal?.(), disabled: isRunning },
-					__( 'Cancel', 'wp-woocommerce-products-list' )
+					__( 'Cancel', 'antijante-products-list' )
 				),
 				createElement(
 					'button',
@@ -833,10 +833,10 @@ export function actionFromDeclarative( def: DeclarativeAction, run: ActionRunner
 						'aria-busy': isRunning,
 					},
 					isRunning
-						? __( 'Working…', 'wp-woocommerce-products-list' )
+						? __( 'Working…', 'antijante-products-list' )
 						: sprintf(
 								/* translators: 1: action label, 2: number of selected rows */
-								__( '%1$s (%2$d)', 'wp-woocommerce-products-list' ),
+								__( '%1$s (%2$d)', 'antijante-products-list' ),
 								base.label,
 								ids.length
 						  )

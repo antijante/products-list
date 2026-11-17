@@ -1,14 +1,14 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\Actions\Action;
-use GeneroWP\ProductsList\Bootstrap;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\BatchState;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Recorder;
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\Actions\Action;
+use Antijante\ProductsList\Bootstrap;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\BatchState;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Recorder;
+use Antijante\ProductsList\Plugin;
 use Throwable;
 use WC_Product;
 use WC_Product_Variation;
@@ -32,7 +32,7 @@ use WP_REST_Response;
  */
 final class ActionsController
 {
-    public const FILTER_HANDLERS = 'wc_products_list/action_handlers';
+    public const FILTER_HANDLERS = 'antijante_products_list/action_handlers';
 
     public const ID_PATTERN = '[a-z0-9][a-z0-9_:.\-]{0,99}';
 
@@ -123,7 +123,7 @@ final class ActionsController
         if ($action === null) {
             return new WP_Error('wc_products_list_unknown_action', sprintf(
                 /* translators: %s: action id */
-                __('Unknown action "%s".', 'wp-woocommerce-products-list'),
+                __('Unknown action "%s".', 'antijante-products-list'),
                 $actionId
             ), ['status' => 404]);
         }
@@ -368,7 +368,7 @@ final class ActionsController
         };
 
         if (! $product instanceof WC_Product || $product->get_id() === 0) {
-            return $fail('not_found', __('The product no longer exists.', 'wp-woocommerce-products-list'));
+            return $fail('not_found', __('The product no longer exists.', 'antijante-products-list'));
         }
 
         $isVariation = $product instanceof WC_Product_Variation;
@@ -376,12 +376,12 @@ final class ActionsController
 
         if (($applies === 'product' && $isVariation) || ($applies === 'variation' && ! $isVariation)) {
             return $fail('not_applicable', $isVariation
-                ? __('This action does not apply to variations.', 'wp-woocommerce-products-list')
-                : __('This action only applies to variations.', 'wp-woocommerce-products-list'));
+                ? __('This action does not apply to variations.', 'antijante-products-list')
+                : __('This action only applies to variations.', 'antijante-products-list'));
         }
 
         if (! $action->can($product)) {
-            return $fail('forbidden', __('You are not allowed to do this to this product.', 'wp-woocommerce-products-list'));
+            return $fail('forbidden', __('You are not allowed to do this to this product.', 'antijante-products-list'));
         }
 
         // The row of a status change or delete is written by the change's

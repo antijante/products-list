@@ -7,7 +7,7 @@ export function createExternalFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'external_url',
 			type: 'url',
-			label: __( 'Product URL', 'wp-woocommerce-products-list' ),
+			label: __( 'Product URL', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			getValue: ( { item } ) => valueOf( item, 'external_url' ) ?? '',
@@ -18,7 +18,7 @@ export function createExternalFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'button_text',
 			type: 'text',
-			label: __( 'Button text', 'wp-woocommerce-products-list' ),
+			label: __( 'Button text', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			getValue: ( { item } ) => valueOf( item, 'button_text' ) ?? '',

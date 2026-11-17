@@ -65,7 +65,7 @@ export function createAttributeFilters( settings: Settings ): ProductField[] {
 				id: ATTRIBUTE_FIELD_PREFIX + taxonomy.name,
 				type: 'array',
 				/* translators: %s: an attribute name ("Colour") */
-				label: sprintf( __( 'Attribute: %s', 'wp-woocommerce-products-list' ), taxonomy.label ),
+				label: sprintf( __( 'Attribute: %s', 'antijante-products-list' ), taxonomy.label ),
 				filterBy: { operators: [ 'isAny' ] },
 				getElements: () => termElements( taxonomy.name ),
 				readOnly: true,

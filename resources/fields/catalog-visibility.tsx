@@ -7,7 +7,7 @@ export function createCatalogVisibilityField( settings: Settings ): ProductField
 	return field( {
 		id: 'catalog_visibility',
 		type: 'text',
-		label: __( 'Catalog visibility', 'wp-woocommerce-products-list' ),
+		label: __( 'Catalog visibility', 'antijante-products-list' ),
 		elements: settings.catalogVisibility,
 		enableSorting: false,
 		filterBy: false,

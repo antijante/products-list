@@ -47,7 +47,7 @@ function media(): WpMedia {
 	const wp = ( window as unknown as { wp?: { media?: WpMedia } } ).wp;
 
 	if ( ! wp?.media ) {
-		throw new Error( __( 'The media library could not be loaded.', 'wp-woocommerce-products-list' ) );
+		throw new Error( __( 'The media library could not be loaded.', 'antijante-products-list' ) );
 	}
 
 	return wp.media;

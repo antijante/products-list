@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneroWP\ProductsList\Actions;
+namespace Antijante\ProductsList\Actions;
 
 use WC_Product;
 use WP_Error;
@@ -41,7 +41,7 @@ final class Trash implements Action
         }
 
         if (! $product->delete(false)) {
-            return new WP_Error('wc_products_list_trash_failed', __('The product could not be moved to the trash.', 'wp-woocommerce-products-list'));
+            return new WP_Error('wc_products_list_trash_failed', __('The product could not be moved to the trash.', 'antijante-products-list'));
         }
 
         return ['changes' => ['status' => [$old, 'trash']]];

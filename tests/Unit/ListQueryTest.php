@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Unit;
+namespace Antijante\ProductsList\Tests\Unit;
 
-use GeneroWP\ProductsList\Rest\ListQuery;
+use Antijante\ProductsList\Rest\ListQuery;
 use PHPUnit\Framework\TestCase;
 
 class ListQueryTest extends TestCase

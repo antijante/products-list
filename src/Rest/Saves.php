@@ -1,21 +1,21 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\History\History;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\BatchState;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Recorder;
-use GeneroWP\ProductsList\Plugin;
-use GeneroWP\ProductsList\Registry;
+use Antijante\ProductsList\History\History;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\BatchState;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Recorder;
+use Antijante\ProductsList\Plugin;
+use Antijante\ProductsList\Registry;
 use WC_Product;
 use WP_REST_Request;
 
 /**
  * The write side of list mode: around every wc/v3 product and variation
  * save made by the app, the recorder snapshots and logs the touched
- * fields, and extensions get `wc_products_list/save` when the request
+ * fields, and extensions get `antijante_products_list/save` when the request
  * carries one of their write keys.
  *
  * Batch endpoints call the same controller methods per item, so the hooks
@@ -23,13 +23,13 @@ use WP_REST_Request;
  */
 final class Saves
 {
-    public const ACTION_SAVE = 'wc_products_list/save';
+    public const ACTION_SAVE = 'antijante_products_list/save';
 
     /**
      * Extra top-level request keys that count as extension writes, for
      * integrations that declare no fields through the registry.
      */
-    public const FILTER_WRITE_KEYS = 'wc_products_list/write_keys';
+    public const FILTER_WRITE_KEYS = 'antijante_products_list/write_keys';
 
     /** After WooCommerce's own insert listeners (Brands at 10). */
     public const INSERTED_PRIORITY = 20;
@@ -59,7 +59,7 @@ final class Saves
         Concurrency::registerCoreChanges();
 
         // The guard (lock, fresh load, refusals, expected values) first, the recorder and
-        // `wc_products_list/save` at 10: extension filters in between see the guarded object.
+        // `antijante_products_list/save` at 10: extension filters in between see the guarded object.
         add_filter('woocommerce_rest_pre_insert_product_object', [self::class, 'guardInsert'], self::GUARD_PRIORITY, 3);
         add_filter('woocommerce_rest_pre_insert_product_variation_object', [self::class, 'guardInsert'], self::GUARD_PRIORITY, 3);
         add_filter('woocommerce_rest_pre_insert_product_object', [self::class, 'preInsert'], 10, 3);
@@ -459,7 +459,7 @@ final class Saves
 
         return sprintf(
             /* translators: 1: SKU, 2: product name, 3: product id */
-            __('The SKU "%1$s" is already used by "%2$s" (#%3$d).', 'wp-woocommerce-products-list'),
+            __('The SKU "%1$s" is already used by "%2$s" (#%3$d).', 'antijante-products-list'),
             $sku,
             $name,
             $owner
@@ -512,7 +512,7 @@ final class Saves
     /**
      * `woocommerce_rest_pre_insert_{product,product_variation}_object` at
      * 10, after the guard (`guardInsert()`) and the extensions' own
-     * filters: the recorder's snapshot and `wc_products_list/save`.
+     * filters: the recorder's snapshot and `antijante_products_list/save`.
      *
      * @param  mixed  $product
      * @return mixed
@@ -548,7 +548,7 @@ final class Saves
                 self::INVALID_TERM_ERROR,
                 sprintf(
                     /* translators: %s: field key, e.g. categories */
-                    __('The %s list names a term without a valid id. Nothing was saved for this product.', 'wp-woocommerce-products-list'),
+                    __('The %s list names a term without a valid id. Nothing was saved for this product.', 'antijante-products-list'),
                     $invalidTerms
                 ),
                 ['status' => 400, 'field' => $invalidTerms]
@@ -792,7 +792,7 @@ final class Saves
         }
 
         /**
-         * Filters the top-level request keys that fire `wc_products_list/save`
+         * Filters the top-level request keys that fire `antijante_products_list/save`
          * in addition to the ones the registered fields declare.
          *
          * @param  array<int, mixed>  $keys

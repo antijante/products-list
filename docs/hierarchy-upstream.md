@@ -35,7 +35,7 @@ switch is a prop rename at most.
 | Header expand all | toolbar buttons calling `hierarchy.expandAll()` / `collapseAll()` (concurrency 6, confirm above `EXPAND_ALL_WARN_ROWS` = 400 rows, stops at `EXPAND_ALL_MAX_ROWS` = 600) | keep: the header disclosure only toggles *loaded* parents, ours also loads and bounds the page |
 | Loading state | placeholder rows (`_placeholder: loading | error | more`) through the same `data` | keep: out of scope upstream |
 | Selection | `HierarchicalDataViews` strips placeholder ids (`"12:loading"`) from `selection`/`onChangeSelection`; actions use `isEligible: ( item ) => ! item._placeholder` | keep the `isEligible`; the strip is only needed while placeholder rows exist |
-| Persistence | `expandedItemIds` in `sessionStorage` (`wcProductsList.expanded`), bounded per page on load | unchanged (consumer-owned upstream too) |
+| Persistence | `expandedItemIds` in `sessionStorage` (`antijanteProductsList.expanded`), bounded per page on load | unchanged (consumer-owned upstream too) |
 | Row rendering | `patches/@wordpress__dataviews@20.0.0.patch` memoises table rows (docs/dataviews-patch.md) | drop the patch once upstream rows are memoised, or re-apply it to the new version |
 | Per-level pagination (#83320) | `limits.maxChildrenPerParent` cap + a "N more variations are not shown" row | map to the per-level pagination props when they land |
 

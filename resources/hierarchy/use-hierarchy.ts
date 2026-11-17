@@ -166,7 +166,7 @@ export function expandAllConfirmMessage( plan: Pick< ExpandAllPlan, 'expanding' 
 				'Expands %1$d of %2$d products (about %3$d rows on one page); %4$d stays collapsed so the page stays under %5$d rows. Large tables are slow to render and scroll; a smaller page size or a filter keeps it fast. Continue?',
 				'Expands %1$d of %2$d products (about %3$d rows on one page); %4$d stay collapsed so the page stays under %5$d rows. Large tables are slow to render and scroll; a smaller page size or a filter keeps it fast. Continue?',
 				plan.skipped,
-				'wp-woocommerce-products-list'
+				'antijante-products-list'
 			),
 			plan.expanding,
 			plan.expanding + plan.skipped,
@@ -182,7 +182,7 @@ export function expandAllConfirmMessage( plan: Pick< ExpandAllPlan, 'expanding' 
 			'Expands %1$d product (about %2$d rows on one page), which makes the table slow to render and scroll. Continue? (A smaller page size or a filter keeps it fast.)',
 			'Expands %1$d products (about %2$d rows on one page), which makes the table slow to render and scroll. Continue? (A smaller page size or a filter keeps it fast.)',
 			plan.expanding,
-			'wp-woocommerce-products-list'
+			'antijante-products-list'
 		),
 		plan.expanding,
 		plan.rows
@@ -751,13 +751,13 @@ function evict(): void {
  * store wires `patchVariationRows` / `removeVariationRows` for optimistic
  * patches (docs/contracts.md, "Hierarchy").
  */
-addAction( ACTIONS.saved, 'wcProductsList/hierarchy', ( result: BatchResult ) => {
+addAction( ACTIONS.saved, 'antijanteProductsList/hierarchy', ( result: BatchResult ) => {
 	if ( Array.isArray( result?.updated ) ) {
 		patchVariationRows( result.updated );
 	}
 } );
 
-addAction( ACTIONS.deleted, 'wcProductsList/hierarchy', ( ids: number[] ) => {
+addAction( ACTIONS.deleted, 'antijanteProductsList/hierarchy', ( ids: number[] ) => {
 	if ( Array.isArray( ids ) ) {
 		removeVariationRows( ids );
 	}
@@ -858,7 +858,7 @@ function errorMessage( error: unknown ): string {
 		return error.message;
 	}
 
-	return __( 'The variations could not be loaded.', 'wp-woocommerce-products-list' );
+	return __( 'The variations could not be loaded.', 'antijante-products-list' );
 }
 
 function restFields( fields: ProductField[] ): string[] {
@@ -1268,7 +1268,7 @@ function loadChildrenAcross( parents: ProductRow[], fields: string[], fetchAcros
 						const result = await request( page );
 
 						if ( result === null ) {
-							throw new Error( __( 'The variations could not be loaded.', 'wp-woocommerce-products-list' ) );
+							throw new Error( __( 'The variations could not be loaded.', 'antijante-products-list' ) );
 						}
 
 						pages[ page - 1 ] = result.items;
@@ -1316,7 +1316,7 @@ async function loadVariationIdsAcross( parentIds: number[], fetchAcross: FetchVa
 					const result = await limit( () => fetchAcross( ids, page, { perPage, fields } ) );
 
 					if ( result === null ) {
-						throw new Error( __( 'The variations could not be loaded.', 'wp-woocommerce-products-list' ) );
+						throw new Error( __( 'The variations could not be loaded.', 'antijante-products-list' ) );
 					}
 
 					pages[ page - 1 ] = result.items;
@@ -1537,7 +1537,7 @@ function defaultOnExpandAllLimit( { expanded, skipped, rows }: ExpandAllLimit ):
 				'Expanded %1$d product; %2$d more left collapsed so the page stays under %3$d rows. Use a smaller page size or a filter to see the rest.',
 				'Expanded %1$d products; %2$d more left collapsed so the page stays under %3$d rows. Use a smaller page size or a filter to see the rest.',
 				expanded,
-				'wp-woocommerce-products-list'
+				'antijante-products-list'
 			),
 			expanded,
 			skipped,
@@ -1565,7 +1565,7 @@ function notifySelectedCollapsed( collapsed: number ): void {
 				'%1$d product stays collapsed so the page stays under %2$d rows; its variations are selected all the same.',
 				'%1$d products stay collapsed so the page stays under %2$d rows; their variations are selected all the same.',
 				collapsed,
-				'wp-woocommerce-products-list'
+				'antijante-products-list'
 			),
 			collapsed,
 			EXPAND_ALL_MAX_ROWS

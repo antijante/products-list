@@ -44,12 +44,12 @@ export function Chevron( { item }: { item: ProductListItem } ) {
 	const label = expanded
 		? sprintf(
 				/* translators: %d: number of variations */
-				_n( 'Collapse %d variation', 'Collapse %d variations', count, 'wp-woocommerce-products-list' ),
+				_n( 'Collapse %d variation', 'Collapse %d variations', count, 'antijante-products-list' ),
 				count
 		  )
 		: sprintf(
 				/* translators: %d: number of variations */
-				_n( 'Expand %d variation', 'Expand %d variations', count, 'wp-woocommerce-products-list' ),
+				_n( 'Expand %d variation', 'Expand %d variations', count, 'antijante-products-list' ),
 				count
 		  );
 
@@ -139,7 +139,7 @@ function PendingMark( { item }: { item: ProductListItem } ) {
 	return pending ? (
 		<span className="wc-pl-pending" ref={ ref }>
 			<span className="wc-pl-spinner" aria-hidden="true" />
-			{ __( 'Updating…', 'wp-woocommerce-products-list' ) }
+			{ __( 'Updating…', 'antijante-products-list' ) }
 		</span>
 	) : null;
 }
@@ -168,7 +168,7 @@ export function NameCell( { item, children }: NameCellProps ) {
 							latest()?.onRetryChildren?.( item._parentId as number );
 						} }
 					>
-						{ __( 'Retry', 'wp-woocommerce-products-list' ) }
+						{ __( 'Retry', 'antijante-products-list' ) }
 					</button>
 				) }
 			</div>
@@ -184,20 +184,20 @@ export function NameCell( { item, children }: NameCellProps ) {
 			<PendingMark item={ item } />
 			{ isSearchMatch && (
 				<span className="wc-pl-name__match">
-					{ __( 'Matches search', 'wp-woocommerce-products-list' ) }
+					{ __( 'Matches search', 'antijante-products-list' ) }
 				</span>
 			) }
 			{ level === 0 && view && variationFilterActive && expanded && state?.status === 'loaded' && <FilteredChildrenNote item={ item } view={ view } state={ state } latest={ latest } /> }
 			{ item._noLongerMatches && (
-				<span className="wc-pl-name__stale" title={ __( 'Edited here; it no longer matches the filters and leaves the list when the view changes.', 'wp-woocommerce-products-list' ) }>
-					{ __( 'No longer matches', 'wp-woocommerce-products-list' ) }
+				<span className="wc-pl-name__stale" title={ __( 'Edited here; it no longer matches the filters and leaves the list when the view changes.', 'antijante-products-list' ) }>
+					{ __( 'No longer matches', 'antijante-products-list' ) }
 				</span>
 			) }
 			{ level > 0 && item._parentName && (
 				<span className="screen-reader-text">
 					{ sprintf(
 						/* translators: %s: the parent product's name */
-						__( '(variation of %s)', 'wp-woocommerce-products-list' ),
+						__( '(variation of %s)', 'antijante-products-list' ),
 						item._parentName
 					) }
 				</span>
@@ -222,13 +222,13 @@ function FilteredChildrenNote( { item, view, state, latest }: { item: ProductLis
 				{ all > 0
 					? sprintf(
 							/* translators: 1: variations matching the filters, 2: variations of the product */
-							_n( '%1$d of %2$d variation matches', '%1$d of %2$d variations match', all, 'wp-woocommerce-products-list' ),
+							_n( '%1$d of %2$d variation matches', '%1$d of %2$d variations match', all, 'antijante-products-list' ),
 							matching,
 							all
 					  )
 					: sprintf(
 							/* translators: %d: variations matching the filters */
-							_n( '%d variation matches', '%d variations match', matching, 'wp-woocommerce-products-list' ),
+							_n( '%d variation matches', '%d variations match', matching, 'antijante-products-list' ),
 							matching
 					  ) }
 				{ view.onShowAllChildren && (
@@ -240,7 +240,7 @@ function FilteredChildrenNote( { item, view, state, latest }: { item: ProductLis
 							latest()?.onShowAllChildren?.( item.id );
 						} }
 					>
-						{ __( 'Show all', 'wp-woocommerce-products-list' ) }
+						{ __( 'Show all', 'antijante-products-list' ) }
 					</button>
 				) }
 			</span>
@@ -251,7 +251,7 @@ function FilteredChildrenNote( { item, view, state, latest }: { item: ProductLis
 		<span className="wc-pl-name__filtered">
 			{ sprintf(
 				/* translators: %d: variations of the product */
-				_n( 'All %d variation', 'All %d variations', all, 'wp-woocommerce-products-list' ),
+				_n( 'All %d variation', 'All %d variations', all, 'antijante-products-list' ),
 				all
 			) }
 			{ view.onShowMatchingChildren && (
@@ -263,7 +263,7 @@ function FilteredChildrenNote( { item, view, state, latest }: { item: ProductLis
 						latest()?.onShowMatchingChildren?.( item.id );
 					} }
 				>
-					{ __( 'Only matching', 'wp-woocommerce-products-list' ) }
+					{ __( 'Only matching', 'antijante-products-list' ) }
 				</button>
 			) }
 		</span>

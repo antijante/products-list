@@ -2,7 +2,7 @@
  * The rows a write left failed: recorded in the batch's audit trail and
  * offered for another try, for every kind of write the list runs (the
  * editor's saves, the menu and footer actions, Trash, declarative tools,
- * Undo and History reverts, `window.wcProductsList.batchUpdate`).
+ * Undo and History reverts, `window.antijanteProductsList.batchUpdate`).
  *
  * The server logs a row for every item it answered for: its concurrency
  * refusals (`wc_products_list_conflict`, `_locked`, `_trashed`, `_deleted`,
@@ -51,7 +51,7 @@ export function namesById( rows: ReadonlyArray< { id: number; name?: unknown } >
 function andMore( shown: string, more: number ): string {
 	return more > 0
 		? /* translators: 1: the first items, 2: number of further items */
-		  sprintf( __( '%1$s and %2$d more', 'wp-woocommerce-products-list' ), shown, more )
+		  sprintf( __( '%1$s and %2$d more', 'antijante-products-list' ), shown, more )
 		: shown;
 }
 
@@ -93,7 +93,7 @@ export function describeFailedRows( failed: ReadonlyArray< FailedRow >, names?: 
 		parts.push(
 			message
 				? /* translators: 1: product names, 2: why they failed */
-				  sprintf( __( '%1$s: %2$s', 'wp-woocommerce-products-list' ), who, message )
+				  sprintf( __( '%1$s: %2$s', 'antijante-products-list' ), who, message )
 				: who
 		);
 	} );
@@ -116,16 +116,16 @@ export function failureMessage( action: FailedAction, failed: ReadonlyArray< Fai
 	switch ( action ) {
 		case 'trash':
 			/* translators: 1: number of products, 2: the products and why */
-			return sprintf( _n( '%1$d product was not moved to the Trash: %2$s', '%1$d products were not moved to the Trash: %2$s', count, 'wp-woocommerce-products-list' ), count, rows );
+			return sprintf( _n( '%1$d product was not moved to the Trash: %2$s', '%1$d products were not moved to the Trash: %2$s', count, 'antijante-products-list' ), count, rows );
 		case 'restore':
 			/* translators: 1: number of products, 2: the products and why */
-			return sprintf( _n( '%1$d product is still in the Trash: %2$s', '%1$d products are still in the Trash: %2$s', count, 'wp-woocommerce-products-list' ), count, rows );
+			return sprintf( _n( '%1$d product is still in the Trash: %2$s', '%1$d products are still in the Trash: %2$s', count, 'antijante-products-list' ), count, rows );
 		case 'duplicate':
 			/* translators: 1: number of products, 2: the products and why */
-			return sprintf( _n( '%1$d product could not be duplicated: %2$s', '%1$d products could not be duplicated: %2$s', count, 'wp-woocommerce-products-list' ), count, rows );
+			return sprintf( _n( '%1$d product could not be duplicated: %2$s', '%1$d products could not be duplicated: %2$s', count, 'antijante-products-list' ), count, rows );
 		default:
 			/* translators: 1: number of items, 2: the items and why */
-			return sprintf( _n( '%1$d item could not be updated: %2$s', '%1$d items could not be updated: %2$s', count, 'wp-woocommerce-products-list' ), count, rows );
+			return sprintf( _n( '%1$d item could not be updated: %2$s', '%1$d items could not be updated: %2$s', count, 'antijante-products-list' ), count, rows );
 	}
 }
 
@@ -199,7 +199,7 @@ export function historyNoticeAction( batchId: string ): FailureNoticeAction | nu
 		history = undefined;
 	}
 
-	return history && batchId ? { label: __( 'View in History', 'wp-woocommerce-products-list' ), url: addQueryArgs( history, { batch: batchId } ) } : null;
+	return history && batchId ? { label: __( 'View in History', 'antijante-products-list' ), url: addQueryArgs( history, { batch: batchId } ) } : null;
 }
 
 /** "Open the Trash": the Trash tab of the list, where products a restore left in the Trash are. */
@@ -212,7 +212,7 @@ export function trashTabNoticeAction(): FailureNoticeAction | null {
 		page = undefined;
 	}
 
-	return page ? { label: __( 'Open the Trash', 'wp-woocommerce-products-list' ), url: addQueryArgs( page, { tab: 'trash' } ) } : null;
+	return page ? { label: __( 'Open the Trash', 'antijante-products-list' ), url: addQueryArgs( page, { tab: 'trash' } ) } : null;
 }
 
 export interface FailureNoticeOptions {
@@ -246,13 +246,13 @@ export function failureNoticeActions( batchId: string, failed: ReadonlyArray< Fa
 					{
 						label: sprintf(
 							/* translators: %d: number of items that failed */
-							_n( 'Select the %d failed', 'Select the %d failed', ids.length, 'wp-woocommerce-products-list' ),
+							_n( 'Select the %d failed', 'Select the %d failed', ids.length, 'antijante-products-list' ),
 							ids.length
 						),
 						keepsNotice: true,
 						onClick: () => {
 							if ( ! selectRows( ids ) ) {
-								notify.info( _n( 'This item is not in the list you are viewing; View in History lists it.', 'These items are not in the list you are viewing; View in History lists them.', ids.length, 'wp-woocommerce-products-list' ) );
+								notify.info( _n( 'This item is not in the list you are viewing; View in History lists it.', 'These items are not in the list you are viewing; View in History lists them.', ids.length, 'antijante-products-list' ) );
 							}
 						},
 					},

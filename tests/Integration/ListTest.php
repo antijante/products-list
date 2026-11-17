@@ -1,10 +1,10 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Rest\ListQuery;
-use GeneroWP\ProductsList\Rest\Rows;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Rest\ListQuery;
+use Antijante\ProductsList\Rest\Rows;
 
 class ListTest extends RestTestCase
 {

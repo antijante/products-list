@@ -31,16 +31,16 @@ export function footerCountLabel( { data, selection, totalItems }: FooterCountIn
 		}
 
 		/* translators: %d: number of selected rows */
-		const selected = sprintf( _n( '%d selected', '%d selected', selection.length, 'wp-woocommerce-products-list' ), selection.length );
+		const selected = sprintf( _n( '%d selected', '%d selected', selection.length, 'antijante-products-list' ), selection.length );
 
 		if ( products && variations ) {
 			return `${ selected } (${ sprintf(
 				/* translators: %d: number of products */
-				_n( '%d product', '%d products', products, 'wp-woocommerce-products-list' ),
+				_n( '%d product', '%d products', products, 'antijante-products-list' ),
 				products
 			) }, ${ sprintf(
 				/* translators: %d: number of variations */
-				_n( '%d variation', '%d variations', variations, 'wp-woocommerce-products-list' ),
+				_n( '%d variation', '%d variations', variations, 'antijante-products-list' ),
 				variations
 			) })`;
 		}
@@ -54,20 +54,20 @@ export function footerCountLabel( { data, selection, totalItems }: FooterCountIn
 		parents < totalItems
 			? sprintf(
 					/* translators: 1: products on this page, 2: products in total */
-					_n( '%1$d of %2$d product', '%1$d of %2$d products', totalItems, 'wp-woocommerce-products-list' ),
+					_n( '%1$d of %2$d product', '%1$d of %2$d products', totalItems, 'antijante-products-list' ),
 					parents,
 					totalItems
 			  )
 			: sprintf(
 					/* translators: %d: number of products */
-					_n( '%d product', '%d products', totalItems, 'wp-woocommerce-products-list' ),
+					_n( '%d product', '%d products', totalItems, 'antijante-products-list' ),
 					totalItems
 			  );
 
 	if ( variations > 0 ) {
 		return `${ label } · ${ sprintf(
 			/* translators: %d: number of variation rows shown */
-			_n( '%d variation shown', '%d variations shown', variations, 'wp-woocommerce-products-list' ),
+			_n( '%d variation shown', '%d variations shown', variations, 'antijante-products-list' ),
 			variations
 		) }`;
 	}

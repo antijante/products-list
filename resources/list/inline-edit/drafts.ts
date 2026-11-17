@@ -228,7 +228,7 @@ export function reportDropped( count: number ): void {
 		notify.info(
 			sprintf(
 				/* translators: %d: number of table cells */
-				_n( '%d change in the table did not save and was dropped.', '%d changes in the table did not save and were dropped.', count, 'wp-woocommerce-products-list' ),
+				_n( '%d change in the table did not save and was dropped.', '%d changes in the table did not save and were dropped.', count, 'antijante-products-list' ),
 				count
 			),
 			{ id: 'wc-pl-inline-dropped' }

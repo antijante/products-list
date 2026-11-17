@@ -7,7 +7,7 @@ export function createNameField( _settings: Settings ): ProductField {
 	return field( {
 		id: 'name',
 		type: 'text',
-		label: __( 'Name', 'wp-woocommerce-products-list' ),
+		label: __( 'Name', 'antijante-products-list' ),
 		enableHiding: false,
 		enableSorting: true,
 		enableGlobalSearch: true,

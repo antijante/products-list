@@ -21,7 +21,7 @@ export function createCostOfGoodsField( settings: Settings ): ProductField | nul
 	return field( {
 		id: 'cost_of_goods_sold',
 		type: 'text',
-		label: __( 'Cost', 'wp-woocommerce-products-list' ),
+		label: __( 'Cost', 'antijante-products-list' ),
 		enableSorting: false,
 		filterBy: false,
 		render: ( { item } ) => <MoneyCell value={ cogsValue( item ) } />,

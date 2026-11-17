@@ -1,14 +1,14 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\Actions\Action;
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Revert;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Registry;
-use GeneroWP\ProductsList\Rest\Saves;
+use Antijante\ProductsList\Actions\Action;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Revert;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Registry;
+use Antijante\ProductsList\Rest\Saves;
 use WC_Product;
 use WP_REST_Request;
 
@@ -23,13 +23,13 @@ class RevertTest extends RestTestCase
 
         Saves::resetWriteKeys();
 
-        add_filter('wc_products_list/fields', static function (array $fields): array {
+        add_filter('antijante_products_list/fields', static function (array $fields): array {
             $fields[] = ['id' => 'i18n:se.name', 'writePath' => 'i18n.se.name', 'applies' => ['variation' => true]];
 
             return $fields;
         });
 
-        add_action('wc_products_list/save', static function (WC_Product $product, WP_REST_Request $request): void {
+        add_action('antijante_products_list/save', static function (WC_Product $product, WP_REST_Request $request): void {
             foreach ((array) ($request['i18n'] ?? []) as $lang => $fields) {
                 foreach ((array) $fields as $field => $value) {
                     if ($value === '') {
@@ -282,7 +282,7 @@ class RevertTest extends RestTestCase
      */
     public function test_extension_action_rows_revert_like_updates(): void
     {
-        add_filter('wc_products_list/action_handlers', static function (array $handlers): array {
+        add_filter('antijante_products_list/action_handlers', static function (array $handlers): array {
             $handlers[] = new class implements Action
             {
                 public function id(): string
@@ -842,7 +842,7 @@ class RevertTest extends RestTestCase
 
     public function test_a_large_batch_is_reverted_in_chunks_under_one_batch_id(): void
     {
-        add_filter('wc_products_list/revert_chunk', static fn (): int => 2);
+        add_filter('antijante_products_list/revert_chunk', static fn (): int => 2);
 
         $products = [$this->simpleProduct(['sku' => 'A']), $this->simpleProduct(['sku' => 'B']), $this->simpleProduct(['sku' => 'C'])];
         $parent = $this->variableProduct(['38']);

@@ -1,17 +1,17 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Registry;
-use GeneroWP\ProductsList\Rest\Saves;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Registry;
+use Antijante\ProductsList\Rest\Saves;
 use WC_Product;
 use WP_REST_Request;
 
 /**
- * The write side of list mode: `wc_products_list/save` for extension keys
+ * The write side of list mode: `antijante_products_list/save` for extension keys
  * and one log row per changed field for every wc/v3 save.
  */
 class SaveHookTest extends RestTestCase
@@ -26,13 +26,13 @@ class SaveHookTest extends RestTestCase
         $this->saves = [];
         Saves::resetWriteKeys();
 
-        add_filter('wc_products_list/fields', function (array $fields): array {
+        add_filter('antijante_products_list/fields', function (array $fields): array {
             $fields[] = ['id' => 'i18n:se.name', 'path' => 'i18n.se.name.value', 'writePath' => 'i18n.se.name', 'applies' => ['variation' => true]];
 
             return $fields;
         });
 
-        add_action('wc_products_list/save', function (WC_Product $product, WP_REST_Request $request, bool $creating): void {
+        add_action('antijante_products_list/save', function (WC_Product $product, WP_REST_Request $request, bool $creating): void {
             $this->saves[] = [$product, $request, $creating];
 
             foreach ((array) ($request['i18n'] ?? []) as $lang => $fields) {
@@ -110,7 +110,7 @@ class SaveHookTest extends RestTestCase
 
     public function test_write_keys_filter_is_a_fallback_for_fields_without_a_registry_entry(): void
     {
-        add_filter('wc_products_list/write_keys', static fn (array $keys): array => array_merge($keys, ['ext']));
+        add_filter('antijante_products_list/write_keys', static fn (array $keys): array => array_merge($keys, ['ext']));
         Saves::resetWriteKeys();
 
         $product = $this->simpleProduct();
@@ -558,7 +558,7 @@ class SaveHookTest extends RestTestCase
     public function test_logged_action_fires_with_the_rows(): void
     {
         $seen = [];
-        add_action('wc_products_list/logged', function (array $rows, string $batch) use (&$seen): void {
+        add_action('antijante_products_list/logged', function (array $rows, string $batch) use (&$seen): void {
             $seen[] = [count($rows), $batch];
         }, 10, 2);
 

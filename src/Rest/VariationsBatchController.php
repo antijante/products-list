@@ -1,10 +1,10 @@
 <?php
 
-namespace GeneroWP\ProductsList\Rest;
+namespace Antijante\ProductsList\Rest;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Plugin;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Plugin;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -46,7 +46,7 @@ final class VariationsBatchController
     public function permission(): bool|WP_Error
     {
         if (! current_user_can(Plugin::capability())) {
-            return new WP_Error('rest_forbidden', __('Sorry, you are not allowed to do that.', 'wp-woocommerce-products-list'), ['status' => rest_authorization_required_code()]);
+            return new WP_Error('rest_forbidden', __('Sorry, you are not allowed to do that.', 'antijante-products-list'), ['status' => rest_authorization_required_code()]);
         }
 
         // Exactly what wc/v3 asks of a batch write.
@@ -63,7 +63,7 @@ final class VariationsBatchController
         $items = is_array($items) ? array_values($items) : [];
 
         if ($items === []) {
-            return new WP_Error('wc_products_list_no_ids', __('No items given.', 'wp-woocommerce-products-list'), ['status' => 400]);
+            return new WP_Error('wc_products_list_no_ids', __('No items given.', 'antijante-products-list'), ['status' => 400]);
         }
 
         /** This filter is documented in WooCommerce. */
@@ -87,7 +87,7 @@ final class VariationsBatchController
             if ($post === null || $post->post_type !== 'product_variation' || (int) $post->post_parent <= 0) {
                 $results[$index] = [
                     'id' => $id,
-                    'error' => ['code' => 'woocommerce_rest_product_variation_invalid_id', 'message' => __('Invalid variation ID.', 'wp-woocommerce-products-list'), 'data' => ['status' => 404]],
+                    'error' => ['code' => 'woocommerce_rest_product_variation_invalid_id', 'message' => __('Invalid variation ID.', 'antijante-products-list'), 'data' => ['status' => 404]],
                 ];
 
                 continue;
@@ -142,7 +142,7 @@ final class VariationsBatchController
                         'id' => (int) $item['id'],
                         'error' => [
                             'code' => $error ? (string) $error->get_error_code() : 'error',
-                            'message' => $error ? $error->get_error_message() : __('The request failed.', 'wp-woocommerce-products-list'),
+                            'message' => $error ? $error->get_error_message() : __('The request failed.', 'antijante-products-list'),
                             'data' => ['status' => $response->get_status()],
                         ],
                     ];

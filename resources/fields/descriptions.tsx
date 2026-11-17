@@ -14,7 +14,7 @@ export function createDescriptionFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'short_description',
 			type: 'text',
-			label: __( 'Short description', 'wp-woocommerce-products-list' ),
+			label: __( 'Short description', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			Edit: { control: 'textarea', rows: 4 },
@@ -27,7 +27,7 @@ export function createDescriptionFields( _settings: Settings ): ProductField[] {
 		field( {
 			id: 'description',
 			type: 'text',
-			label: __( 'Description', 'wp-woocommerce-products-list' ),
+			label: __( 'Description', 'antijante-products-list' ),
 			enableSorting: false,
 			filterBy: false,
 			Edit: { control: 'textarea', rows: 8 },

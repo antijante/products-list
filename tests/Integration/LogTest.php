@@ -1,14 +1,14 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Integration;
+namespace Antijante\ProductsList\Tests\Integration;
 
-use GeneroWP\ProductsList\ListMode;
-use GeneroWP\ProductsList\Log\Logger;
-use GeneroWP\ProductsList\Log\Prune;
-use GeneroWP\ProductsList\Log\Table;
-use GeneroWP\ProductsList\Modules\Log;
-use GeneroWP\ProductsList\Plugin;
-use GeneroWP\ProductsList\Rest\LogController;
+use Antijante\ProductsList\ListMode;
+use Antijante\ProductsList\Log\Logger;
+use Antijante\ProductsList\Log\Prune;
+use Antijante\ProductsList\Log\Table;
+use Antijante\ProductsList\Modules\Log;
+use Antijante\ProductsList\Plugin;
+use Antijante\ProductsList\Rest\LogController;
 
 /**
  * The log table, the logger and GET /log, GET /log/batches.
@@ -534,11 +534,11 @@ class LogTest extends RestTestCase
         $table = Table::name();
         $this->assertEqualsCanonicalizing(['edge', 'new'], $wpdb->get_col("SELECT batch_id FROM {$table}")); // phpcs:ignore
 
-        add_filter('wc_products_list/log_retention_days', static fn (): int => 0);
+        add_filter('antijante_products_list/log_retention_days', static fn (): int => 0);
         $this->assertSame(0, Prune::run());
 
-        remove_all_filters('wc_products_list/log_retention_days');
-        add_filter('wc_products_list/log_retention_days', static fn (): int => 1);
+        remove_all_filters('antijante_products_list/log_retention_days');
+        add_filter('antijante_products_list/log_retention_days', static fn (): int => 1);
         $this->assertSame(1, Prune::run());
         $this->assertSame(['new'], $wpdb->get_col("SELECT batch_id FROM {$table}")); // phpcs:ignore
 

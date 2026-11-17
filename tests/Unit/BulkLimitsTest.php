@@ -1,10 +1,10 @@
 <?php
 
-namespace GeneroWP\ProductsList\Tests\Unit;
+namespace Antijante\ProductsList\Tests\Unit;
 
-use GeneroWP\ProductsList\Bootstrap;
-use GeneroWP\ProductsList\Log\Revert;
-use GeneroWP\ProductsList\Rest\ActionsController;
+use Antijante\ProductsList\Bootstrap;
+use Antijante\ProductsList\Log\Revert;
+use Antijante\ProductsList\Rest\ActionsController;
 use PHPUnit\Framework\TestCase;
 
 /**
