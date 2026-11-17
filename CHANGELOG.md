@@ -17,6 +17,8 @@ Field types for a site's own product data, and WooCommerce fields the product sc
 - A field declared `visible` is a column of the default table view (it was read but not used).
 - Upsells, cross-sells and the purchase note in quick and bulk edit.
 - The integration tests run from whatever folder the plugin is checked out in.
+- A declared layout (`antijante_products_list/layout`) gives quick edit a main level: scopes in a rail (a select on a narrow panel), such as "All markets" and then each market, each with its tabs, its intro line and, for a market, how many of its texts are missing. Tabs can take fields from elsewhere, hide fields and set their own sections. One Update still saves every scope.
+- A number WooCommerce sends as text (`weight`) is read as a number and written back as text.
 
 ## 0.5.2 - 2026-10-29
 

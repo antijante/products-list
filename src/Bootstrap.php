@@ -131,6 +131,7 @@ final class Bootstrap
             'fields' => Registry::fields(),
             'filters' => Registry::filters(),
             'actions' => Registry::actions(),
+            'layout' => Layout::get(),
             // Set by gds-woo-i18n (or any translation integration) through
             // the bootstrap filter: {default, others, labels, currencies}.
             'languages' => null,

@@ -245,6 +245,53 @@ export interface QuickEditTab {
 	/** Field ids on the tab; a field's `edit.tab` may also point here. */
 	fields?: string[];
 	order?: number;
+	/** The tab's own sections, in order (a declared layout); fields no section names keep their usual section. */
+	sections?: LayoutSection[];
+	/** Fields of the tab it does not show (a declared layout). */
+	hide?: string[];
+}
+
+/** A section of a declared tab (`antijante_products_list/layout`, src/Layout.php). */
+export interface LayoutSection {
+	id: string;
+	label: string;
+	description: string;
+	fields: string[];
+}
+
+/** A tab of a declared layout: its label and order, the fields it takes and its sections. */
+export interface LayoutTab {
+	id: string;
+	label: string | null;
+	order: number | null;
+	fields: string[];
+	hide: string[];
+	sections: LayoutSection[];
+}
+
+/** The panel's main level (a market): the rail item and the tabs it holds. */
+export interface LayoutScope {
+	id: string;
+	label: string;
+	/** The rail's second line ("SEK"); the state follows it when `missing`. */
+	detail: string;
+	/** A tag beside the label ("Hidden"). */
+	badge: string;
+	/** A heading in the rail before this scope ("Texts and prices per market"). */
+	heading: string;
+	/** The line at the top of the scope. */
+	intro: string;
+	link: { url: string; label: string } | null;
+	tabs: string[];
+	/** The rail counts the scope's empty texts that have a default to fall back on. */
+	missing: boolean;
+	/** Under an empty field with a default: what the visitor sees instead ("Missing. The English one is used."). */
+	missingFallback: string;
+}
+
+export interface QuickEditLayout {
+	scopes: LayoutScope[];
+	tabs: LayoutTab[];
 }
 
 export interface BatchUpdate {

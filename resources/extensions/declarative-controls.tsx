@@ -139,7 +139,7 @@ export function createTermsEdit( def: DeclarativeField ): ComponentType< Props >
 				label={ field.label }
 				value={ value }
 				suggestions={ suggestions }
-				maxLength={ def.multiple ? undefined : 1 }
+				// One-term fields take a new pick in place of the term (onChange keeps the last), so suggestions stay open.
 				onInputChange={ setSearch }
 				__experimentalExpandOnFocus
 				__experimentalValidateInput={ ( input: string ) => def.create || suggestions.includes( input ) }

@@ -1694,3 +1694,128 @@ html.wc-pl-panel-open .wc-products-list__notices {
 		display: none;
 	}
 }
+
+// A declared layout's main level (resources/edit/scope-rail.tsx): a rail of scopes (markets) on the panel's left
+// where the panel is a side panel and wide enough, else a select at its top (the drawer below 960px).
+.wc-pl-inline-edit:has( > .wc-pl-edit__scoped ),
+.wc-pl-inline-edit:has( .wc-pl-edit__scoped ) {
+	container: wcpl-edit / inline-size;
+}
+
+.wc-pl-edit__scoped {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	min-width: 0;
+}
+
+.wc-pl-edit__unscoped,
+.wc-pl-edit__scope {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	min-width: 0;
+}
+
+.wc-pl-edit__rail {
+	display: none;
+}
+
+.wc-pl-edit__scope-select select {
+	width: 100%;
+	max-width: none;
+	min-height: 40px;
+}
+
+.wc-pl-edit__scope-intro {
+	margin: 0;
+	color: var( --wp-components-color-foreground-muted, #50575e );
+}
+
+@media ( min-width: 960px ) {
+	@container wcpl-edit ( min-width: 640px ) {
+		.wc-pl-edit__scoped {
+			display: grid;
+			grid-template-columns: 200px minmax( 0, 1fr );
+			align-items: start;
+			gap: 0 20px;
+		}
+
+		.wc-pl-edit__scope-select {
+			display: none;
+		}
+
+		.wc-pl-edit__rail {
+			position: sticky;
+			top: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			padding: 8px;
+			background: #f6f7f7;
+			border: 1px solid #dcdcde;
+			border-radius: 4px;
+		}
+	}
+}
+
+.wc-pl-edit__rail-heading {
+	margin: 12px 8px 4px;
+	font-size: 12px;
+	font-weight: 600;
+	color: #50575e;
+}
+
+.wc-pl-edit__rail-item {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+	width: 100%;
+	padding: 8px 10px;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: #1e1e1e;
+	font: inherit;
+	text-align: start;
+	cursor: pointer;
+
+	&:hover {
+		background: #fff;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var( --wp-admin-theme-color, #3858e9 );
+		outline-offset: -2px;
+	}
+
+	&.is-active {
+		background: #fff;
+		box-shadow: 0 0 0 1px #c3c4c7;
+
+		.wc-pl-edit__rail-label {
+			color: var( --wp-admin-theme-color, #2271b1 );
+		}
+	}
+}
+
+.wc-pl-edit__rail-label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 600;
+}
+
+.wc-pl-edit__rail-detail {
+	font-size: 12px;
+	color: #50575e;
+}
+
+.wc-pl-edit__rail-badge {
+	padding: 0 6px;
+	border: 1px solid #8c8f94;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: 400;
+	color: #50575e;
+}

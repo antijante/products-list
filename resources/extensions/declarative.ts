@@ -361,7 +361,12 @@ export function fieldFromDeclarative( input: DeclarativeField, settings: Setting
 	const currency = currencyForField( def, settings );
 	const editable = def.editable && ! def.readonly;
 	const writePath = def.writePath ?? def.path;
-	const readValue = ( item: ProductListItem ) => getPath( item, def.path );
+	// wc/v3 sends some numbers as text (`weight: "225"`); DataForm's number control refuses a string.
+	const readValue = ( item: ProductListItem ) => {
+		const value = getPath( item, def.path );
+
+		return ( def.type === 'number' || def.type === 'integer' ) && typeof value === 'string' && value.trim() !== '' && Number.isFinite( Number( value ) ) ? Number( value ) : value;
+	};
 	const reference = def.reference ? ( item: ProductListItem ) => getPath( item, def.reference as string ) : undefined;
 	const normalizeForWrite = ( value: unknown ): unknown => {
 		if ( def.type === 'price' ) {
@@ -516,7 +521,8 @@ export function fieldFromDeclarative( input: DeclarativeField, settings: Setting
 		rest: {
 			fields: def.restFields.length > 0 ? def.restFields : [ def.path.split( '.' )[ 0 ] as string ],
 			read: readValue,
-			write: ( value ) => setPath( writePath, normalizeForWrite( value ) ),
+			// A number the row had as text goes back as text (wc/v3's `weight` is a string in its schema).
+			write: ( value, item ) => setPath( writePath, typeof value === 'number' && item && typeof getPath( item, def.path ) === 'string' ? String( value ) : normalizeForWrite( value ) ),
 			param: def.filter?.param ?? undefined,
 			sortParam: def.sortParam ?? undefined,
 			applies: {

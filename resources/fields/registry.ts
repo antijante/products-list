@@ -8,6 +8,7 @@
 import { applyFilters } from '@wordpress/hooks';
 import { getRegisteredFields } from '../extensions/api';
 import { fieldsFromSettings } from '../extensions/declarative';
+import { claimFields } from '../edit/scopes';
 import { FILTERS } from '../extensions/hooks';
 import type { ProductField, ProductListItem, Settings } from '../types';
 import { guardCell } from '../ui/error-boundary';
@@ -161,7 +162,8 @@ export function createProductFields( settings: Settings ): ProductField[] {
 	const core = createCoreFields( settings );
 	const coreRenders = new Set( core.map( ( field ) => field.render ).filter( Boolean ) );
 	const merged = mergeById( [ core, declarative, getRegisteredFields() ] );
-	const filtered = applyFilters( FILTERS.fields, merged, settings ) as ProductField[];
+	// A declared layout's tabs take their fields (resources/edit/scopes.ts).
+	const filtered = claimFields( applyFilters( FILTERS.fields, merged, settings ) as ProductField[], settings );
 
 	// A cell renderer from an extension that throws blanks its own cell, not the list.
 	return filtered.map( ( field ) => ( field.render && ! coreRenders.has( field.render ) ? { ...field, render: guardCell( field.render, `field ${ field.id }` ) } : field ) );

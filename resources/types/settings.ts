@@ -2,7 +2,7 @@
  * `window.antijanteProductsListSettings`, printed by src/Bootstrap.php and filtered
  * through `antijante_products_list/bootstrap`. Keep in sync with that file.
  */
-import type { DeclarativeAction, DeclarativeField, DeclarativeFilter } from './extension';
+import type { DeclarativeAction, DeclarativeField, DeclarativeFilter, QuickEditLayout } from './extension';
 
 export interface Option< Value extends string = string > {
 	value: Value;
@@ -116,6 +116,8 @@ export interface Settings {
 	fields: DeclarativeField[];
 	filters: DeclarativeFilter[];
 	actions: DeclarativeAction[];
+	/** The quick edit panel's scopes and tabs (`antijante_products_list/layout`); absent or empty for the plain tab strip. */
+	layout?: QuickEditLayout;
 	languages: LanguageSettings | null;
 	/** Anything else an integration adds through the bootstrap filter. */
 	[ extension: string ]: unknown;

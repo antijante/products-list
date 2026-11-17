@@ -176,6 +176,15 @@ describe( 'money', () => {
 describe( 'fieldFromDeclarative', () => {
 	const settings = makeSettings();
 
+	it( 'reads a number wc/v3 sends as text as a number, so the number control takes it', () => {
+		const field = fieldFromDeclarative( makeField( { id: 'shipping_weight', type: 'number', path: 'weight', writePath: 'weight' } ), settings );
+
+		expect( field.getValue?.( { item: product( { weight: '225' } ) } ) ).toBe( 225 );
+		expect( field.getValue?.( { item: product( { weight: '0.54' } ) } ) ).toBe( 0.54 );
+		expect( field.getValue?.( { item: product( { weight: '' } ) } ) ).toBe( '' );
+		expect( field.rest.write?.( 230, product( { weight: '225' } ) ) ).toEqual( { weight: '230' } );
+	} );
+
 	it( 'reads by path, writes by writePath and nests edits like the row', () => {
 		const field = fieldFromDeclarative( makeField(), settings );
 		const item = product( { i18n: { se: { name: { value: 'Saga (sv)', source: 'Saga' } } } } );

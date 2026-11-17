@@ -34,7 +34,7 @@ final class Compat
     public const OLD_SCRIPT_HANDLE = 'wc-products-list';
 
     /** Hooks added after the fork: they had no old name, so nothing to bridge. */
-    public const NEW_HOOKS = ['preview'];
+    public const NEW_HOOKS = ['preview', 'layout'];
 
     /** Hooks that are actions; every other hook this plugin runs is a filter. */
     public const ACTIONS = ['activate', 'deactivate', 'enqueue', 'logged', 'save'];

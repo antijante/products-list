@@ -151,7 +151,7 @@ export function fieldsOfTab( fields: ProductField[], tab: QuickEditTab ): Produc
 
 	return fields
 		.map( ( field, index ) => ( { field, index } ) )
-		.filter( ( { field } ) => explicit.has( field.id ) || tabOf( field ) === tab.id )
+		.filter( ( { field } ) => ( explicit.has( field.id ) || tabOf( field ) === tab.id ) && ! tab.hide?.includes( field.id ) )
 		.sort( ( a, b ) => groupRank( groupOf( a.field ), seen ) - groupRank( groupOf( b.field ), seen ) || orderOf( a.field ) - orderOf( b.field ) || a.index - b.index )
 		.map( ( { field } ) => field );
 }
@@ -214,6 +214,23 @@ export function buildTabs( fields: ProductField[], items: ProductListItem[], set
 
 	for ( const registered of getQuickEditTabs() ) {
 		tabs.set( registered.id, { ...tabs.get( registered.id ), ...registered } );
+	}
+
+	// A declared layout names its tabs, orders them and may give them their own sections (src/Layout.php).
+	for ( const declared of settings.layout?.tabs ?? [] ) {
+		const current = tabs.get( declared.id );
+
+		if ( ! current ) {
+			continue;
+		}
+
+		tabs.set( declared.id, {
+			...current,
+			...( declared.label ? { label: declared.label } : {} ),
+			...( declared.order !== null ? { order: declared.order } : {} ),
+			...( declared.sections.length ? { sections: declared.sections } : {} ),
+			...( declared.hide.length ? { hide: declared.hide } : {} ),
+		} );
 	}
 
 	const list = Array.from( tabs.values() )
@@ -302,12 +319,21 @@ function isLongText( field: ProductField ): boolean {
 	return ( field.type as string ) === 'html' || field.html === true || ( typeof edit === 'object' && edit !== null && edit.control === 'textarea' );
 }
 
+/** The section id of a tab's declared section (`QuickEditTab.sections`). */
+export const DECLARED_SECTION_PREFIX = 'declared:';
+
 function isLanguageTab( tab: QuickEditTab ): boolean {
 	return tab.id.startsWith( 'i18n:' );
 }
 
 /** The section (card) a field is laid out under on `tab` (in a quick edit unless `bulk`). */
 export function layoutGroupOf( field: ProductField, tab?: QuickEditTab, bulk = false ): string {
+	const declared = tab?.sections?.find( ( section ) => section.fields.includes( field.id ) );
+
+	if ( declared ) {
+		return `${ DECLARED_SECTION_PREFIX }${ declared.id }`;
+	}
+
 	if ( tab && isLanguageTab( tab ) ) {
 		const leaf = leafOf( field.id );
 
@@ -366,9 +392,17 @@ export function sectionsOfTab( fields: ProductField[], tab: QuickEditTab, leads:
 		}
 	}
 
+	// Declared sections come first, in their order and with their fields in the order given.
+	const declared = ( tab.sections ?? [] ).map( ( section ) => `${ DECLARED_SECTION_PREFIX }${ section.id }` );
+	const rank = ( group: string ) => ( declared.includes( group ) ? declared.indexOf( group ) - declared.length : groupRank( group, seen, NARROW_ORDER ) );
+
 	return Array.from( sections.entries() )
-		.map( ( [ group, ids ] ) => ( { group, fields: ids } ) )
-		.sort( ( a, b ) => groupRank( a.group, seen, NARROW_ORDER ) - groupRank( b.group, seen, NARROW_ORDER ) );
+		.map( ( [ group, ids ] ) => {
+			const section = tab.sections?.find( ( entry ) => `${ DECLARED_SECTION_PREFIX }${ entry.id }` === group );
+
+			return { group, fields: section ? [ ...ids ].sort( ( a, b ) => section.fields.indexOf( a ) - section.fields.indexOf( b ) ) : ids };
+		} )
+		.sort( ( a, b ) => rank( a.group ) - rank( b.group ) );
 }
 
 /** A section's children: field ids, with the pairs as `row` layouts (aligned at the top so uneven help texts do not shift the inputs). */
@@ -421,6 +455,11 @@ export interface LayoutOptions {
 /** The card title of a section; on a General tab of a translated shop, the texts say which language they are. */
 function sectionLabel( group: string, tab: QuickEditTab, settings: Settings ): string {
 	const languages = settings.languages;
+	const declared = tab.sections?.find( ( section ) => `${ DECLARED_SECTION_PREFIX }${ section.id }` === group );
+
+	if ( declared ) {
+		return declared.label;
+	}
 
 	if ( group === 'prices' && isLanguageTab( tab ) ) {
 		const currency = languages?.currencies?.[ tab.id.slice( 'i18n:'.length ) ];
@@ -429,7 +468,8 @@ function sectionLabel( group: string, tab: QuickEditTab, settings: Settings ): s
 		return currency ? sprintf( __( 'Prices (%s)', 'antijante-products-list' ), currency ) : groupLabel( group, settings );
 	}
 
-	if ( tab.id === GENERAL_TAB_ID && languages && languages.others.length > 0 && ( group === 'general' || group === 'content' ) ) {
+	// Under a declared layout the default language's texts have a scope of their own: General holds no texts.
+	if ( tab.id === GENERAL_TAB_ID && ! settings.layout?.scopes?.length && languages && languages.others.length > 0 && ( group === 'general' || group === 'content' ) ) {
 		const source = languages.labels[ languages.default ] ?? languages.default.toUpperCase();
 
 		/* translators: 1: section title (Product, Description), 2: the shop's default language */
@@ -471,7 +511,9 @@ export function buildInlineForm( fields: ProductField[], tab: QuickEditTab, item
 
 	let formFields: FormField[];
 
-	const rank = ( group: string ) => ( SECTION_ORDER.indexOf( group ) === -1 ? SECTION_ORDER.indexOf( 'translation' ) + 0.5 : SECTION_ORDER.indexOf( group ) );
+	const declaredOrder = ( tab.sections ?? [] ).map( ( section ) => `${ DECLARED_SECTION_PREFIX }${ section.id }` );
+	const rank = ( group: string ) =>
+		declaredOrder.includes( group ) ? declaredOrder.indexOf( group ) - declaredOrder.length : SECTION_ORDER.indexOf( group ) === -1 ? SECTION_ORDER.indexOf( 'translation' ) + 0.5 : SECTION_ORDER.indexOf( group );
 	const byRank = ( a: { group: string }, b: { group: string } ) => rank( a.group ) - rank( b.group );
 	const main = cards.filter( ( entry ) => ! isSideGroup( entry.group ) ).sort( byRank );
 

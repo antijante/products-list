@@ -61,6 +61,8 @@ import type { StagedTool } from './language-tools';
 import { editTypeOf, isVariableParent, isVariation, parentIdOf } from './field-value';
 import { captureFocusOrigin, focusWithin, restoreFocus } from './focus';
 import { APPLY_TO_VARIATIONS_FIELD_ID, buildInlineForm, buildTabs, fieldsOfTab, formLabelOf, GENERAL_TAB_ID, layoutGroupOf, sectionNoteFieldId, tabOf, withScheduleSale } from './form-layouts';
+import { ScopeRail } from './scope-rail';
+import { scopeOfTab, scopesOf } from './scopes';
 import { ApplyControlContext, applyControlField, sectionNoteField, SectionNotesContext } from './apply-control';
 import type { ApplyControlState } from './apply-control';
 import { labelsOf, messageLabelOf, stockStatusTakers, toFormFields } from './form-fields';
@@ -83,7 +85,7 @@ import { useEditState } from './use-edit-state';
 import { saleScheduleProblems } from './sale-schedule';
 import { clearFlaggedControls, collectInvalidFields, controlForField, flagInvalidControls, focusControl, focusFirstInvalidControl, invalidMessageId, revealInvalidControls, validateFormData } from './validity';
 import type { InvalidField, ValidatedField } from './validity';
-import { isSellableField, visibleEditFields } from './visibility';
+import { isSellableField, leafOf, visibleEditFields } from './visibility';
 import { useFormColumns } from './use-form-columns';
 import { DescriptionModalContext } from './description-modal/context';
 import { canLoadBlockEditor } from './description-modal/load-block-editor';
@@ -679,6 +681,8 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	const selectedRows = frozenRows ?? liveRows;
 	const selectionKey = selectedRows.map( ( item ) => item.id ).join( ',' );
 	// The tab the editor opens on: the list's translation filter, else the one "Update & next" carried over, else the last one used, else General.
+	// Whether the opening tab is only the one remembered from last time (not asked for, not carried from Update and next).
+	const fromMemoryRef = useRef( ( initialTab === null || initialTab === undefined ) && carriedTab === null );
 	const [ tabId, setTabId ] = useState( () => openingTab( initialTab, mode ) );
 
 	// Remember the open tab for the next quick edit (another product, a reload).
@@ -692,6 +696,8 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	const [ loaded, setLoaded ] = useState( false );
 	const [ excluded, setExcluded ] = useState< { missing: ProductListItem[]; trashed: ProductListItem[] } >( { missing: [], trashed: [] } );
 	const [ loadedTabs, setLoadedTabs ] = useState< ReadonlySet< string > >( () => new Set() );
+	/** The tabs of scopes whose missing texts the rail counts (set below, once the tabs are known). */
+	const countedTabsRef = useRef< string[] >( [] );
 	const [ tabLoading, setTabLoading ] = useState< string | null >( null );
 	const loadingIdsRef = useRef< Set< number > >( new Set() );
 	// The stamp of each parent of a loaded variation when it loaded: the pre-save check's baseline for that variation.
@@ -750,7 +756,9 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			return;
 		}
 
-		const tabs = loaded ? Array.from( loadedTabs ) : [ tabId ];
+		// With a declared layout that counts missing texts per scope (markets), the first load brings those tabs too:
+		// the rail's counts are right before a market is opened.
+		const tabs = loaded ? Array.from( loadedTabs ) : Array.from( new Set( [ tabId, ...countedTabsRef.current ] ) );
 		const wanted = Array.from( new Set( tabs.flatMap( ( tab ) => editFetchFields( allFields, missing, mode, { tab } ) ) ) ).sort();
 
 		missing.forEach( ( row ) => loadingIdsRef.current.add( row.id ) );
@@ -1031,6 +1039,43 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 
 	const tabs = useMemo( () => buildTabs( visibleFields, items, settings ), [ visibleFields, items, settings ] );
 	const tab = useMemo< QuickEditTab >( () => tabs.find( ( entry ) => entry.id === tabId ) ?? tabs[ 0 ] ?? { id: GENERAL_TAB_ID, label: __( 'General', 'antijante-products-list' ) }, [ tabs, tabId ] );
+	// A declared layout's main level (markets): the rail picks a scope, the tab strip shows that scope's tabs.
+	const scopes = useMemo( () => scopesOf( tabs, settings ), [ tabs, settings ] );
+	const scope = scopeOfTab( scopes, tab.id );
+	const scopeTabs = scope ? scope.tabs : tabs;
+
+	countedTabsRef.current = bulk ? [] : scopes.filter( ( entry ) => entry.scope.missing ).flatMap( ( entry ) => entry.tabs.map( ( scoped ) => scoped.id ) );
+
+	// A declared layout opens on its first scope ("All markets"); a remembered tab only counts inside it.
+	useEffect( () => {
+		const first = scopes[ 0 ];
+
+		if ( ! fromMemoryRef.current || ! first ) {
+			return;
+		}
+
+		fromMemoryRef.current = false;
+
+		if ( ! first.tabs.some( ( entry ) => entry.id === tabId ) ) {
+			setTabId( first.tabs[ 0 ]!.id );
+		}
+	}, [ scopes, tabId ] );
+	// The tab last open in each scope, so coming back to "All markets" finds Specs again.
+	const scopeTabRef = useRef< Record< string, string > >( {} );
+
+	if ( scope ) {
+		scopeTabRef.current[ scope.scope.id ] = tab.id;
+	}
+
+	const showScope = ( id: string ) => {
+		const target = scopes.find( ( entry ) => entry.scope.id === id );
+
+		if ( target ) {
+			const remembered = scopeTabRef.current[ id ];
+
+			setTabId( target.tabs.some( ( entry ) => entry.id === remembered ) ? ( remembered as string ) : target.tabs[ 0 ]!.id );
+		}
+	};
 	// The labels inside the form ("Stock status"; "Name" on the Svenska tab): what a control is found by.
 	const controlLabels = useMemo( () => Object.fromEntries( editFields.map( ( field ) => [ field.id, formLabelOf( field, settings ) ] ) ), [ editFields, settings ] );
 	/** The variations a price tool reaches when "Apply price and sale fields to all variations" is ticked. */
@@ -1040,7 +1085,8 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	);
 
 	// What was typed on General for the texts a language tab shows as its "Default:" (a quick edit's name, say).
-	const editedDefaultsKey = bulk || tab.id === GENERAL_TAB_ID ? '{}' : JSON.stringify( Object.fromEntries( Object.entries( state.edits ).filter( ( [ id, value ] ) => tabOf( editFieldsById.get( id ) ?? ( { id } as ProductField ) ) === GENERAL_TAB_ID && typeof value === 'string' ) ) );
+	// The default texts sit on any tab that is not a language's (General, or a declared layout's default market).
+	const editedDefaultsKey = bulk || ! tab.id.includes( ':' ) ? '{}' : JSON.stringify( Object.fromEntries( Object.entries( state.edits ).filter( ( [ id, value ] ) => ! tabOf( editFieldsById.get( id ) ?? ( { id } as ProductField ) ).includes( ':' ) && typeof value === 'string' ) ) );
 	const formFields = useMemo(
 		() => toFormFields( visibleFields, {
 				bulk,
@@ -1334,10 +1380,12 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 			return undefined;
 		}
 
-		const section = tab.id === GENERAL_TAB_ID ? 'pricing' : tab.id.startsWith( 'i18n:' ) && editFields.some( ( field ) => tabOf( field ) === tab.id && isSellableField( field ) ) ? 'prices' : null;
+		// The section holding this tab's prices: Pricing on General, a language's Prices, or wherever a declared layout put them.
+		const sellable = editFields.find( ( field ) => tabOf( field ) === tab.id && leafOf( field.id ) === 'regular_price' && fieldsOfTab( [ field ], tab ).length > 0 );
+		const section = sellable ? layoutGroupOf( sellable, tab, bulk ) : tab.id === GENERAL_TAB_ID && ! scopes.length ? 'pricing' : null;
 
 		return section ? { [ section ]: [ APPLY_TO_VARIATIONS_FIELD_ID ] } : undefined;
-	}, [ applyOffered, tab.id, editFields ] );
+	}, [ applyOffered, tab, editFields, bulk, scopes.length ] );
 	// Notes that end Pricing and Inventory (existing sales, "only lower", why a stock edit is skipped): next to the fields
 	// they are about. A tab without that card (a language's) shows them below the form, as before.
 	const noteSections = useMemo( () => {
@@ -2739,6 +2787,7 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 	};
 
 	const onTabKeyDown = ( event: KeyboardEvent< HTMLDivElement > ) => {
+		const tabs = scopeTabs;
 		const index = tabs.findIndex( ( entry ) => entry.id === tab.id );
 		let next = index;
 
@@ -3428,9 +3477,34 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					</Notice>
 				) : null }
 
-				{ tabs.length > 1 ? (
+				<div className={ scopes.length > 1 ? 'wc-pl-edit__scoped' : 'wc-pl-edit__unscoped' }>
+				{ scopes.length > 1 && scope ? (
+					<ScopeRail
+						scopes={ scopes }
+						current={ scope.scope.id }
+						onChange={ showScope }
+						fields={ visibleFields }
+						data={ state.data }
+						item={ bulk ? undefined : items[ 0 ] }
+						pending={ ( entry ) => entry.tabs.some( ( scoped ) => fieldsOfTab( visibleFields, scoped ).some( ( field ) => field.id in pendingEdits ) ) }
+						controls={ PANEL_ID }
+					/>
+				) : null }
+				<div className="wc-pl-edit__scope">
+				{ scope && scopes.length > 1 && ( scope.scope.intro || scope.scope.link ) ? (
+					<p className="wc-pl-edit__scope-intro">
+						{ scope.scope.intro }
+						{ scope.scope.link ? (
+							<>
+								{ ' ' }
+								<a href={ scope.scope.link.url }>{ scope.scope.link.label }</a>
+							</>
+						) : null }
+					</p>
+				) : null }
+				{ scopeTabs.length > 1 ? (
 					<div className={ `wc-pl-edit__tabs${ formColumns.narrow ? ' is-narrow' : '' }` } role="tablist" aria-label={ __( 'Edit sections', 'antijante-products-list' ) } onKeyDown={ onTabKeyDown }>
-						{ tabs.map( ( entry ) => {
+						{ scopeTabs.map( ( entry ) => {
 							const selectedTab = entry.id === tab.id;
 
 							return (
@@ -3491,8 +3565,8 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 					ref={ formRef }
 					id={ PANEL_ID }
 					className={ `wc-pl-edit__form is-${ formColumns.columns === 2 ? 'wide' : 'single' }${ formColumns.narrow ? ' is-narrow' : '' }` }
-					role={ tabs.length > 1 ? 'tabpanel' : undefined }
-					aria-labelledby={ tabs.length > 1 ? `wc-pl-edit-tab-${ tab.id }` : undefined }
+					role={ scopeTabs.length > 1 || scopes.length > 1 ? 'tabpanel' : undefined }
+					aria-labelledby={ scopeTabs.length > 1 ? `wc-pl-edit-tab-${ tab.id }` : scopes.length > 1 && scope ? `wc-pl-edit-scope-${ scope.scope.id }` : undefined }
 					aria-busy={ ! tabReady }
 				>
 					{ tabChanged.length ? (
@@ -3517,6 +3591,8 @@ export function InlineEditor( { host }: InlineEditorProps ) {
 							</SectionNotesContext.Provider>
 						</ApplyControlContext.Provider>
 					) }
+				</div>
+				</div>
 				</div>
 
 				{ descriptionFieldId ? (
